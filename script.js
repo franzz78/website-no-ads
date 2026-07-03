@@ -21,57 +21,86 @@ function extractVideoId(url) {
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
-// --- FITUR BACKGROUND PLAYBACK VIA MEDIA SESSION API ---
-function updateMediaSession(videoId) {
+function updateMediaSession(videoId, title = "CleanPlayer Audio") {
     if ('mediaSession' in navigator) {
-        // Mendaftarkan metadata audio ke sistem operasi Android/iOS/Windows
         navigator.mediaSession.metadata = new MediaMetadata({
-            title: `CleanPlayer Audio - ${videoId}`,
+            title: title,
             artist: 'Streaming Mode',
             album: 'No Ads Streamer',
-            artwork: [
-                { src: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' }
-            ]
+            artwork: [{ src: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' }]
         });
-
-        // Hubungkan tombol kontrol di panel notifikasi HP ke player YouTube
-        navigator.mediaSession.setActionHandler('play', () => {
-            if(window.player) window.player.playVideo();
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-            if(window.player) window.player.pauseVideo();
-        });
+        navigator.mediaSession.setActionHandler('play', () => { if(window.player) window.player.playVideo(); });
+        navigator.mediaSession.setActionHandler('pause', () => { if(window.player) window.player.pauseVideo(); });
     }
 }
 
-// Play button handler
-document.getElementById('playBtn').addEventListener('click', () => {
-    const urlInput = document.getElementById('videoUrl').value.trim();
-    if (!urlInput) return alert('Bro, isi dulu kolom link YouTube-nya!');
+// Fungsi utama untuk memicu pemutaran lagu & simpan ke database
+function playAndSave(videoId, titleText) {
+    if (window.player && typeof window.player.loadVideoById === 'function') {
+        window.player.loadVideoById(videoId);
+        window.currentVideoId = videoId;
+        updateMediaSession(videoId, titleText);
+    }
 
-    const videoId = extractVideoId(urlInput);
+    // Push riwayat baru ke Firebase
+    const newHistoryRef = push(historyRef);
+    set(newHistoryRef, {
+        url: `https://www.youtube.com/watch?v=${videoId}`,
+        videoId: videoId,
+        title: titleText || `ID Video: ${videoId}`,
+        timestamp: Date.now()
+    });
+}
 
-    if (videoId) {
-        if (window.player && typeof window.player.loadVideoById === 'function') {
-            window.player.loadVideoById(videoId);
-            window.currentVideoId = videoId;
-            updateMediaSession(videoId); // Pemicu kontrol background
-        }
+// Handler Tombol Cari / Putar
+document.getElementById('playBtn').addEventListener('click', async () => {
+    const queryInput = document.getElementById('videoUrl').value.trim();
+    if (!queryInput) return alert('Bro, ketik dulu judul lagu atau paste linknya!');
 
-        const newHistoryRef = push(historyRef);
-        set(newHistoryRef, {
-            url: urlInput,
-            videoId: videoId,
-            timestamp: Date.now()
-        });
+    const directId = extractVideoId(queryInput);
 
+    if (directId) {
+        // Jika input berupa LINK, langsung putar
+        document.getElementById('searchResultsSection').style.display = 'none';
+        playAndSave(directId, "Video Pilihan Kamu");
         document.getElementById('videoUrl').value = '';
     } else {
-        alert('Format tautan salah!');
+        // Jika input berupa KATA KUNCI, jalankan pencarian lagu
+        const searchList = document.getElementById('searchResultsList');
+        searchList.innerHTML = '<li style="color:#94a3b8; font-size:0.85rem;">Mencari lagu terbaik untukmu...</li>';
+        document.getElementById('searchResultsSection').style.display = 'block';
+
+        try {
+            // Memakai public API provider Invidious untuk mencari track list YouTube
+            const response = await fetch(`https://invidious.nerdvpn.de/api/v1/search?q=${encodeURIComponent(queryInput)}&type=video`);
+            const results = await response.json();
+            
+            searchList.innerHTML = '';
+            if (results && results.length > 0) {
+                results.slice(0, 5).forEach(track => {
+                    const li = document.createElement('li');
+                    li.className = 'search-item';
+                    li.innerHTML = `🎵 <strong>${track.title}</strong> - <span>${track.author}</span>`;
+                    
+                    // Kalau salah satu lagu hasil cari diklik, langsung set ke player!
+                    li.addEventListener('click', () => {
+                        playAndSave(track.videoId, track.title);
+                        document.getElementById('searchResultsSection').style.display = 'none';
+                        document.getElementById('videoUrl').value = '';
+                    });
+                    searchList.appendChild(li);
+                });
+            } else {
+                searchList.innerHTML = '<li style="color:#ef4444; font-size:0.85rem;">Lagu tidak ditemukan, coba kata kunci lain bro.</li>';
+            }
+        } catch (error) {
+            console.error(error);
+            searchList.innerHTML = '<li style="color:#ef4444; font-size:0.85rem;">Gagal memuat pencarian. Coba ketik ulang.</li>';
+        }
     }
 });
 
-// Real-time Database Listener
+// Listener Sinkronisasi Data Real-time dari Firebase
 onValue(historyRef, (snapshot) => {
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
@@ -82,9 +111,12 @@ onValue(historyRef, (snapshot) => {
             const li = document.createElement('li');
             li.className = 'history-item';
             const formattedTime = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            // Tampilkan judul lagu asli jika ada di DB, kalau tidak tampilkan ID-nya
+            const displayTitle = item.title ? item.title : `ID Video: ${item.videoId}`;
 
             li.innerHTML = `
-                <span class="video-id-text">▶️ ID Video: <strong>${item.videoId}</strong></span>
+                <span class="video-id-text" title="${displayTitle}">▶️ <strong>${displayTitle}</strong></span>
                 <span class="time-stamp">${formattedTime}</span>
             `;
             
@@ -92,7 +124,7 @@ onValue(historyRef, (snapshot) => {
                 if (window.player && typeof window.player.loadVideoById === 'function') {
                     window.player.loadVideoById(item.videoId);
                     window.currentVideoId = item.videoId;
-                    updateMediaSession(item.videoId); // Pemicu kontrol background saat klik history
+                    updateMediaSession(item.videoId, displayTitle);
                 }
             });
             historyList.appendChild(li);
@@ -124,35 +156,22 @@ document.getElementById('downloadMp4Btn').addEventListener('click', () => {
     window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
 });
 
-// --- LOGIKA OTOMATIS POP-UP ADD TO HOME SCREEN ---
+// PWA Instalasi Prompt
 let deferredPrompt;
 const installBtn = document.getElementById('installAppBtn');
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Cegah Chrome memunculkan mini-bar bawaan lama
     e.preventDefault();
-    // Simpan event-nya agar bisa dieksekusi nanti
     deferredPrompt = e;
-    // Tampilkan tombol instalasi rahasia kita di dalam web
     if(installBtn) installBtn.style.display = 'block';
 });
 
 if(installBtn) {
     installBtn.addEventListener('click', async () => {
         if (!deferredPrompt) return;
-        // Munculkan prompt instalasi bawaan OS (Android/Windows)
         deferredPrompt.prompt();
-        // Tunggu respon user (setuju instal atau menolak)
         const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User memilih instalasi: ${outcome}`);
-        // Reset prompt karena hanya bisa dipakai sekali
         deferredPrompt = null;
-        // Sembunyikan tombol lagi
         installBtn.style.display = 'none';
     });
-}
-
-window.addEventListener('appinstalled', () => {
-    console.log('Aplikasi CleanPlayer sukses di-install di perangkat kamu!');
-    if(installBtn) installBtn.style.display = 'none';
-});
+          }
