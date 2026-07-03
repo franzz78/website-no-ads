@@ -2,99 +2,120 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube - Pemutar Bebas Iklan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MiniTube Mobile</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 
-    <header class="header">
+    <header class="mobile-header">
         <div class="header-left">
-            <button class="icon-btn"><i class="fas fa-bars"></i></button>
-            <div class="logo" onclick="location.reload()">
-                <i class="fab fa-youtube logo-icon"></i>
-                <span class="logo-text">MiniTube</span>
-            </div>
+            <i class="fab fa-youtube youtube-logo-icon"></i>
+            <span class="logo-text">YouTube</span>
         </div>
-
-        <div class="header-center">
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Telusuri Video MiniTube...">
-                <button class="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-            <button class="icon-btn mic-btn"><i class="fas fa-microphone"></i></button>
-        </div>
-
         <div class="header-right">
-            <button class="icon-btn"><i class="fas fa-video"></i></button>
-            <button class="icon-btn"><i class="fas fa-bell"></i></button>
-            
-            <div id="google-login-wrapper">
-                <div id="g_id_onload"
-                     data-client_id="MOHON_GANTI_DENGAN_CLIENT_ID_KAMU.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-callback="handleCredentialResponse"
-                     data-auto_select="true">
-                </div>
-                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_blue" data-text="signin_with" data-size="large"></div>
+            <div class="notification-container">
+                <i class="far fa-bell header-icon"></i>
+                <span class="notification-badge">9+</span>
             </div>
-
-            <div id="user-profile" class="user-profile hidden">
-                <img id="user-avatar" src="" alt="Avatar">
-            </div>
+            <i class="fas fa-search header-icon" id="mobile-search-trigger"></i>
         </div>
     </header>
 
-    <div class="main-container">
-        <aside class="sidebar">
-            <div class="sidebar-group">
-                <a href="#" class="sidebar-item active"><i class="fas fa-home"></i> <span>Beranda</span></a>
-                <a href="#" class="sidebar-item"><i class="fab fa-youtube-square"></i> <span>Shorts</span></a>
-                <a href="#" class="sidebar-item"><i class="fas fa-folder-open"></i> <span>Subskripsi</span></a>
-            </div>
-            <hr class="divider">
-            <div class="sidebar-group">
-                <a href="#" class="sidebar-item"><i class="fas fa-history"></i> <span>Histori</span></a>
-                <a href="#" class="sidebar-item"><i class="fas fa-clock"></i> <span>Tonton Nanti</span></a>
-                <a href="#" class="sidebar-item"><i class="fas fa-thumbs-up"></i> <span>Video Disukai</span></a>
-            </div>
-        </aside>
-
-        <main class="content">
-            
-            <div class="player-section">
-                <div class="video-wrapper">
-                    <iframe id="main-youtube-player" 
-                            src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1" 
-                            title="YouTube video player" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen>
-                    </iframe>
-                </div>
-                <h2 id="playing-title" class="playing-title">Selamat Datang di MiniTube - Pemutar Video YouTube Bebas Iklan</h2>
-                <p id="playing-channel" class="playing-channel">Silakan pilih atau cari video di bawah untuk mulai memutar</p>
-                <hr class="divider">
-            </div>
-
-            <div class="tags-container">
-                <span class="tag active">Musik Indonesia</span>
-                <span class="tag">Live Streaming</span>
-                <span class="tag">Gaming</span>
-                <span class="tag">Edukasi Web</span>
-                <span class="tag">Lo-Fi Beats</span>
-            </div>
-
-            <div class="video-grid">
-                </div>
-        </main>
+    <div class="mobile-search-bar-container">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Telusuri Video MiniTube...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
     </div>
 
+    <div class="mobile-tags-bar">
+        <div class="tag explorer-tag"><i class="fas fa-compass"></i></div>
+        <span class="tag active">All</span>
+        <span class="tag">Gaming</span>
+        <span class="tag">Role-playing</span>
+        <span class="tag">Live</span>
+        <span class="tag">Life Simulation Games</span>
+    </div>
+
+    <main class="mobile-content">
+        
+        <div class="player-container">
+            <div class="video-wrapper">
+                <iframe id="main-youtube-player" 
+                        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <h3 id="playing-title" class="player-title">MiniTube Pemutar Bebas Iklan Komersial</h3>
+            <p id="playing-channel" class="player-channel">Klik video di bawah untuk memutar</p>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="shorts-section">
+            <div class="shorts-header">
+                <div class="shorts-title-left">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Youtube_shorts_icon.svg" alt="Shorts" class="shorts-logo">
+                    <span>Shorts</span>
+                </div>
+                <i class="fas fa-ellipsis-v shorts-more"></i>
+            </div>
+
+            <div class="shorts-grid">
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" alt="Shorts 1">
+                    </div>
+                    <div class="shorts-info">
+                        <p class="shorts-text">"14 MILIAR BUNGKUS?!" 5 Negara Paling Gila Makan Mie Instan...</p>
+                    </div>
+                </div>
+                <div class="shorts-card">
+                    <div class="shorts-thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400" alt="Shorts 2">
+                    </div>
+                    <div class="shorts-info">
+                        <p class="shorts-text">Di Amerika, Nasi Goreng Aja Dijual Frozen! 😳</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="video-grid">
+            </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="location.reload()">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Youtube_shorts_icon.svg" style="width:18px; filter: invert(1);" alt="Shorts">
+            <span>Shorts</span>
+        </div>
+        <div class="nav-item add-button">
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="nav-item">
+            <i class="layer-group fas fa-folder-open"></i>
+            <span>Subscriptions</span>
+        </div>
+        <div class="nav-item profile-nav">
+            <div class="avatar-placeholder-nav"></div>
+            <span>You</span>
+        </div>
+    </nav>
+
     <script>
-        // Fungsi mengganti video di player utama
         function playVideo(videoId, title, channel) {
             const player = document.getElementById('main-youtube-player');
             player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1`;
@@ -105,25 +126,13 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Handler Google Login
-        function handleCredentialResponse(response) {
-            const responsePayload = parseJwt(response.credential);
-            document.getElementById("google-login-wrapper").classList.add("hidden");
-            const avatar = document.getElementById("user-avatar");
-            avatar.src = responsePayload.picture;
-            document.getElementById("user-profile").classList.remove("hidden");
-        }
-
-        function parseJwt (token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
+        // Efek toggle kolom pencarian di HP biar pas rapi
+        const searchTrigger = document.getElementById('mobile-search-trigger');
+        const searchContainer = document.querySelector('.mobile-search-bar-container');
+        searchTrigger.addEventListener('click', () => {
+            searchContainer.classList.toggle('active');
+        });
     </script>
-
     <script src="script.js"></script>
 </body>
 </html>
