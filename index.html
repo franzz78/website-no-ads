@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CleanPlayer">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    <link class="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
 </head>
 <body>
 
@@ -31,6 +31,17 @@
 
         <div class="options">
             <button class="btn-secondary" id="musicModeBtn">Mode Musik Saja</button>
+        </div>
+
+        <div class="lyrics-section">
+            <div class="lyrics-header">
+                <h3>Lirik Lagu</h3>
+                <button id="editLyricsBtn" class="btn-small">Edit Lirik</button>
+            </div>
+            <div class="lyrics-body">
+                <div id="lyricsText" class="lyrics-content">Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.</div>
+                <textarea id="lyricsInput" class="lyrics-textarea" style="display: none;" placeholder="Tulis atau tempel lirik lagu di sini..."></textarea>
+            </div>
         </div>
 
         <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">Install Aplikasi CleanPlayer</button>
