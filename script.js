@@ -34,6 +34,21 @@ function updateMediaSession(videoId) {
     }
 }
 
+// Logika pengelolaan lirik lagu mandiri
+function loadLyrics(videoId) {
+    const savedLyrics = localStorage.getItem(`lyrics_${videoId}`);
+    const lyricsText = document.getElementById('lyricsText');
+    const lyricsInput = document.getElementById('lyricsInput');
+    
+    if (savedLyrics) {
+        lyricsText.innerText = savedLyrics;
+        lyricsInput.value = savedLyrics;
+    } else {
+        lyricsText.innerText = "Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.";
+        lyricsInput.value = "";
+    }
+}
+
 // Handler klik tombol Putar
 document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
@@ -46,6 +61,7 @@ document.getElementById('playBtn').addEventListener('click', () => {
             window.player.loadVideoById(videoId);
             window.currentVideoId = videoId;
             updateMediaSession(videoId);
+            loadLyrics(videoId); // Muat lirik video baru
         }
 
         const newHistoryRef = push(historyRef);
@@ -78,7 +94,6 @@ onValue(historyRef, (snapshot) => {
             li.className = 'history-item';
             const formattedTime = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            // Bagian ini sudah bersih dari seluruh emoji
             li.innerHTML = `
                 <div class="history-clickable">
                     <span class="video-id-text">ID Video: <strong>${item.videoId}</strong></span>
@@ -92,10 +107,10 @@ onValue(historyRef, (snapshot) => {
                     window.player.loadVideoById(item.videoId);
                     window.currentVideoId = item.videoId;
                     updateMediaSession(item.videoId);
+                    loadLyrics(item.videoId); // Muat lirik saat riwayat diklik
                 }
             });
 
-            // Event klik tombol silang (X) untuk hapus data spesifik dari Firebase
             li.querySelector('.btn-delete-item').addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 if(confirm("Hapus lagu ini dari riwayat database?")) {
@@ -110,6 +125,31 @@ onValue(historyRef, (snapshot) => {
         });
     } else {
         historyList.innerHTML = '<li class="loading-state">Belum ada riwayat pemutaran.</li>';
+    }
+});
+
+// Logika Aksi Tombol Edit / Simpan Lirik
+document.getElementById('editLyricsBtn').addEventListener('click', () => {
+    const btn = document.getElementById('editLyricsBtn');
+    const textDiv = document.getElementById('lyricsText');
+    const inputArea = document.getElementById('lyricsInput');
+    const id = window.currentVideoId;
+
+    if (inputArea.style.display === 'none') {
+        // Pindah ke mode edit
+        textDiv.style.display = 'none';
+        inputArea.style.display = 'block';
+        btn.innerText = "Simpan Lirik";
+    } else {
+        // Simpan lirik ke LocalStorage berdasarkan ID video aktif
+        const newLyrics = inputArea.value.trim();
+        localStorage.setItem(`lyrics_${id}`, newLyrics);
+        
+        textDiv.innerText = newLyrics || "Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.";
+        
+        inputArea.style.display = 'none';
+        textDiv.style.display = 'block';
+        btn.innerText = "Edit Lirik";
     }
 });
 
@@ -138,3 +178,11 @@ if(installBtn) {
         installBtn.style.display = 'none';
     });
 }
+
+// Load lirik awal saat halaman dimuat pertama kali
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if(window.currentVideoId) loadLyrics(window.currentVideoId);
+    }, 1000);
+});
+                                        
