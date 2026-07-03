@@ -1,6 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
+// ==========================================
+// 1. KONFIGURASI FIREBASE (TETAP DIPERTAHANKAN)
+// ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyD9BmV4XKXuMWa4PZHpb7Bbt-rHs61m3lE",
   databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -10,385 +10,102 @@ const firebaseConfig = {
   appId: "1:19006760644:web:b980f54aea123e92ed4b91"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const historyRef = ref(db, 'player_history');
+// Catatan: Jika kamu menggunakan Firebase SDK, pastikan inisialisasi di bawah ini tetap aktif
+// firebase.initializeApp(firebaseConfig);
 
-let audioCtx;
-let bassFilter;
-let trebleFilter;
 
-function initAudioEqualizer() {
-    if (audioCtx) return;
-    try {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        bassFilter = audioCtx.createBiquadFilter();
-        bassFilter.type = "lowshelf";
-        bassFilter.frequency.value = 200;
+// ==========================================
+// 2. KONFIGURASI YOUTUBE DATA API V3
+// ==========================================
+const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
 
-        trebleFilter = audioCtx.createBiquadFilter();
-        trebleFilter.type = "highshelf";
-        trebleFilter.frequency.value = 3000;
+document.addEventListener("DOMContentLoaded", () => {
+    // Jalankan pencarian video terpopuler secara default saat pertama dibuka
+    fetchYouTubeVideos("musik indonesia terbaru");
 
-        bassFilter.connect(trebleFilter);
-        trebleFilter.connect(audioCtx.destination);
-        
-        const iframeElement = document.getElementById('player');
-        if (iframeElement) {
-            const source = audioCtx.createMediaElementSource(iframeElement);
-            source.connect(bassFilter);
-        }
-    } catch (e) {
-        console.log("Web Audio API menggunakan mode simulasi filter.");
-    }
-}
+    // Tangani klik tombol Cari
+    const searchBtn = document.querySelector(".search-btn");
+    const searchInput = document.getElementById("search-input");
 
-function applyEqualizer() {
-    const bassLevel = document.getElementById('bassSlider').value;
-    const trebleLevel = document.getElementById('trebleSlider').value;
-    
-    document.getElementById('bassVal').innerText = `${bassLevel}%`;
-    document.getElementById('trebleVal').innerText = `${trebleLevel}%`;
-
-    const bassGain = ((bassLevel / 100) * 25) - 10;
-    const trebleGain = ((trebleLevel / 100) * 25) - 10;
-
-    if (bassFilter && trebleFilter) {
-        bassFilter.gain.value = bassGain;
-        trebleFilter.gain.value = trebleGain;
-    }
-
-    localStorage.setItem('cleanplayer_bass', bassLevel);
-    localStorage.setItem('cleanplayer_treble', trebleLevel);
-}
-
-function loadSavedEqualizer() {
-    const savedBass = localStorage.getItem('cleanplayer_bass') || 50;
-    const savedTreble = localStorage.getItem('cleanplayer_treble') || 50;
-
-    document.getElementById('bassSlider').value = savedBass;
-    document.getElementById('trebleSlider').value = savedTreble;
-    
-    document.getElementById('bassVal').innerText = `${savedBass}%`;
-    document.getElementById('trebleVal').innerText = `${savedTreble}%`;
-}
-
-function extractVideoId(url) {
-    if (url.length === 11) return url;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-}
-
-function updateMediaSession(videoId) {
-    if ('mediaSession' in navigator) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: `CleanPlayer Track - ${videoId}`,
-            artist: 'Playing Mode',
-            album: 'No Ads Streamer',
-            artwork: [{ src: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' }]
-        });
-        navigator.mediaSession.setActionHandler('play', () => { if(window.player) window.player.playVideo(); });
-        navigator.mediaSession.setActionHandler('pause', () => { if(window.player) window.player.pauseVideo(); });
-    }
-}
-
-// Handler klik tombol Putar
-document.getElementById('playBtn').addEventListener('click', () => {
-    const urlInput = document.getElementById('videoUrl').value.trim();
-    if (!urlInput) {
-        Swal.fire({ icon: 'warning', title: 'Kolom Kosong', text: 'Isi dulu kolom link YouTube atau ID video!' });
-        return;
-    }
-
-    initAudioEqualizer();
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-
-    const videoId = extractVideoId(urlInput);
-
-    if (videoId) {
-        if (window.player && typeof window.player.loadVideoById === 'function') {
-            window.player.loadVideoById(videoId);
-            window.currentVideoId = videoId;
-            updateMediaSession(videoId);
-        }
-
-        const newHistoryRef = push(historyRef);
-        set(newHistoryRef, {
-            url: urlInput,
-            videoId: videoId,
-            timestamp: Date.now()
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener("click", () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                fetchYouTubeVideos(query);
+            }
         });
 
-        document.getElementById('videoUrl').value = '';
-    } else {
-        Swal.fire({ icon: 'error', title: 'Format Salah', text: 'Format tautan salah atau tidak dikenali!' });
-    }
-});
-
-// Real-time Database Listener
-onValue(historyRef, (snapshot) => {
-    const historyList = document.getElementById('historyList');
-    historyList.innerHTML = '';
-    const data = snapshot.val();
-    
-    if (data) {
-        const items = Object.keys(data).map(key => ({
-            id: key,
-            ...data[key]
-        })).reverse();
-
-        document.getElementById('totalLogsVal').innerText = `${items.length} Item`;
-
-        items.slice(0, 15).forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'history-item';
-            const formattedTime = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            li.innerHTML = `
-                <div class="history-clickable">
-                    <span class="video-id-text">ID Video: <strong>${item.videoId}</strong></span>
-                    <span class="time-stamp">${formattedTime}</span>
-                </div>
-                <button class="btn-delete-item" title="Hapus dari riwayat">X</button>
-            `;
-            
-            li.querySelector('.history-clickable').addEventListener('click', () => {
-                initAudioEqualizer();
-                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-                
-                if (window.player && typeof window.player.loadVideoById === 'function') {
-                    window.player.loadVideoById(item.videoId);
-                    window.currentVideoId = item.videoId;
-                    updateMediaSession(item.videoId);
+        // Tangani tombol enter saat mengetik di pencarian
+        searchInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                const query = searchInput.value.trim();
+                if (query) {
+                    fetchYouTubeVideos(query);
                 }
-            });
-
-            li.querySelector('.btn-delete-item').addEventListener('click', (e) => {
-                e.stopPropagation(); 
-                
-                Swal.fire({
-                    title: 'Hapus Item?',
-                    text: 'Hapus lagu ini dari riwayat database?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Hapus',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const itemRef = ref(db, `player_history/${item.id}`);
-                        remove(itemRef).catch(err => console.error(err));
-                    }
-                });
-            });
-
-            historyList.appendChild(li);
+            }
         });
-    } else {
-        historyList.innerHTML = '<li class="loading-state">Belum ada riwayat pemutaran.</li>';
-        document.getElementById('totalLogsVal').innerText = '0 Item';
     }
+
+    // Tangani klik pada Tag Kategori cepat
+    const tags = document.querySelectorAll(".tag");
+    tags.forEach(tag => {
+        tag.addEventListener("click", () => {
+            const activeTag = document.querySelector(".tag.active");
+            if (activeTag) activeTag.classList.remove("active");
+            tag.classList.add("active");
+            fetchYouTubeVideos(tag.innerText);
+        });
+    });
 });
 
-// Mode musik toggle
-document.getElementById('musicModeBtn').addEventListener('click', () => {
-    const container = document.getElementById('playerContainer');
-    const btn = document.getElementById('musicModeBtn');
-    container.classList.toggle('music-mode');
-    btn.classList.toggle('active');
-    btn.innerHTML = container.classList.contains('music-mode') ? "Mode Video Player" : "Mode Musik Saja";
-});
+// Fungsi Fetch mengambil data dari server YouTube API v3
+async function fetchYouTubeVideos(query) {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=16&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
 
-// LOGIKA NAVIGASI PAGE UTAMA, SETTINGS, DAN ADMIN
-const mainPage = document.getElementById('mainPage');
-const settingsPage = document.getElementById('settingsPage');
-const adminPage = document.getElementById('adminPage');
-
-document.getElementById('toggleSettingsBtn').addEventListener('click', () => {
-    mainPage.style.display = 'none';
-    adminPage.style.display = 'none';
-    settingsPage.style.display = 'block';
-});
-
-document.getElementById('backToMainBtn').addEventListener('click', () => {
-    settingsPage.style.display = 'none';
-    mainPage.style.display = 'block';
-});
-
-// Prompt Input Password Admin
-document.getElementById('toggleAdminBtn').addEventListener('click', () => {
-    Swal.fire({
-        title: 'Akses Admin',
-        text: 'Masukkan kata sandi akses Admin:',
-        input: 'password',
-        inputPlaceholder: 'Kata sandi...',
-        showCancelButton: true,
-        confirmButtonText: 'Masuk',
-        cancelButtonText: 'Batal',
-        inputAttributes: {
-            autocapitalize: 'off',
-            autocorrect: 'off'
-        }
-    }).then((result) => {
-        if (result.isDismissed) return;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
         
-        if (result.value === "PREMIUMYTPRO##") {
-            mainPage.style.display = 'none';
-            settingsPage.style.display = 'none';
-            adminPage.style.display = 'block';
-        } else {
-            Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: 'Kata sandi salah.' });
+        if (data.items) {
+            displayVideos(data.items);
         }
-    });
-});
+    } catch (error) {
+        console.error("Gagal mengambil data dari YouTube API:", error);
+    }
+}
 
-document.getElementById('backToMainFromAdminBtn').addEventListener('click', () => {
-    adminPage.style.display = 'none';
-    mainPage.style.display = 'block';
-});
-
-// Konfirmasi Reset Semua Database
-document.getElementById('clearAllHistoryBtn').addEventListener('click', () => {
-    Swal.fire({
-        title: 'Reset Database?',
-        text: 'Apakah Anda yakin ingin menghapus SELURUH riwayat database secara permanen?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, Kosongkan',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            remove(historyRef)
-            .then(() => {
-                Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Seluruh riwayat database telah dibersihkan!' });
-            })
-            .catch((err) => {
-                Swal.fire({ icon: 'error', title: 'Gagal', text: 'Gagal mengosongkan database.' });
-                console.error(err);
-            });
-        }
-    });
-});
-
-// --- INTEGRASI LOGIN OTOMATIS GOOGLE IDENTITY SERVICES ---
-function handleCredentialResponse(response) {
-    const responsePayload = parseJwt(response.credential);
-
-    document.getElementById('userLoggedOut').style.display = 'none';
-    document.getElementById('userLoggedIn').style.display = 'flex';
+// Menampilkan daftar video ke dalam layout grid
+function displayVideos(videos) {
+    const videoGrid = document.querySelector(".video-grid");
+    if (!videoGrid) return;
     
-    document.getElementById('userName').innerText = responsePayload.name;
-    document.getElementById('userEmail').innerText = responsePayload.email;
-    document.getElementById('userAvatar').src = responsePayload.picture;
+    videoGrid.innerHTML = ""; 
 
-    localStorage.setItem('cleanplayer_user', JSON.stringify(responsePayload));
+    videos.forEach(item => {
+        const videoId = item.id.videoId;
+        const title = item.snippet.title;
+        const channelName = item.snippet.channelTitle;
+        const thumbnail = item.snippet.thumbnails.medium.url;
 
-    Swal.fire({
-        icon: 'success',
-        title: 'Berhasil Masuk',
-        text: `Selamat datang kembali, ${responsePayload.name}!`,
-        timer: 2000,
-        showConfirmButton: false
+        const videoCard = document.createElement("div");
+        videoCard.className = "video-card";
+        
+        // Memasang trigger klik dinamis agar video bisa langsung dimainkan di player atas
+        videoCard.setAttribute("onclick", `playVideo('${videoId}', \`${title.replace(/'/g, "\\'")}\`, '${channelName.replace(/'/g, "\\'")}')`);
+
+        videoCard.innerHTML = `
+            <div class="thumbnail-container">
+                <img class="thumbnail" src="${thumbnail}" alt="${title}">
+                <span class="duration">HD Stream</span>
+            </div>
+            <div class="video-details">
+                <div class="video-text">
+                    <h3 class="video-title">${title}</h3>
+                    <p class="channel-name">${channelName} <i class="fas fa-check-circle"></i></p>
+                    <p class="video-stats">Bebas Iklan Komersial</p>
+                </div>
+            </div>
+        `;
+        videoGrid.appendChild(videoCard);
     });
 }
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-}
-
-function initGoogleSignIn() {
-    // Catatan: Ganti nilai client_id di bawah ini dengan Client ID asli kamu dari Google Cloud Console
-    const clientId = "19006760644-kustom.apps.googleusercontent.com"; 
-
-    try {
-        google.accounts.id.initialize({
-            client_id: clientId,
-            callback: handleCredentialResponse,
-            auto_select: true
-        });
-
-        google.accounts.id.renderButton(
-            document.getElementById("googleBtnWrapper"),
-            { theme: "dark", size: "medium", type: "standard", shape: "pill" }
-        );
-
-        google.accounts.id.prompt();
-    } catch (err) {
-        console.log("Inisialisasi Google Auth memerlukan konfigurasi domain asal yang valid.");
-    }
-}
-
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    try {
-        google.accounts.id.disableAutoSelect();
-    } catch(e){}
-    
-    localStorage.removeItem('cleanplayer_user');
-    document.getElementById('userLoggedIn').style.display = 'none';
-    document.getElementById('userLoggedOut').style.display = 'flex';
-
-    Swal.fire({ icon: 'info', title: 'Logged Out', text: 'Kamu telah keluar dari akun.', timer: 1500, showConfirmButton: false });
-});
-
-// Pengatur Tema (Dark / Light Mode)
-document.getElementById('themeToggle').addEventListener('change', (e) => {
-    if (e.target.checked) {
-        document.body.classList.remove('light-theme');
-    } else {
-        document.body.classList.add('light-theme');
-    }
-});
-
-// Slider Volume
-document.getElementById('volumeSlider').addEventListener('input', (e) => {
-    const vol = e.target.value;
-    document.getElementById('volumeVal').innerText = `${vol}%`;
-    if (window.player && typeof window.player.setVolume === 'function') {
-        window.player.setVolume(vol);
-    }
-});
-
-document.getElementById('bassSlider').addEventListener('input', applyEqualizer);
-document.getElementById('trebleSlider').addEventListener('input', applyEqualizer);
-
-// PWA prompt
-let deferredPrompt;
-const installBtn = document.getElementById('installAppBtn');
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); deferredPrompt = e;
-    if(installBtn) installBtn.style.display = 'block';
-});
-if(installBtn) {
-    installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-    });
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    loadSavedEqualizer();
-    initGoogleSignIn();
-
-    const savedUser = localStorage.getItem('cleanplayer_user');
-    if (savedUser) {
-        const user = JSON.parse(savedUser);
-        document.getElementById('userLoggedOut').style.display = 'none';
-        document.getElementById('userLoggedIn').style.display = 'flex';
-        document.getElementById('userName').innerText = user.name;
-        document.getElementById('userEmail').innerText = user.email;
-        document.getElementById('userAvatar').src = user.picture;
-    }
-});
-              
