@@ -21,7 +21,7 @@
         </header>
         
         <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="Ketik nama lagu / artis, atau tempel link YouTube...">
+            <input type="text" id="videoUrl" placeholder="Ketik judul lagu / nama artis, atau paste link...">
             <button id="playBtn">🔍 Cari / Putar</button>
         </div>
 
@@ -36,9 +36,10 @@
         </div>
 
         <div class="search-results-section" id="searchResultsSection" style="display: none;">
-            <h3>🎵 Hasil Pencarian Lagu</h3>
-            <ul class="search-results-list" id="searchResultsList">
-                </ul>
+            <h3>🎵 Panel Hasil Pencarian Musik</h3>
+            <div class="search-iframe-wrapper">
+                <iframe id="searchIframe" src="" allowfullscreen></iframe>
+            </div>
         </div>
 
         <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">📲 Install Aplikasi CleanPlayer</button>
@@ -80,8 +81,7 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                .catch(err => console.log('Service Worker gagal:', err));
+                navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
             });
         }
     </script>
