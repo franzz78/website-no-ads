@@ -214,15 +214,20 @@
             document.getElementById("owner-dashboard").classList.add("hidden");
         }
 
-        // --- PEMUTAR VIDEO ---
+        // --- PEMUTAR VIDEO DENGAN FITUR REPEAT / PUTAR BALIK OTOMATIS ---
         function playVideo(videoId, title, channel) {
             const player = document.getElementById('main-youtube-player');
-            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1`;
+            
+            // Menggunakan parameter &loop=1 dan &playlist=[id_video] agar otomatis mengulang tanpa henti
+            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1&loop=1&playlist=${videoId}`;
+            
             document.getElementById('playing-title').innerText = title;
             document.getElementById('playing-channel').innerText = channel;
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Tweak tombol cari/search box dropdown mobile
         const searchTrigger = document.getElementById('mobile-search-trigger');
         const searchContainer = document.querySelector('.mobile-search-bar-container');
         if(searchTrigger) {
