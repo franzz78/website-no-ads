@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube</title>
+    <title>MiniTube - Pemutar Tanpa Iklan</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -13,7 +13,7 @@
     <header class="header">
         <div class="header-left">
             <button class="icon-btn"><i class="fas fa-bars"></i></button>
-            <div class="logo">
+            <div class="logo" onclick="location.reload()">
                 <i class="fab fa-youtube logo-icon"></i>
                 <span class="logo-text">MiniTube</span>
             </div>
@@ -21,7 +21,7 @@
 
         <div class="header-center">
             <div class="search-box">
-                <input type="text" placeholder="Telusuri">
+                <input type="text" id="search-input" placeholder="Telusuri Video MiniTube...">
                 <button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <button class="icon-btn mic-btn"><i class="fas fa-microphone"></i></button>
@@ -37,17 +37,9 @@
                      data-context="signin"
                      data-ux_mode="popup"
                      data-callback="handleCredentialResponse"
-                     data-auto_select="true"
-                     data-itp_support="true">
+                     data-auto_select="true">
                 </div>
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="pill"
-                     data-theme="filled_blue"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left">
-                </div>
+                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_blue" data-text="signin_with" data-size="large"></div>
             </div>
 
             <div id="user-profile" class="user-profile hidden">
@@ -65,85 +57,104 @@
             </div>
             <hr class="divider">
             <div class="sidebar-group">
-                <a href="#" class="sidebar-item"><i class="fas fa-photo-video"></i> <span>Koleksi</span></a>
                 <a href="#" class="sidebar-item"><i class="fas fa-history"></i> <span>Histori</span></a>
                 <a href="#" class="sidebar-item"><i class="fas fa-clock"></i> <span>Tonton Nanti</span></a>
-                <a href="#" class="sidebar-item"><i class="fas fa-thumbs-up"></i> <span>Video yang disukai</span></a>
             </div>
         </aside>
 
         <main class="content">
+            
+            <div class="player-section">
+                <div class="video-wrapper">
+                    <iframe id="main-youtube-player" 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                    </iframe >
+                </div>
+                <h2 id="playing-title" class="playing-title">Selamat Datang di MiniTube - Klik video di bawah untuk memutar</h2>
+                <p id="playing-channel" class="playing-channel">Pilih pemutaran bebas iklan komersial eksternal</p>
+                <hr class="divider">
+            </div>
+
             <div class="tags-container">
                 <span class="tag active">Semua</span>
                 <span class="tag">Musik</span>
-                <span class="tag">Game</span>
-                <span class="tag">Live</span>
-                <span class="tag">Animasi</span>
                 <span class="tag">Pemrograman</span>
+                <span class="tag">Edukasi</span>
             </div>
 
             <div class="video-grid">
-                <div class="video-card">
+                
+                <div class="video-card" onclick="playVideo('dQw4w9WgXcQ', 'Rick Astley - Never Gonna Give You Up (Official Music Video)', 'Rick Astley')">
                     <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="Thumbnail">
-                        <span class="duration">10:42</span>
+                        <img class="thumbnail" src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Thumbnail">
+                        <span class="duration">03:32</span>
                     </div>
                     <div class="video-details">
                         <img class="channel-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" alt="Channel">
                         <div class="video-text">
-                            <h3 class="video-title">Belajar Web Development dari Nol sampai Mahir dalam 10 Menit!</h3>
-                            <p class="channel-name">Coding Kreatif <i class="fas fa-check-circle verification-badge"></i></p>
-                            <p class="video-stats">125 rb x ditonton • 2 jam yang lalu</p>
+                            <h3 class="video-title">Rick Astley - Never Gonna Give You Up (Official Music Video)</h3>
+                            <p class="channel-name">Rick Astley <i class="fas fa-check-circle verification-badge"></i></p>
                         </div>
                     </div>
                 </div>
 
-                <div class="video-card">
+                <div class="video-card" onclick="playVideo('d747_6I37n8', 'Belajar HTML & CSS Lengkap Untuk Pemula dari Dasar', 'Web Programming UNPAS')">
                     <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500" alt="Thumbnail">
-                        <span class="duration">25:15</span>
+                        <img class="thumbnail" src="https://img.youtube.com/vi/d747_6I37n8/mqdefault.jpg" alt="Thumbnail">
+                        <span class="duration">45:20</span>
                     </div>
                     <div class="video-details">
                         <img class="channel-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100" alt="Channel">
                         <div class="video-text">
-                            <h3 class="video-title">Turnamen Game Terbesar Tahun Ini - Grand Final Live</h3>
-                            <p class="channel-name">Gamer Indo</p>
-                            <p class="video-stats">1,2 jt x ditonton • 1 hari yang lalu</p>
+                            <h3 class="video-title">Belajar HTML & CSS Lengkap Untuk Pemula dari Dasar</h3>
+                            <p class="channel-name">Web Programming UNPAS</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="video-card">
+                <div class="video-card" onclick="playVideo('jfKfPfyJRdk', 'lofi hip hop radio 📚 beats to relax/study to', 'Lofi Girl')">
                     <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500" alt="Thumbnail">
-                        <span class="duration">04:05</span>
+                        <img class="thumbnail" src="https://img.youtube.com/vi/jfKfPfyJRdk/mqdefault.jpg" alt="Thumbnail">
+                        <span class="duration">LIVE</span>
                     </div>
                     <div class="video-details">
                         <img class="channel-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Channel">
                         <div class="video-text">
-                            <h3 class="video-title">Lagu Santai Peneman Kerja & Belajar - Lo-Fi Chill Beats</h3>
-                            <p class="channel-name">Musika ID</p>
-                            <p class="video-stats">500 rb x ditonton • 3 minggu yang lalu</p>
+                            <h3 class="video-title">lofi hip hop radio 📚 beats to relax/study to</h3>
+                            <p class="channel-name">Lofi Girl <i class="fas fa-check-circle verification-badge"></i></p>
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
     </div>
 
     <script>
+        // Fungsi untuk mengganti video yang sedang diputar di iframe
+        function playVideo(videoId, title, channel) {
+            const player = document.getElementById('main-youtube-player');
+            
+            // Mengubah source iframe dengan parameter pelindung iklan & auto play
+            // modestbranding=1 (menyembunyikan logo YouTube besar)
+            // rel=0 (mencegah rekomendasi video acak di akhir)
+            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1`;
+            
+            // Perbarui judul teks di bawah player
+            document.getElementById('playing-title').innerText = title;
+            document.getElementById('playing-channel').innerText = channel;
+            
+            // Otomatis scroll halus ke atas biar player langsung kelihatan di HP
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handler Google Sign-In
         function handleCredentialResponse(response) {
-            // Membongkar data JWT token dari Google
             const responsePayload = parseJwt(response.credential);
-
-            console.log("ID: " + responsePayload.sub);
-            console.log('Full Name: ' + responsePayload.name);
-            console.log('Given Name: ' + responsePayload.given_name);
-            console.log('Family Name: ' + responsePayload.family_name);
-            console.log("Image URL: " + responsePayload.picture);
-            console.log("Email: " + responsePayload.email);
-
-            // Sembunyikan tombol Google login asli, tampilkan foto profil user
             document.getElementById("google-login-wrapper").classList.add("hidden");
             const avatar = document.getElementById("user-avatar");
             avatar.src = responsePayload.picture;
@@ -156,7 +167,6 @@
             var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
-
             return JSON.parse(jsonPayload);
         }
     </script>
