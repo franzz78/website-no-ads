@@ -10,51 +10,93 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CleanPlayer">
-    <link class="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
 </head>
 <body>
 
     <div class="container" id="playerContainer">
-        <header>
-            <h1>CleanPlayer <span>PRO</span></h1>
-            <p class="subtitle">Streaming musik & video tanpa gangguan iklan</p>
+        <header class="main-header">
+            <div>
+                <h1>CleanPlayer <span>PRO</span></h1>
+                <p class="subtitle">Streaming musik dan video tanpa gangguan iklan</p>
+            </div>
+            <button id="toggleSettingsBtn" class="btn-icon">Pengaturan</button>
         </header>
         
-        <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
-            <button id="playBtn">Putar</button>
-        </div>
-
-        <div class="video-wrapper">
-            <div id="player"></div>
-        </div>
-
-        <div class="options">
-            <button class="btn-secondary" id="musicModeBtn">Mode Musik Saja</button>
-        </div>
-
-        <div class="lyrics-section">
-            <div class="lyrics-header">
-                <h3>Lirik Lagu</h3>
-                <button id="editLyricsBtn" class="btn-small">Edit Lirik</button>
+        <div id="mainPage">
+            <div class="input-group">
+                <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
+                <button id="playBtn">Putar</button>
             </div>
-            <div class="lyrics-body">
-                <div id="lyricsText" class="lyrics-content">Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.</div>
-                <textarea id="lyricsInput" class="lyrics-textarea" style="display: none;" placeholder="Tulis atau tempel lirik lagu di sini..."></textarea>
+
+            <div class="video-wrapper">
+                <div id="player"></div>
+            </div>
+
+            <div class="options">
+                <button class="btn-secondary" id="musicModeBtn">Mode Musik Saja</button>
+            </div>
+
+            <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">Install Aplikasi CleanPlayer</button>
+
+            <div class="history-section">
+                <div class="history-header">
+                    <h3>Riwayat Putar Terakhir</h3>
+                    <span class="db-badge">Realtime DB</span>
+                </div>
+                <ul class="history-list" id="historyList">
+                    <li class="loading-state">Menghubungkan ke database aman...</li>
+                </ul>
             </div>
         </div>
 
-        <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">Install Aplikasi CleanPlayer</button>
-
-        <div class="history-section">
-            <div class="history-header">
-                <h3>Riwayat Putar Terakhir</h3>
-                <span class="db-badge">Realtime DB</span>
+        <div id="settingsPage" style="display: none;">
+            <div class="settings-header">
+                <h2>Pengaturan Aplikasi</h2>
+                <button id="backToMainBtn" class="btn-small">Kembali</button>
             </div>
-            <ul class="history-list" id="historyList">
-                <li class="loading-state">Menghubungkan ke database aman...</li>
-            </ul>
+
+            <div class="settings-body">
+                <div class="settings-item">
+                    <div class="settings-info">
+                        <span class="settings-title">Mode Gelap / Terang</span>
+                        <span class="settings-desc">Ubah tampilan tema warna aplikasi</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-item vertical">
+                    <div class="settings-info-row">
+                        <span class="settings-title">Volume Utama</span>
+                        <span id="volumeVal" class="settings-value">100%</span>
+                    </div>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="100" class="range-slider">
+                </div>
+
+                <div class="settings-item vertical">
+                    <div class="settings-info-row">
+                        <span class="settings-title">Efek Bass Boost</span>
+                        <span id="bassVal" class="settings-value">0%</span>
+                    </div>
+                    <input type="range" id="bassSlider" min="0" max="100" value="0" class="range-slider">
+                </div>
+
+                <div class="settings-item">
+                    <div class="settings-info">
+                        <span class="settings-title">Efek Audio Stereo</span>
+                        <span class="settings-desc">Optimasi pemisahan suara kanan dan kiri</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="stereoToggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
         </div>
+
     </div>
 
     <script>
@@ -64,7 +106,7 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var player;
-        window.currentVideoId = 'dQw4w9WgXcQ'; // Lagu default awal
+        window.currentVideoId = 'dQw4w9WgXcQ'; 
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
@@ -81,12 +123,9 @@
             });
         }
 
-        // Registrasi Service Worker asli untuk fitur PWA (Installable)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker terdaftar!', reg))
-                .catch(err => console.log('Service Worker gagal:', err));
+                navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
             });
         }
     </script>
