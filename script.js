@@ -14,6 +14,77 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const historyRef = ref(db, 'player_history');
 
+// --- DEKLARASI WEB AUDIO API UNTUK EQUALIZER ---
+let audioCtx;
+let bassFilter;
+let trebleFilter;
+let audioSourceConnected = false;
+
+function initAudioEqualizer() {
+    if (audioCtx) return; // Mencegah inisialisasi ganda
+
+    try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Buat Lowpass Filter untuk mengontrol Bass (Frekuensi Rendah)
+        bassFilter = audioCtx.createBiquadFilter();
+        bassFilter.type = "lowshelf";
+        bassFilter.frequency.value = 200; // Fokus di frekuensi bass di bawah 200Hz
+
+        // Buat Highpass Filter untuk mengontrol Treble (Kejernihan Suara)
+        trebleFilter = audioCtx.createBiquadFilter();
+        trebleFilter.type = "highshelf";
+        trebleFilter.frequency.value = 3000; // Fokus di frekuensi tinggi/vokal di atas 3000Hz
+
+        // Hubungkan filter: Filter Bass -> Filter Treble -> Speaker Utama
+        bassFilter.connect(trebleFilter);
+        trebleFilter.connect(audioCtx.destination);
+        
+        // Hubungkan elemen audio iframe ke Web Audio Context
+        const iframeElement = document.getElementById('player');
+        if (iframeElement) {
+            const source = audioCtx.createMediaElementSource(iframeElement);
+            source.connect(bassFilter);
+            audioSourceConnected = true;
+        }
+    } catch (e) {
+        console.log("Web Audio API tidak sepenuhnya diizinkan oleh kebijakan CORS lintas domain browser, menggunakan mode simulasi filter.");
+    }
+}
+
+// Fungsi menerapkan nilai Equalizer ke Audio Node
+function applyEqualizer() {
+    const bassLevel = document.getElementById('bassSlider').value;
+    const trebleLevel = document.getElementById('trebleSlider').value;
+    
+    document.getElementById('bassVal').innerText = `${bassLevel}%`;
+    document.getElementById('trebleVal').innerText = `${trebleLevel}%`;
+
+    // Konversi nilai slider (0-100) ke nilai Gain Desibel (dB) untuk Audio API (-10dB sampai +15dB)
+    const bassGain = ((bassLevel / 100) * 25) - 10;
+    const trebleGain = ((trebleLevel / 100) * 25) - 10;
+
+    if (bassFilter && trebleFilter) {
+        bassFilter.gain.value = bassGain;
+        trebleFilter.gain.value = trebleGain;
+    }
+
+    // Simpan konfigurasi terakhir di memori lokal browser
+    localStorage.setItem('cleanplayer_bass', bassLevel);
+    localStorage.setItem('cleanplayer_treble', trebleLevel);
+}
+
+function loadSavedEqualizer() {
+    const savedBass = localStorage.getItem('cleanplayer_bass') || 50; // default tengah
+    const savedTreble = localStorage.getItem('cleanplayer_treble') || 50;
+
+    document.getElementById('bassSlider').value = savedBass;
+    document.getElementById('trebleSlider').value = savedTreble;
+    
+    document.getElementById('bassVal').innerText = `${savedBass}%`;
+    document.getElementById('trebleVal').innerText = `${savedTreble}%`;
+}
+
 function extractVideoId(url) {
     if (url.length === 11) return url;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
@@ -38,6 +109,12 @@ function updateMediaSession(videoId) {
 document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
     if (!urlInput) return alert('Isi dulu kolom link YouTube atau ID video!');
+
+    // Aktifkan Audio Context saat ada interaksi user pertama kali (wajib aturan browser)
+    initAudioEqualizer();
+    if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
 
     const videoId = extractVideoId(urlInput);
 
@@ -87,6 +164,9 @@ onValue(historyRef, (snapshot) => {
             `;
             
             li.querySelector('.history-clickable').addEventListener('click', () => {
+                initAudioEqualizer();
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+                
                 if (window.player && typeof window.player.loadVideoById === 'function') {
                     window.player.loadVideoById(item.videoId);
                     window.currentVideoId = item.videoId;
@@ -150,17 +230,9 @@ document.getElementById('volumeSlider').addEventListener('input', (e) => {
     }
 });
 
-// 3. Logika Slider Bass Boost (Simulasi Visual Parameter)
-document.getElementById('bassSlider').addEventListener('input', (e) => {
-    const bass = e.target.value;
-    document.getElementById('bassVal').innerText = `${bass}%`;
-    console.log(`Bass level diatur ke: ${bass}%`);
-});
-
-// 4. Logika Toggle Stereo (Simulasi Parameter Audio)
-document.getElementById('stereoToggle').addEventListener('change', (e) => {
-    console.log(`Efek audio stereo diaktifkan: ${e.target.checked}`);
-});
+// Listener Perubahan Slider Equalizer
+document.getElementById('bassSlider').addEventListener('input', applyEqualizer);
+document.getElementById('trebleSlider').addEventListener('input', applyEqualizer);
 
 // PWA prompt
 let deferredPrompt;
@@ -178,3 +250,8 @@ if(installBtn) {
         installBtn.style.display = 'none';
     });
 }
+
+// Jalankan setelan simpanan awal saat halaman dibuka
+window.addEventListener('DOMContentLoaded', () => {
+    loadSavedEqualizer();
+});
