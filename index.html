@@ -31,6 +31,8 @@
 
         <div class="options">
             <button class="btn-secondary" id="musicModeBtn">🎵 Mode Musik Saja</button>
+            <button class="btn-download id-dl-mp3" id="downloadMp3Btn">📥 Download MP3 (Lagu)</button>
+            <button class="btn-download id-dl-mp4" id="downloadMp4Btn">🎥 Download MP4 (Video)</button>
         </div>
 
         <div class="history-section">
@@ -51,11 +53,14 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var player;
+        // Kita simpan ID video yang aktif saat ini di variabel global agar bisa dibaca tombol download
+        window.currentVideoId = 'dQw4w9WgXcQ'; 
+
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '100%',
                 width: '100%',
-                videoId: 'dQw4w9WgXcQ', // Lagu default awal
+                videoId: window.currentVideoId,
                 playerVars: {
                     'playsinline': 1,
                     'rel': 0,
@@ -66,11 +71,9 @@
             });
         }
 
-        // Register Service Worker otomatis agar PWA berjalan sempurna
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGU9PntlLnJlc3BvbmRXaXRoKGZldGNoKGUucmVxdWVzdCkpO30pOw==', {scope: './'})
-                .catch(err => console.log("Service Worker gagal: ", err));
+                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGU9PntlLnJlc3BvbmRXaXRoKGZldGNoKGUucmVxdWVzdCkpO30pOw==', {scope: './'});
             });
         }
     </script>
