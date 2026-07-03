@@ -86,19 +86,23 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     btn.innerHTML = container.classList.contains('music-mode') ? "📺 Mode Video Player" : "🎵 Mode Musik Saja";
 });
 
-// --- LOGIKA BARU: TOMBOL DOWNLOAD MP3 & MP4 ---
-// Menggunakan API pihak ketiga yang stabil untuk konversi instan tanpa iklan berlapis
+// --- LOGIKA BARU: TOMBOL DOWNLOAD MP3 & MP4 (STABIL & ANTI-DOWN) ---
+// Mengarahkan langsung ke halaman generator download universal berdasarkan ID video yang aktif
 
 document.getElementById('downloadMp3Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
-    // Membuka tab bypass downloader mp3
-    window.open(`https://api.vexdw.com/download/mp3/${id}`, '_blank');
+    
+    // Menggunakan skema direct-query ke y2mate (fokus konversi audio/mp3)
+    const downloadUrl = `https://www.y2mate.com/mates/en/convert-youtube?url=https://www.youtube.com/watch?v=${id}`;
+    window.open(downloadUrl, '_blank');
 });
 
 document.getElementById('downloadMp4Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
-    // Membuka tab bypass downloader mp4 
-    window.open(`https://api.vexdw.com/download/mp4/${id}`, '_blank');
+    
+    // Menggunakan alternatif SaveFrom dengan trik prefix "ss" untuk langsung ke halaman unduh video (mp4)
+    const downloadUrl = `https://ssyoutube.com/watch?v=${id}`;
+    window.open(downloadUrl, '_blank');
 });
