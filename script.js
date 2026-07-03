@@ -123,3 +123,36 @@ document.getElementById('downloadMp4Btn').addEventListener('click', () => {
     if (!id) return alert("Belum ada video yang dimuat, bro.");
     window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
 });
+
+// --- LOGIKA OTOMATIS POP-UP ADD TO HOME SCREEN ---
+let deferredPrompt;
+const installBtn = document.getElementById('installAppBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Cegah Chrome memunculkan mini-bar bawaan lama
+    e.preventDefault();
+    // Simpan event-nya agar bisa dieksekusi nanti
+    deferredPrompt = e;
+    // Tampilkan tombol instalasi rahasia kita di dalam web
+    if(installBtn) installBtn.style.display = 'block';
+});
+
+if(installBtn) {
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        // Munculkan prompt instalasi bawaan OS (Android/Windows)
+        deferredPrompt.prompt();
+        // Tunggu respon user (setuju instal atau menolak)
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User memilih instalasi: ${outcome}`);
+        // Reset prompt karena hanya bisa dipakai sekali
+        deferredPrompt = null;
+        // Sembunyikan tombol lagi
+        installBtn.style.display = 'none';
+    });
+}
+
+window.addEventListener('appinstalled', () => {
+    console.log('Aplikasi CleanPlayer sukses di-install di perangkat kamu!');
+    if(installBtn) installBtn.style.display = 'none';
+});
