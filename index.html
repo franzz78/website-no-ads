@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanPlayer - Premium No Ads Streamer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CleanPlayer">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+</head>
+<body>
+
+    <div class="container" id="playerContainer">
+        <header>
+            <h1>CleanPlayer <span>PRO</span></h1>
+            <p class="subtitle">Streaming musik & video tanpa gangguan iklan</p>
+        </header>
+        
+        <div class="input-group">
+            <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
+            <button id="playBtn">⚡ Putar</button>
+        </div>
+
+        <div class="video-wrapper">
+            <div id="player"></div>
+        </div>
+
+        <div class="options">
+            <button class="btn-secondary" id="musicModeBtn">🎵 Mode Musik Saja</button>
+        </div>
+
+        <div class="history-section">
+            <div class="history-header">
+                <h3>🕒 Riwayat Putar Terakhir</h3>
+                <span class="db-badge">Realtime DB</span>
+            </div>
+            <ul class="history-list" id="historyList">
+                <li class="loading-state">Menghubungkan ke database aman...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: 'dQw4w9WgXcQ', // Lagu default awal
+                playerVars: {
+                    'playsinline': 1,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'controls': 1,
+                    'autoplay': 0
+                }
+            });
+        }
+
+        // Register Service Worker otomatis agar PWA berjalan sempurna
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGU9PntlLnJlc3BvbmRXaXRoKGZldGNoKGUucmVxdWVzdCkpO30pOw==', {scope: './'})
+                .catch(err => console.log("Service Worker gagal: ", err));
+            });
+        }
+    </script>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
