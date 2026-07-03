@@ -20,7 +20,10 @@
                 <h1>CleanPlayer <span>PRO</span></h1>
                 <p class="subtitle">Streaming musik dan video tanpa gangguan iklan</p>
             </div>
-            <button id="toggleSettingsBtn" class="btn-icon">Pengaturan</button>
+            <div class="header-buttons">
+                <button id="toggleAdminBtn" class="btn-icon">Admin</button>
+                <button id="toggleSettingsBtn" class="btn-icon">Pengaturan</button>
+            </div>
         </header>
         
         <div id="mainPage">
@@ -78,21 +81,43 @@
 
                 <div class="settings-item vertical">
                     <div class="settings-info-row">
-                        <span class="settings-title">Efek Bass Boost</span>
+                        <span class="settings-title">Bass (Suara Rendah)</span>
                         <span id="bassVal" class="settings-value">0%</span>
                     </div>
                     <input type="range" id="bassSlider" min="0" max="100" value="0" class="range-slider">
                 </div>
 
+                <div class="settings-item vertical">
+                    <div class="settings-info-row">
+                        <span class="settings-title">Treble (Kejernihan Suara)</span>
+                        <span id="trebleVal" class="settings-value">0%</span>
+                    </div>
+                    <input type="range" id="trebleSlider" min="0" max="100" value="0" class="range-slider">
+                </div>
+            </div>
+        </div>
+
+        <div id="adminPage" style="display: none;">
+            <div class="settings-header">
+                <h2>Panel Kontrol Admin</h2>
+                <button id="backToMainFromAdminBtn" class="btn-small">Kembali</button>
+            </div>
+
+            <div class="settings-body">
                 <div class="settings-item">
                     <div class="settings-info">
-                        <span class="settings-title">Efek Audio Stereo</span>
-                        <span class="settings-desc">Optimasi pemisahan suara kanan dan kiri</span>
+                        <span class="settings-title">Status Database</span>
+                        <span class="settings-desc">Jumlah total log riwayat saat ini</span>
                     </div>
-                    <label class="switch">
-                        <input type="checkbox" id="stereoToggle" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <span id="totalLogsVal" class="settings-value">0 Item</span>
+                </div>
+
+                <div class="settings-item">
+                    <div class="settings-info">
+                        <span class="settings-title">Hapus Semua Riwayat</span>
+                        <span class="settings-desc">Menghapus seluruh database riwayat secara permanen</span>
+                    </div>
+                    <button id="clearAllHistoryBtn" style="background: #ef4444; padding: 10px 20px; font-size: 0.85rem; box-shadow: none;">Kosongkan DB</button>
                 </div>
             </div>
         </div>
