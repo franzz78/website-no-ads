@@ -31,9 +31,11 @@
 
         <div class="options">
             <button class="btn-secondary" id="musicModeBtn">🎵 Mode Musik Saja</button>
-            <button class="btn-download id-dl-mp3" id="downloadMp3Btn">📥 Download MP3 (Lagu)</button>
-            <button class="btn-download id-dl-mp4" id="downloadMp4Btn">🎥 Download MP4 (Video)</button>
+            <button class="btn-download id-dl-mp3" id="downloadMp3Btn">📥 Save MP3 ke Drive</button>
+            <button class="btn-download id-dl-mp4" id="downloadMp4Btn">🎥 Save MP4 ke Drive</button>
         </div>
+
+        <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">📲 Install Aplikasi CleanPlayer</button>
 
         <div class="history-section">
             <div class="history-header">
@@ -53,7 +55,6 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var player;
-        // Kita simpan ID video yang aktif saat ini di variabel global agar bisa dibaca tombol download
         window.currentVideoId = 'dQw4w9WgXcQ'; 
 
         function onYouTubeIframeAPIReady() {
@@ -71,9 +72,12 @@
             });
         }
 
+        // Daftarkan file sw.js secara bersih
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGU9PntlLnJlc3BvbmRXaXRoKGZldGNoKGUucmVxdWVzdCkpO30pOw==', {scope: './'});
+                navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker terdaftar!', reg))
+                .catch(err => console.log('Service Worker gagal:', err));
             });
         }
     </script>
