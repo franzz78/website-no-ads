@@ -44,7 +44,7 @@
         <div class="player-container">
             <div class="video-wrapper">
                 <iframe id="main-youtube-player" 
-                        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1" 
+                        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1&enablejsapi=1" 
                         title="YouTube video player" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -52,7 +52,7 @@
                 </iframe>
             </div>
             <h3 id="playing-title" class="player-title">MiniTube Pemutar Bebas Iklan Komersial</h3>
-            <p id="playing-channel" class="player-channel">Klik video di bawah untuk memutar</p>
+            <p id="playing-channel" class="player-channel">Klik video atau Shorts di bawah untuk memutar</p>
         </div>
 
         <hr class="section-divider">
@@ -67,17 +67,17 @@
             </div>
 
             <div class="shorts-grid">
-                <div class="shorts-card">
+                <div class="shorts-card" onclick="playVideo('rX96Ym8bBEY', '14 MILIAR BUNGKUS?! 5 Negara Paling Gila Makan Mie Instan...', 'Shorts Kuliner')">
                     <div class="shorts-thumbnail-wrapper">
-                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" alt="Shorts 1">
+                        <img src="https://img.youtube.com/vi/rX96Ym8bBEY/hqdefault.jpg" alt="Shorts 1">
                     </div>
                     <div class="shorts-info">
                         <p class="shorts-text">"14 MILIAR BUNGKUS?!" 5 Negara Paling Gila Makan Mie Instan...</p>
                     </div>
                 </div>
-                <div class="shorts-card">
+                <div class="shorts-card" onclick="playVideo('pS9fP8pG7wE', 'Di Amerika, Nasi Goreng Aja Dijual Frozen! 😳', 'Shorts Kuliner')">
                     <div class="shorts-thumbnail-wrapper">
-                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400" alt="Shorts 2">
+                        <img src="https://img.youtube.com/vi/pS9fP8pG7wE/hqdefault.jpg" alt="Shorts 2">
                     </div>
                     <div class="shorts-info">
                         <p class="shorts-text">Di Amerika, Nasi Goreng Aja Dijual Frozen! 😳</p>
@@ -110,7 +110,7 @@
             <span>Subscriptions</span>
         </div>
         <div class="nav-item profile-nav">
-            <div class="avatar-placeholder-nav"></div>
+            <i class="far fa-user-circle" style="font-size: 20px;"></i>
             <span>You</span>
         </div>
     </nav>
@@ -118,20 +118,32 @@
     <script>
         function playVideo(videoId, title, channel) {
             const player = document.getElementById('main-youtube-player');
-            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1`;
+            // Menambahkan parameter enablejsapi=1 agar browser mengenali perintah PiP
+            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1`;
             
             document.getElementById('playing-title').innerText = title;
             document.getElementById('playing-channel').innerText = channel;
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Otomatis request Picture-in-Picture setelah video dimuat (agar musik tetap nyala saat keluar aplikasi)
+            setTimeout(() => {
+                if (document.pictureInPictureEnabled) {
+                    player.requestPictureInPicture().catch(err => {
+                        console.log("Tekan video secara manual untuk mengaktifkan pemutaran latar belakang.");
+                    });
+                }
+            }, 1500);
         }
 
-        // Efek toggle kolom pencarian di HP biar pas rapi
+        // Efek toggle kolom pencarian
         const searchTrigger = document.getElementById('mobile-search-trigger');
         const searchContainer = document.querySelector('.mobile-search-bar-container');
-        searchTrigger.addEventListener('click', () => {
-            searchContainer.classList.toggle('active');
-        });
+        if(searchTrigger) {
+            searchTrigger.addEventListener('click', () => {
+                searchContainer.classList.toggle('active');
+            });
+        }
     </script>
     <script src="script.js"></script>
 </body>
