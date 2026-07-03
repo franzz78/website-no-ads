@@ -9,7 +9,6 @@
     --card-bg: rgba(0, 0, 0, 0.2);
 }
 
-/* Pengaturan Tema Terang (Light Mode) */
 body.light-theme {
     --bg-gradient: linear-gradient(135deg, #f1f5f9, #e2e8f0, #cbd5e1);
     --glass-bg: rgba(0, 0, 0, 0.02);
@@ -54,6 +53,11 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 8px;
 }
 
 h1 {
@@ -142,8 +146,7 @@ button:hover { transform: translateY(-2px); }
     color: white;
 }
 
-/* Style Halaman Settings */
-#settingsPage {
+#settingsPage, #adminPage {
     animation: fadeIn 0.3s ease-in-out;
 }
 .settings-header {
@@ -176,7 +179,6 @@ button:hover { transform: translateY(-2px); }
 .settings-info-row { display: flex; justify-content: space-between; width: 100%; font-weight: 600; }
 .settings-value { color: #38bdf8; }
 
-/* Switch Slider Toggle Button */
 .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #475569; transition: .3s; border-radius: 34px; }
@@ -184,12 +186,10 @@ button:hover { transform: translateY(-2px); }
 input:checked + .slider { background-color: #3b82f6; }
 input:checked + .slider:before { transform: translateX(24px); }
 
-/* Range Input Slider */
 .range-slider { -webkit-appearance: none; width: 100%; height: 6px; background: #475569; border-radius: 5px; outline: none; }
 .range-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #38bdf8; cursor: pointer; transition: transform 0.1s; }
 .range-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
-/* History Section */
 .history-section { margin-top: 35px; text-align: left; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 22px; }
 .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .history-header h3 { font-size: 1.05rem; color: var(--text-muted); }
@@ -206,4 +206,4 @@ input:checked + .slider:before { transform: translateX(24px); }
 .loading-state { color: var(--text-muted); text-align: center; padding: 15px 0; font-style: italic; width: 100%; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    
+           
