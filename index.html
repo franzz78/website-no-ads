@@ -21,8 +21,8 @@
         </header>
         
         <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
-            <button id="playBtn">⚡ Putar</button>
+            <input type="text" id="videoUrl" placeholder="Ketik nama lagu / artis, atau tempel link YouTube...">
+            <button id="playBtn">🔍 Cari / Putar</button>
         </div>
 
         <div class="video-wrapper">
@@ -33,6 +33,12 @@
             <button class="btn-secondary" id="musicModeBtn">🎵 Mode Musik Saja</button>
             <button class="btn-download id-dl-mp3" id="downloadMp3Btn">📥 Save MP3 ke Drive</button>
             <button class="btn-download id-dl-mp4" id="downloadMp4Btn">🎥 Save MP4 ke Drive</button>
+        </div>
+
+        <div class="search-results-section" id="searchResultsSection" style="display: none;">
+            <h3>🎵 Hasil Pencarian Lagu</h3>
+            <ul class="search-results-list" id="searchResultsList">
+                </ul>
         </div>
 
         <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">📲 Install Aplikasi CleanPlayer</button>
@@ -67,16 +73,14 @@
                     'rel': 0,
                     'modestbranding': 1,
                     'controls': 1,
-                    'autoplay': 0
+                    'autoplay': 1
                 }
             });
         }
 
-        // Daftarkan file sw.js secara bersih
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker terdaftar!', reg))
                 .catch(err => console.log('Service Worker gagal:', err));
             });
         }
