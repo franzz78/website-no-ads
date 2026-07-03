@@ -1,196 +1,191 @@
-/* RESET & VARIABEL UTAMA */
+/* GLOBAL STYLES MOBILE APP RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Roboto", "Arial", sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     background-color: #0f0f0f;
     color: #f1f1f1;
     overflow-x: hidden;
+    padding-bottom: 70px; /* Jarak pas agar konten bawah tidak tertutup oleh menu navigasi bawah */
 }
 
+/* UTILITIES */
 .hidden {
     display: none !important;
 }
 
-hr.divider {
+.section-divider {
     border: 0;
-    border-top: 1px solid #272727;
-    margin: 12px 0;
+    border-top: 4px solid #212121;
+    margin: 16px 0;
 }
 
-/* HEADER STYLE */
-.header {
+
+/* 1. APP TOP BAR HEADER */
+.mobile-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 56px;
+    height: 48px;
     padding: 0 16px;
     position: fixed;
     top: 0;
     width: 100%;
     background-color: #0f0f0f;
-    z-index: 100;
+    z-index: 1000;
 }
 
-.header-left, .header-right {
+.header-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
-.icon-btn {
-    background: none;
-    border: none;
-    color: #f1f1f1;
-    font-size: 18px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-btn:hover {
-    background-color: #272727;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    margin-left: 8px;
-}
-
-.logo-icon {
+.youtube-logo-icon {
     color: #ff0000;
-    font-size: 28px;
+    font-size: 24px;
 }
 
 .logo-text {
     font-size: 20px;
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.8px;
 }
 
-/* BAR PENCARIAN */
-.header-center {
+.header-right {
     display: flex;
     align-items: center;
-    flex: 0 1 600px;
-    gap: 12px;
+    gap: 20px;
+}
+
+.header-icon {
+    font-size: 20px;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Notification Badge Red 9+ */
+.notification-container {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #ff0000;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 10px;
+}
+
+
+/* 2. DOCK INPUT PENCARIAN (DROP DOWN BOX) */
+.mobile-search-bar-container {
+    display: none;
+    padding: 8px 16px;
+    background-color: #0f0f0f;
+    position: fixed;
+    top: 48px;
+    width: 100%;
+    z-index: 999;
+}
+
+.mobile-search-bar-container.active {
+    display: block;
 }
 
 .search-box {
     display: flex;
-    width: 100%;
-    background-color: #121212;
-    border: 1px solid #303030;
-    border-radius: 40px;
+    background-color: #212121;
+    border-radius: 20px;
     overflow: hidden;
+    width: 100%;
 }
 
 .search-box input {
     width: 100%;
     background: none;
     border: none;
-    padding: 0 16px;
-    height: 40px;
-    color: #f1f1f1;
-    font-size: 16px;
+    padding: 8px 16px;
+    color: #fff;
     outline: none;
+    font-size: 14px;
 }
 
 .search-btn {
-    background-color: #222222;
+    background-color: #313131;
     border: none;
-    border-left: 1px solid #303030;
-    color: #f1f1f1;
-    width: 64px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.search-btn:hover {
-    background-color: #272727;
-}
-
-.mic-btn {
-    background-color: #212121;
-}
-
-.user-profile img {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    object-fit: cover;
+    color: #fff;
+    padding: 0 16px;
     cursor: pointer;
 }
 
-/* LAYOUT CONTAINER */
-.main-container {
-    display: flex;
-    margin-top: 56px;
-    height: calc(100vh - 56px);
-}
 
-/* SIDEBAR STYLE */
-.sidebar {
-    width: 240px;
-    background-color: #0f0f0f;
-    padding: 12px;
-    flex-shrink: 0;
-    overflow-y: auto;
-}
-
-.sidebar-item {
+/* 3. HORIZONTAL CATEGORIES BAR (TAGS) */
+.mobile-tags-bar {
     display: flex;
     align-items: center;
-    gap: 24px;
-    padding: 0 12px;
-    height: 40px;
-    color: #f1f1f1;
-    text-decoration: none;
-    font-size: 14px;
-    border-radius: 10px;
-}
-
-.sidebar-item i {
-    font-size: 18px;
-    width: 24px;
-    text-align: center;
-}
-
-.sidebar-item:hover, .sidebar-item.active {
-    background-color: #272727;
-}
-
-/* AREA KONTEN UTAMA & PLAYER */
-.content {
-    flex-grow: 1;
-    padding: 24px;
-    overflow-y: auto;
-    background-color: #0f0f0f;
-}
-
-.player-section {
+    gap: 8px;
+    padding: 8px 12px;
+    overflow-x: auto;
+    position: fixed;
+    top: 48px;
     width: 100%;
-    max-width: 1000px;
-    margin-bottom: 24px;
+    background-color: #0f0f0f;
+    z-index: 990;
+}
+
+.mobile-tags-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.tag {
+    background-color: #272727;
+    color: #f1f1f1;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tag.active {
+    background-color: #f1f1f1;
+    color: #0f0f0f;
+}
+
+.explorer-tag {
+    background-color: #272727;
+    padding: 6px 10px;
+}
+
+
+/* 4. MAIN KONTEN BODY */
+.mobile-content {
+    margin-top: 100px; /* Memberi ruang agar tidak terpotong header & tags */
+    padding: 0 0px;
+}
+
+
+/* 5. PEMUTAR VIDEO EMBED CORES */
+.player-container {
+    padding: 0 12px;
 }
 
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* Rasio Sinema 16:9 */
+    padding-bottom: 56.25%; /* Mengunci Aspek Rasio Sinema 16:9 */
     height: 0;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
     background-color: #000;
 }
@@ -203,97 +198,142 @@ hr.divider {
     height: 100%;
 }
 
-.playing-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 14px;
+.player-title {
+    font-size: 16px;
+    margin-top: 10px;
     line-height: 1.4;
+    font-weight: 500;
 }
 
-.playing-channel {
-    font-size: 14px;
+.player-channel {
+    font-size: 13px;
     color: #aaa;
     margin-top: 4px;
 }
 
-/* KATEGORI TAGS */
-.tags-container {
+
+/* 6. SEKSI SHORTS GRAPHICS (2 KOLOM VERTIKAL) */
+.shorts-section {
+    padding: 0 12px;
+}
+
+.shorts-header {
     display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
-    overflow-x: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
 }
 
-.tags-container::-webkit-scrollbar {
-    display: none;
+.shorts-title-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-.tag {
-    background-color: #272727;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
+.shorts-logo {
+    width: 20px;
+    height: 20px;
 }
 
-.tag.active {
-    background-color: #f1f1f1;
-    color: #0f0f0f;
+.shorts-more {
+    color: #aaa;
+    font-size: 16px;
 }
 
-/* VIDEO GRID & CARD */
-.video-grid {
+.shorts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 32px 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.shorts-card {
+    background-color: #0f0f0f;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.shorts-thumbnail-wrapper {
+    width: 100%;
+    aspect-ratio: 9 / 16; /* Format portrait HP tegak lurus */
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #272727;
+}
+
+.shorts-thumbnail-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.shorts-info {
+    padding: 8px 4px;
+}
+
+.shorts-text {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #f1f1f1;
+}
+
+
+/* 7. REKOMENDASI LIST VIDEO GRID (PENCARIAN DATA API) */
+.video-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .video-card {
+    width: 100%;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .thumbnail-container {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border-radius: 12px;
-    overflow: hidden;
+    background-color: #272727;
 }
 
 .thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: border-radius 0.15s ease;
-}
-
-.video-card:hover .thumbnail {
-    border-radius: 0px;
 }
 
 .duration {
     position: absolute;
     bottom: 8px;
     right: 8px;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0,0,0,0.8);
     color: #fff;
+    font-size: 11px;
+    font-weight: 500;
     padding: 2px 4px;
-    font-size: 12px;
     border-radius: 4px;
+}
+
+.video-details {
+    padding: 12px;
+    display: flex;
+    gap: 12px;
 }
 
 .video-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
-.video-title {
+.video-text .video-title {
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
@@ -304,19 +344,70 @@ hr.divider {
     overflow: hidden;
 }
 
-.channel-name {
-    font-size: 13px;
+.video-text .channel-name {
+    font-size: 12px;
     color: #aaa;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.video-stats {
+.video-text .channel-name i {
+    font-size: 11px;
+}
+
+.video-text .video-stats {
     font-size: 12px;
     color: #aaa;
 }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 792px) {
-    .sidebar { display: none; }
-    .header-center { flex: 1; }
-    .mic-btn { display: none; }
+
+/* 8. NAVIGATION BOTTOM BAR (STUCK ON BOTTOM SCREEN) */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #0f0f0f;
+    border-top: 1px solid #212121;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 10px;
+    gap: 4px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.nav-item i {
+    font-size: 16px;
+    color: #f1f1f1;
+}
+
+.nav-item.active {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Tombol Tambah (+) Lingkaran Tengah */
+.add-button i {
+    font-size: 22px !important;
+}
+
+/* Lingkaran Kecil Akun Pojok Kanan Bawah */
+.avatar-placeholder-nav {
+    width: 20px;
+    height: 20px;
+    background-color: #7b1fa2; /* Warna ungu bawaan profil */
+    border-radius: 50%;
 }
