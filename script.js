@@ -86,23 +86,24 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     btn.innerHTML = container.classList.contains('music-mode') ? "📺 Mode Video Player" : "🎵 Mode Musik Saja";
 });
 
-// --- LOGIKA BARU: TOMBOL DOWNLOAD MP3 & MP4 (STABIL & ANTI-DOWN) ---
-// Mengarahkan langsung ke halaman generator download universal berdasarkan ID video yang aktif
+// --- LOGIKA BARU: TRANSFER LANGSUNG KE GOOGLE DRIVE ---
+// Menggunakan generator pihak ketiga untuk memindahkan file media langsung ke Drive
 
 document.getElementById('downloadMp3Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
     
-    // Menggunakan skema direct-query ke y2mate (fokus konversi audio/mp3)
-    const downloadUrl = `https://www.y2mate.com/mates/en/convert-youtube?url=https://www.youtube.com/watch?v=${id}`;
-    window.open(downloadUrl, '_blank');
+    // Trik menggunakan Google Drive Save Link via Offcloud / MultCloud / SaveToDrive web
+    // Kita arahkan ke tools generator link yang menyediakan tombol "Save to Drive" langsung
+    const targetUrl = `https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`;
+    window.open(targetUrl, '_blank');
 });
 
 document.getElementById('downloadMp4Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
     
-    // Menggunakan alternatif SaveFrom dengan trik prefix "ss" untuk langsung ke halaman unduh video (mp4)
-    const downloadUrl = `https://ssyoutube.com/watch?v=${id}`;
-    window.open(downloadUrl, '_blank');
+    // Alternatif generator video ke Drive langsung
+    const targetUrl = `https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`;
+    window.open(targetUrl, '_blank');
 });
