@@ -23,6 +23,13 @@
         </div>
     </div>
 
+    <div id="global-announcement" class="announcement-banner hidden">
+        <div class="announcement-content">
+            <div class="announcement-header">❗ Notification</div>
+            <div id="announcement-text" class="announcement-body">Ini adalah pesan default.</div>
+        </div>
+    </div>
+
     <div id="owner-modal" class="modal-overlay hidden">
         <div class="modal-box">
             <h3>Menu Owner Rahasia</h3>
@@ -37,12 +44,46 @@
 
     <div id="owner-dashboard" class="owner-panel hidden">
         <div class="panel-header">
-            <h2>⚙️ Panel Kontrol Owner</h2>
+            <h2>⚙️ Control Panel Owner</h2>
             <button class="btn-close-panel" onclick="closeOwnerPanel()">Keluar Panel</button>
         </div>
+        
         <div class="panel-body">
-            <p>Selamat Datang, <strong>Haruukii79</strong>! Status sistem: <strong>YouTube Premium Aktif</strong>.</p>
-            
+            <div class="stat-card clock-card">
+                <h4><i class="far fa-clock"></i> Waktu Asia/Jakarta</h4>
+                <div id="jakarta-clock" class="live-clock">00:00:00 WIB</div>
+            </div>
+
+            <div class="stat-card">
+                <h4><i class="fas fa-bullhorn"></i> Global Announcement Broadcast</h4>
+                <textarea id="input-announcement-text" placeholder="Ketik pesan notifikasi di sini..."></textarea>
+                
+                <label for="select-duration">Durasi Tampilan Notifikasi:</label>
+                <select id="select-duration">
+                    <option value="15">15 Detik</option>
+                    <option value="30">30 Detik</option>
+                    <option value="60">1 Menit</option>
+                    <option value="300">5 Menit</option>
+                    <option value="999999">Tak Terbatas (Special Mode)</option>
+                </select>
+
+                <div class="panel-action-buttons">
+                    <button class="btn-broadcast" onclick="sendGlobalAnnouncement()">📢 Kirim Notifikasi</button>
+                    <button class="btn-stop-broadcast" onclick="stopGlobalAnnouncement()">🛑 Hentikan Paksa</button>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <h4><i class="fas fa-compact-disc"></i> Special Mode (Rainbow & Global Music)</h4>
+                <p class="feature-desc">Mengaktifkan background pelangi kedip-kedip, menghentikan video utama, dan memutar audio darurat global.</p>
+                <div class="panel-action-buttons">
+                    <button class="btn-party-on" onclick="togglePartyMode(true)">🎉 Aktifkan Mode Party</button>
+                    <button class="btn-party-off" onclick="togglePartyMode(false)">❌ Matikan Mode Party</button>
+                </div>
+            </div>
+
+            <audio id="global-party-audio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
             <div class="stat-card">
                 <h4>Database Firebase</h4>
                 <p style="color: #00ff00;">Connected (absensi-polri)</p>
@@ -62,7 +103,6 @@
         </div>
         <div class="header-right">
             <span class="owner-trigger-btn" onclick="openOwnerModal()">⚙️</span>
-            
             <div class="notification-container">
                 <i class="far fa-bell header-icon"></i>
                 <span class="notification-badge">9+</span>
@@ -164,8 +204,21 @@
     </nav>
 
     <script>
+        let announcementTimeout;
+
+        // --- JAM ASIA / JAKARTA LIVE ---
+        function updateJakartaClock() {
+            const options = { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            document.getElementById('jakarta-clock').innerText = formatter.format(new Date()) + " WIB";
+        }
+        setInterval(updateJakartaClock, 1000);
+
         // --- ANIMASI LOADING SCREEN ---
         window.addEventListener("DOMContentLoaded", () => {
+            updateJakartaClock();
+            checkLiveStorageData(); // Pantau data kontrol saat web dimuat
+            
             let percentageElement = document.getElementById("loading-percentage");
             let progressFill = document.getElementById("progress-bar-fill");
             let loadingScreen = document.getElementById("loading-screen");
@@ -187,6 +240,83 @@
                 }
             }, 15); 
         });
+
+        // --- SISTEM PEMANTAU LOCALSTORAGE (SINKRONISASI REAL-TIME BROADCAST) ---
+        function checkLiveStorageData() {
+            // Cek status Announcement Banner
+            const activeNotice = localStorage.getItem("announcement_text");
+            if (activeNotice) {
+                showAnnouncementUI(activeNotice);
+            } else {
+                document.getElementById("global-announcement").classList.add("hidden");
+            }
+
+            // Cek status Mode Party
+            const partyState = localStorage.getItem("party_mode_active");
+            if (partyState === "true") {
+                triggerPartyEffects(true);
+            } else {
+                triggerPartyEffects(false);
+            }
+        }
+        // Dengarkan perubahan data antar tab secara live
+        window.addEventListener('storage', checkLiveStorageData);
+
+        // --- FITUR OWNER: ANNOUNCEMENT BROADCAST ---
+        function sendGlobalAnnouncement() {
+            const text = document.getElementById("input-announcement-text").value.trim();
+            const duration = parseInt(document.getElementById("select-duration").value);
+
+            if (!text) return alert("Pesan tidak boleh kosong!");
+
+            localStorage.setItem("announcement_text", text);
+            showAnnouncementUI(text);
+
+            clearTimeout(announcementTimeout);
+            // Jika durasi bukan tak terbatas (999999), set waktu hapus otomatis
+            if (duration < 900000) {
+                announcementTimeout = setTimeout(() => {
+                    stopGlobalAnnouncement();
+                }, duration * 1000);
+            }
+        }
+
+        function showAnnouncementUI(text) {
+            const banner = document.getElementById("global-announcement");
+            document.getElementById("announcement-text").innerText = text;
+            banner.classList.remove("hidden");
+        }
+
+        function stopGlobalAnnouncement() {
+            localStorage.removeItem("announcement_text");
+            document.getElementById("global-announcement").classList.add("hidden");
+            clearTimeout(announcementTimeout);
+        }
+
+        // --- FITUR OWNER: RAINBOW & GLOBAL MUSIC PARTY MODE ---
+        function togglePartyMode(isActive) {
+            localStorage.setItem("party_mode_active", isActive ? "true" : "false");
+            triggerPartyEffects(isActive);
+        }
+
+        function triggerPartyEffects(isActive) {
+            const iframePlayer = document.getElementById('main-youtube-player');
+            const partyAudio = document.getElementById('global-party-audio');
+
+            if (isActive) {
+                document.body.classList.add("rainbow-party-bg");
+                // Matikan / Reset paksa video utama YouTube agar tidak bentrok
+                iframePlayer.src = "";
+                document.getElementById('playing-title').innerText = "🚨 SERVER TAKEOVER: PARTY MODE ACTIVE!";
+                document.getElementById('playing-channel').innerText = "Diambil alih oleh Owner";
+                // Putar musik global Owner
+                partyAudio.play().catch(e => console.log("Audio butuh interaksi user pertama kali."));
+            } else {
+                document.body.classList.remove("rainbow-party-bg");
+                partyAudio.pause();
+                partyAudio.currentTime = 0;
+            }
+        }
 
         // --- LOGIKA POP UP MODAL OWNER ---
         function openOwnerModal() {
@@ -214,20 +344,20 @@
             document.getElementById("owner-dashboard").classList.add("hidden");
         }
 
-        // --- PEMUTAR VIDEO DENGAN FITUR REPEAT / PUTAR BALIK OTOMATIS ---
+        // --- PEMUTAR VIDEO ---
         function playVideo(videoId, title, channel) {
+            // Jika sedang mode party, dilarang memutar video biasa
+            if (localStorage.getItem("party_mode_active") === "true") {
+                alert("Tidak bisa memutar video. Mode Party global sedang diaktifkan oleh Owner!");
+                return;
+            }
             const player = document.getElementById('main-youtube-player');
-            
-            // Menggunakan parameter &loop=1 dan &playlist=[id_video] agar otomatis mengulang tanpa henti
             player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1&loop=1&playlist=${videoId}`;
-            
             document.getElementById('playing-title').innerText = title;
             document.getElementById('playing-channel').innerText = channel;
-            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Tweak tombol cari/search box dropdown mobile
         const searchTrigger = document.getElementById('mobile-search-trigger');
         const searchContainer = document.querySelector('.mobile-search-bar-container');
         if(searchTrigger) {
