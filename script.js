@@ -14,7 +14,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const historyRef = ref(db, 'player_history');
 
-// --- AUDIO EQUALIZER GLOBAL CONFIG ---
 let audioCtx;
 let bassFilter;
 let trebleFilter;
@@ -97,7 +96,10 @@ function updateMediaSession(videoId) {
 // Handler klik tombol Putar
 document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
-    if (!urlInput) return alert('Isi dulu kolom link YouTube atau ID video!');
+    if (!urlInput) {
+        Swal.fire({ icon: 'warning', title: 'Kolom Kosong', text: 'Isi dulu kolom link YouTube atau ID video!' });
+        return;
+    }
 
     initAudioEqualizer();
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
@@ -120,7 +122,7 @@ document.getElementById('playBtn').addEventListener('click', () => {
 
         document.getElementById('videoUrl').value = '';
     } else {
-        alert('Format tautan salah!');
+        Swal.fire({ icon: 'error', title: 'Format Salah', text: 'Format tautan salah atau tidak dikenali!' });
     }
 });
 
@@ -136,7 +138,6 @@ onValue(historyRef, (snapshot) => {
             ...data[key]
         })).reverse();
 
-        // Update indikator statistik total log di panel admin
         document.getElementById('totalLogsVal').innerText = `${items.length} Item`;
 
         items.slice(0, 15).forEach(item => {
@@ -165,10 +166,23 @@ onValue(historyRef, (snapshot) => {
 
             li.querySelector('.btn-delete-item').addEventListener('click', (e) => {
                 e.stopPropagation(); 
-                if(confirm("Hapus lagu ini dari riwayat database?")) {
-                    const itemRef = ref(db, `player_history/${item.id}`);
-                    remove(itemRef).catch(err => console.error(err));
-                }
+                
+                // SweetAlert2 Konfirmasi Hapus Satuan
+                Swal.fire({
+                    title: 'Hapus Item?',
+                    text: 'Hapus lagu ini dari riwayat database?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const itemRef = ref(db, `player_history/${item.id}`);
+                        remove(itemRef).catch(err => console.error(err));
+                    }
+                });
             });
 
             historyList.appendChild(li);
@@ -204,17 +218,31 @@ document.getElementById('backToMainBtn').addEventListener('click', () => {
     mainPage.style.display = 'block';
 });
 
-// Baru: Logika Proteksi Password Halaman Admin
+// SweetAlert2 Prompt Input Password Admin
 document.getElementById('toggleAdminBtn').addEventListener('click', () => {
-    const inputPassword = prompt("Masukkan kata sandi akses Admin:");
-    
-    if (inputPassword === "PREMIUMYTPRO##") {
-        mainPage.style.display = 'none';
-        settingsPage.style.display = 'none';
-        adminPage.style.display = 'block';
-    } else if (inputPassword !== null) {
-        alert("Akses ditolak! Kata sandi salah.");
-    }
+    Swal.fire({
+        title: 'Akses Admin',
+        text: 'Masukkan kata sandi akses Admin:',
+        input: 'password',
+        inputPlaceholder: 'Kata sandi...',
+        showCancelButton: true,
+        confirmButtonText: 'Masuk',
+        cancelButtonText: 'Batal',
+        inputAttributes: {
+            autocapitalize: 'off',
+            autocorrect: 'off'
+        }
+    }).then((result) => {
+        if (result.isDismissed) return;
+        
+        if (result.value === "PREMIUMYTPRO##") {
+            mainPage.style.display = 'none';
+            settingsPage.style.display = 'none';
+            adminPage.style.display = 'block';
+        } else {
+            Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: 'Kata sandi salah.' });
+        }
+    });
 });
 
 document.getElementById('backToMainFromAdminBtn').addEventListener('click', () => {
@@ -222,18 +250,29 @@ document.getElementById('backToMainFromAdminBtn').addEventListener('click', () =
     mainPage.style.display = 'block';
 });
 
-// Baru: Fitur Reset Seluruh Database di Dalam Panel Admin
+// SweetAlert2 Konfirmasi Reset Semua Database
 document.getElementById('clearAllHistoryBtn').addEventListener('click', () => {
-    if (confirm("Apakah Anda yakin ingin menghapus SELURUH riwayat database secara permanen?")) {
-        remove(historyRef)
-        .then(() => {
-            alert("Seluruh riwayat database berhasil dibersihkan!");
-        })
-        .catch((err) => {
-            alert("Gagal mengosongkan database.");
-            console.error(err);
-        });
-    }
+    Swal.fire({
+        title: 'Reset Database?',
+        text: 'Apakah Anda yakin ingin menghapus SELURUH riwayat database secara permanen?',
+        icon: 'danger',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Kosongkan',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            remove(historyRef)
+            .then(() => {
+                Swal.fire({ icon: 'success', title: 'Berhasil', text: 'Seluruh riwayat database telah dibersihkan!' });
+            })
+            .catch((err) => {
+                Swal.fire({ icon: 'error', title: 'Gagal', text: 'Gagal mengosongkan database.' });
+                console.error(err);
+            });
+        }
+    });
 });
 
 // Pengatur Tema (Dark / Light Mode)
@@ -277,4 +316,4 @@ if(installBtn) {
 window.addEventListener('DOMContentLoaded', () => {
     loadSavedEqualizer();
 });
-      
+          
