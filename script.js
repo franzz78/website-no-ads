@@ -34,21 +34,6 @@ function updateMediaSession(videoId) {
     }
 }
 
-// Logika pengelolaan lirik lagu mandiri
-function loadLyrics(videoId) {
-    const savedLyrics = localStorage.getItem(`lyrics_${videoId}`);
-    const lyricsText = document.getElementById('lyricsText');
-    const lyricsInput = document.getElementById('lyricsInput');
-    
-    if (savedLyrics) {
-        lyricsText.innerText = savedLyrics;
-        lyricsInput.value = savedLyrics;
-    } else {
-        lyricsText.innerText = "Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.";
-        lyricsInput.value = "";
-    }
-}
-
 // Handler klik tombol Putar
 document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
@@ -61,7 +46,6 @@ document.getElementById('playBtn').addEventListener('click', () => {
             window.player.loadVideoById(videoId);
             window.currentVideoId = videoId;
             updateMediaSession(videoId);
-            loadLyrics(videoId); // Muat lirik video baru
         }
 
         const newHistoryRef = push(historyRef);
@@ -77,7 +61,7 @@ document.getElementById('playBtn').addEventListener('click', () => {
     }
 });
 
-// Real-time Database Listener (Menampilkan riwayat + Tombol Hapus per Item)
+// Real-time Database Listener
 onValue(historyRef, (snapshot) => {
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
@@ -107,7 +91,6 @@ onValue(historyRef, (snapshot) => {
                     window.player.loadVideoById(item.videoId);
                     window.currentVideoId = item.videoId;
                     updateMediaSession(item.videoId);
-                    loadLyrics(item.videoId); // Muat lirik saat riwayat diklik
                 }
             });
 
@@ -115,9 +98,7 @@ onValue(historyRef, (snapshot) => {
                 e.stopPropagation(); 
                 if(confirm("Hapus lagu ini dari riwayat database?")) {
                     const itemRef = ref(db, `player_history/${item.id}`);
-                    remove(itemRef)
-                    .then(() => console.log("Berhasil dihapus!"))
-                    .catch(err => console.error("Gagal hapus:", err));
+                    remove(itemRef).catch(err => console.error(err));
                 }
             });
 
@@ -125,31 +106,6 @@ onValue(historyRef, (snapshot) => {
         });
     } else {
         historyList.innerHTML = '<li class="loading-state">Belum ada riwayat pemutaran.</li>';
-    }
-});
-
-// Logika Aksi Tombol Edit / Simpan Lirik
-document.getElementById('editLyricsBtn').addEventListener('click', () => {
-    const btn = document.getElementById('editLyricsBtn');
-    const textDiv = document.getElementById('lyricsText');
-    const inputArea = document.getElementById('lyricsInput');
-    const id = window.currentVideoId;
-
-    if (inputArea.style.display === 'none') {
-        // Pindah ke mode edit
-        textDiv.style.display = 'none';
-        inputArea.style.display = 'block';
-        btn.innerText = "Simpan Lirik";
-    } else {
-        // Simpan lirik ke LocalStorage berdasarkan ID video aktif
-        const newLyrics = inputArea.value.trim();
-        localStorage.setItem(`lyrics_${id}`, newLyrics);
-        
-        textDiv.innerText = newLyrics || "Belum ada lirik untuk lagu ini. Klik Edit Lirik untuk menambahkan teks lirik kamu sendiri.";
-        
-        inputArea.style.display = 'none';
-        textDiv.style.display = 'block';
-        btn.innerText = "Edit Lirik";
     }
 });
 
@@ -162,7 +118,51 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     btn.innerHTML = container.classList.contains('music-mode') ? "Mode Video Player" : "Mode Musik Saja";
 });
 
-// PWA prompt untuk install ke home screen
+// LOGIKA NAVIGASI HALAMAN SETTINGS
+const mainPage = document.getElementById('mainPage');
+const settingsPage = document.getElementById('settingsPage');
+
+document.getElementById('toggleSettingsBtn').addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    settingsPage.style.display = 'block';
+});
+
+document.getElementById('backToMainBtn').addEventListener('click', () => {
+    settingsPage.style.display = 'none';
+    mainPage.style.display = 'block';
+});
+
+// 1. Logika Pengatur Tema (Dark / Light Mode)
+document.getElementById('themeToggle').addEventListener('change', (e) => {
+    if (e.target.checked) {
+        document.body.classList.remove('light-theme');
+    } else {
+        document.body.classList.add('light-theme');
+    }
+});
+
+// 2. Logika Slider Volume (0 - 100%)
+document.getElementById('volumeSlider').addEventListener('input', (e) => {
+    const vol = e.target.value;
+    document.getElementById('volumeVal').innerText = `${vol}%`;
+    if (window.player && typeof window.player.setVolume === 'function') {
+        window.player.setVolume(vol);
+    }
+});
+
+// 3. Logika Slider Bass Boost (Simulasi Visual Parameter)
+document.getElementById('bassSlider').addEventListener('input', (e) => {
+    const bass = e.target.value;
+    document.getElementById('bassVal').innerText = `${bass}%`;
+    console.log(`Bass level diatur ke: ${bass}%`);
+});
+
+// 4. Logika Toggle Stereo (Simulasi Parameter Audio)
+document.getElementById('stereoToggle').addEventListener('change', (e) => {
+    console.log(`Efek audio stereo diaktifkan: ${e.target.checked}`);
+});
+
+// PWA prompt
 let deferredPrompt;
 const installBtn = document.getElementById('installAppBtn');
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -178,11 +178,3 @@ if(installBtn) {
         installBtn.style.display = 'none';
     });
 }
-
-// Load lirik awal saat halaman dimuat pertama kali
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        if(window.currentVideoId) loadLyrics(window.currentVideoId);
-    }, 1000);
-});
-                                        
