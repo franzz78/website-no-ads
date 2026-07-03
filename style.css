@@ -11,7 +11,7 @@ body {
     background-color: #0f0f0f;
     color: #f1f1f1;
     overflow-x: hidden;
-    padding-bottom: 70px; /* Jarak pas agar konten bawah tidak tertutup oleh menu navigasi bawah */
+    padding-bottom: 70px;
 }
 
 /* UTILITIES */
@@ -25,8 +25,94 @@ body {
     margin: 16px 0;
 }
 
+/* ==========================================
+   STYLE SPLASH LOADING SCREEN (FULL UTUH)
+   ========================================== */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f0f0f; /* Hitam pekat khas YouTube */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Selalu berada di lapisan paling depan */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
 
-/* 1. APP TOP BAR HEADER */
+/* Class pembantu untuk efek menghilang halus */
+.splash-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Logo YouTube Besar di Tengah */
+.splash-logo {
+    color: #ff0000;
+    font-size: 70px;
+    margin-bottom: 16px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Teks Angka Persen */
+.splash-counter {
+    font-size: 18px;
+    font-weight: 500;
+    color: #f1f1f1;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+/* Wadah Bar Loading */
+.progress-bar-container {
+    width: 140px;
+    height: 3px;
+    background-color: #272727;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Bagian Isi Merah Berjalan */
+.progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #ff0000;
+    transition: width 0.02s linear;
+}
+
+/* Footer teks nama kamu di bawah layar */
+.splash-footer {
+    position: absolute;
+    bottom: 40px;
+    font-size: 12px;
+    color: #606060;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Animasi denyut halus pada logo biar interaktif */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================
+   STYLE ELEMENT HALAMAN UTAMA MINI YOUTUBE
+   ========================================== */
 .mobile-header {
     display: flex;
     justify-content: space-between;
@@ -69,7 +155,6 @@ body {
     cursor: pointer;
 }
 
-/* Notification Badge Red 9+ */
 .notification-container {
     position: relative;
 }
@@ -86,8 +171,6 @@ body {
     border-radius: 10px;
 }
 
-
-/* 2. DOCK INPUT PENCARIAN (DROP DOWN BOX) */
 .mobile-search-bar-container {
     display: none;
     padding: 8px 16px;
@@ -128,8 +211,6 @@ body {
     cursor: pointer;
 }
 
-
-/* 3. HORIZONTAL CATEGORIES BAR (TAGS) */
 .mobile-tags-bar {
     display: flex;
     align-items: center;
@@ -168,22 +249,17 @@ body {
     padding: 6px 10px;
 }
 
-
-/* 4. MAIN KONTEN BODY */
 .mobile-content {
-    margin-top: 100px; /* Memberi ruang agar tidak terpotong header & tags */
-    padding: 0 0px;
+    margin-top: 100px;
 }
 
-
-/* 5. PEMUTAR VIDEO EMBED CORES */
 .player-container {
     padding: 0 12px;
 }
 
 .video-wrapper {
     position: relative;
-    padding-bottom: 56.25%; /* Mengunci Aspek Rasio Sinema 16:9 */
+    padding-bottom: 56.25%;
     height: 0;
     border-radius: 12px;
     overflow: hidden;
@@ -211,8 +287,6 @@ body {
     margin-top: 4px;
 }
 
-
-/* 6. SEKSI SHORTS GRAPHICS (2 KOLOM VERTIKAL) */
 .shorts-section {
     padding: 0 12px;
 }
@@ -256,7 +330,7 @@ body {
 
 .shorts-thumbnail-wrapper {
     width: 100%;
-    aspect-ratio: 9 / 16; /* Format portrait HP tegak lurus */
+    aspect-ratio: 9 / 16;
     border-radius: 12px;
     overflow: hidden;
     background-color: #272727;
@@ -283,8 +357,6 @@ body {
     color: #f1f1f1;
 }
 
-
-/* 7. REKOMENDASI LIST VIDEO GRID (PENCARIAN DATA API) */
 .video-grid {
     display: flex;
     flex-direction: column;
@@ -353,17 +425,11 @@ body {
     gap: 4px;
 }
 
-.video-text .channel-name i {
-    font-size: 11px;
-}
-
 .video-text .video-stats {
     font-size: 12px;
     color: #aaa;
 }
 
-
-/* 8. NAVIGATION BOTTOM BAR (STUCK ON BOTTOM SCREEN) */
 .bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -399,15 +465,6 @@ body {
     font-weight: bold;
 }
 
-/* Tombol Tambah (+) Lingkaran Tengah */
 .add-button i {
     font-size: 22px !important;
-}
-
-/* Lingkaran Kecil Akun Pojok Kanan Bawah */
-.avatar-placeholder-nav {
-    width: 20px;
-    height: 20px;
-    background-color: #7b1fa2; /* Warna ungu bawaan profil */
-    border-radius: 50%;
 }
