@@ -21,6 +21,29 @@ function extractVideoId(url) {
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
+// --- FITUR BACKGROUND PLAYBACK VIA MEDIA SESSION API ---
+function updateMediaSession(videoId) {
+    if ('mediaSession' in navigator) {
+        // Mendaftarkan metadata audio ke sistem operasi Android/iOS/Windows
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: `CleanPlayer Audio - ${videoId}`,
+            artist: 'Streaming Mode',
+            album: 'No Ads Streamer',
+            artwork: [
+                { src: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' }
+            ]
+        });
+
+        // Hubungkan tombol kontrol di panel notifikasi HP ke player YouTube
+        navigator.mediaSession.setActionHandler('play', () => {
+            if(window.player) window.player.playVideo();
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            if(window.player) window.player.pauseVideo();
+        });
+    }
+}
+
 // Play button handler
 document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
@@ -31,7 +54,8 @@ document.getElementById('playBtn').addEventListener('click', () => {
     if (videoId) {
         if (window.player && typeof window.player.loadVideoById === 'function') {
             window.player.loadVideoById(videoId);
-            window.currentVideoId = videoId; // Update global state id yang aktif
+            window.currentVideoId = videoId;
+            updateMediaSession(videoId); // Pemicu kontrol background
         }
 
         const newHistoryRef = push(historyRef);
@@ -67,7 +91,8 @@ onValue(historyRef, (snapshot) => {
             li.addEventListener('click', () => {
                 if (window.player && typeof window.player.loadVideoById === 'function') {
                     window.player.loadVideoById(item.videoId);
-                    window.currentVideoId = item.videoId; // Update id aktif saat riwayat diklik
+                    window.currentVideoId = item.videoId;
+                    updateMediaSession(item.videoId); // Pemicu kontrol background saat klik history
                 }
             });
             historyList.appendChild(li);
@@ -86,24 +111,15 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     btn.innerHTML = container.classList.contains('music-mode') ? "📺 Mode Video Player" : "🎵 Mode Musik Saja";
 });
 
-// --- LOGIKA BARU: TRANSFER LANGSUNG KE GOOGLE DRIVE ---
-// Menggunakan generator pihak ketiga untuk memindahkan file media langsung ke Drive
-
+// Tombol Drive
 document.getElementById('downloadMp3Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
-    
-    // Trik menggunakan Google Drive Save Link via Offcloud / MultCloud / SaveToDrive web
-    // Kita arahkan ke tools generator link yang menyediakan tombol "Save to Drive" langsung
-    const targetUrl = `https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`;
-    window.open(targetUrl, '_blank');
+    window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
 });
 
 document.getElementById('downloadMp4Btn').addEventListener('click', () => {
     const id = window.currentVideoId;
     if (!id) return alert("Belum ada video yang dimuat, bro.");
-    
-    // Alternatif generator video ke Drive langsung
-    const targetUrl = `https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`;
-    window.open(targetUrl, '_blank');
+    window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
 });
