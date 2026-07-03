@@ -14,45 +14,36 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const historyRef = ref(db, 'player_history');
 
-// --- DEKLARASI WEB AUDIO API UNTUK EQUALIZER ---
+// --- AUDIO EQUALIZER GLOBAL CONFIG ---
 let audioCtx;
 let bassFilter;
 let trebleFilter;
-let audioSourceConnected = false;
 
 function initAudioEqualizer() {
-    if (audioCtx) return; // Mencegah inisialisasi ganda
-
+    if (audioCtx) return;
     try {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        // Buat Lowpass Filter untuk mengontrol Bass (Frekuensi Rendah)
         bassFilter = audioCtx.createBiquadFilter();
         bassFilter.type = "lowshelf";
-        bassFilter.frequency.value = 200; // Fokus di frekuensi bass di bawah 200Hz
+        bassFilter.frequency.value = 200;
 
-        // Buat Highpass Filter untuk mengontrol Treble (Kejernihan Suara)
         trebleFilter = audioCtx.createBiquadFilter();
         trebleFilter.type = "highshelf";
-        trebleFilter.frequency.value = 3000; // Fokus di frekuensi tinggi/vokal di atas 3000Hz
+        trebleFilter.frequency.value = 3000;
 
-        // Hubungkan filter: Filter Bass -> Filter Treble -> Speaker Utama
         bassFilter.connect(trebleFilter);
         trebleFilter.connect(audioCtx.destination);
         
-        // Hubungkan elemen audio iframe ke Web Audio Context
         const iframeElement = document.getElementById('player');
         if (iframeElement) {
             const source = audioCtx.createMediaElementSource(iframeElement);
             source.connect(bassFilter);
-            audioSourceConnected = true;
         }
     } catch (e) {
-        console.log("Web Audio API tidak sepenuhnya diizinkan oleh kebijakan CORS lintas domain browser, menggunakan mode simulasi filter.");
+        console.log("Web Audio API menggunakan mode simulasi filter.");
     }
 }
 
-// Fungsi menerapkan nilai Equalizer ke Audio Node
 function applyEqualizer() {
     const bassLevel = document.getElementById('bassSlider').value;
     const trebleLevel = document.getElementById('trebleSlider').value;
@@ -60,7 +51,6 @@ function applyEqualizer() {
     document.getElementById('bassVal').innerText = `${bassLevel}%`;
     document.getElementById('trebleVal').innerText = `${trebleLevel}%`;
 
-    // Konversi nilai slider (0-100) ke nilai Gain Desibel (dB) untuk Audio API (-10dB sampai +15dB)
     const bassGain = ((bassLevel / 100) * 25) - 10;
     const trebleGain = ((trebleLevel / 100) * 25) - 10;
 
@@ -69,13 +59,12 @@ function applyEqualizer() {
         trebleFilter.gain.value = trebleGain;
     }
 
-    // Simpan konfigurasi terakhir di memori lokal browser
     localStorage.setItem('cleanplayer_bass', bassLevel);
     localStorage.setItem('cleanplayer_treble', trebleLevel);
 }
 
 function loadSavedEqualizer() {
-    const savedBass = localStorage.getItem('cleanplayer_bass') || 50; // default tengah
+    const savedBass = localStorage.getItem('cleanplayer_bass') || 50;
     const savedTreble = localStorage.getItem('cleanplayer_treble') || 50;
 
     document.getElementById('bassSlider').value = savedBass;
@@ -110,11 +99,8 @@ document.getElementById('playBtn').addEventListener('click', () => {
     const urlInput = document.getElementById('videoUrl').value.trim();
     if (!urlInput) return alert('Isi dulu kolom link YouTube atau ID video!');
 
-    // Aktifkan Audio Context saat ada interaksi user pertama kali (wajib aturan browser)
     initAudioEqualizer();
-    if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
     const videoId = extractVideoId(urlInput);
 
@@ -149,6 +135,9 @@ onValue(historyRef, (snapshot) => {
             id: key,
             ...data[key]
         })).reverse();
+
+        // Update indikator statistik total log di panel admin
+        document.getElementById('totalLogsVal').innerText = `${items.length} Item`;
 
         items.slice(0, 15).forEach(item => {
             const li = document.createElement('li');
@@ -186,6 +175,7 @@ onValue(historyRef, (snapshot) => {
         });
     } else {
         historyList.innerHTML = '<li class="loading-state">Belum ada riwayat pemutaran.</li>';
+        document.getElementById('totalLogsVal').innerText = '0 Item';
     }
 });
 
@@ -198,12 +188,14 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     btn.innerHTML = container.classList.contains('music-mode') ? "Mode Video Player" : "Mode Musik Saja";
 });
 
-// LOGIKA NAVIGASI HALAMAN SETTINGS
+// LOGIKA NAVIGASI PAGE UTAMA, SETTINGS, DAN ADMIN
 const mainPage = document.getElementById('mainPage');
 const settingsPage = document.getElementById('settingsPage');
+const adminPage = document.getElementById('adminPage');
 
 document.getElementById('toggleSettingsBtn').addEventListener('click', () => {
     mainPage.style.display = 'none';
+    adminPage.style.display = 'none';
     settingsPage.style.display = 'block';
 });
 
@@ -212,7 +204,39 @@ document.getElementById('backToMainBtn').addEventListener('click', () => {
     mainPage.style.display = 'block';
 });
 
-// 1. Logika Pengatur Tema (Dark / Light Mode)
+// Baru: Logika Proteksi Password Halaman Admin
+document.getElementById('toggleAdminBtn').addEventListener('click', () => {
+    const inputPassword = prompt("Masukkan kata sandi akses Admin:");
+    
+    if (inputPassword === "PREMIUMYTPRO##") {
+        mainPage.style.display = 'none';
+        settingsPage.style.display = 'none';
+        adminPage.style.display = 'block';
+    } else if (inputPassword !== null) {
+        alert("Akses ditolak! Kata sandi salah.");
+    }
+});
+
+document.getElementById('backToMainFromAdminBtn').addEventListener('click', () => {
+    adminPage.style.display = 'none';
+    mainPage.style.display = 'block';
+});
+
+// Baru: Fitur Reset Seluruh Database di Dalam Panel Admin
+document.getElementById('clearAllHistoryBtn').addEventListener('click', () => {
+    if (confirm("Apakah Anda yakin ingin menghapus SELURUH riwayat database secara permanen?")) {
+        remove(historyRef)
+        .then(() => {
+            alert("Seluruh riwayat database berhasil dibersihkan!");
+        })
+        .catch((err) => {
+            alert("Gagal mengosongkan database.");
+            console.error(err);
+        });
+    }
+});
+
+// Pengatur Tema (Dark / Light Mode)
 document.getElementById('themeToggle').addEventListener('change', (e) => {
     if (e.target.checked) {
         document.body.classList.remove('light-theme');
@@ -221,7 +245,7 @@ document.getElementById('themeToggle').addEventListener('change', (e) => {
     }
 });
 
-// 2. Logika Slider Volume (0 - 100%)
+// Slider Volume
 document.getElementById('volumeSlider').addEventListener('input', (e) => {
     const vol = e.target.value;
     document.getElementById('volumeVal').innerText = `${vol}%`;
@@ -230,7 +254,6 @@ document.getElementById('volumeSlider').addEventListener('input', (e) => {
     }
 });
 
-// Listener Perubahan Slider Equalizer
 document.getElementById('bassSlider').addEventListener('input', applyEqualizer);
 document.getElementById('trebleSlider').addEventListener('input', applyEqualizer);
 
@@ -251,7 +274,7 @@ if(installBtn) {
     });
 }
 
-// Jalankan setelan simpanan awal saat halaman dibuka
 window.addEventListener('DOMContentLoaded', () => {
     loadSavedEqualizer();
 });
+      
