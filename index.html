@@ -9,6 +9,17 @@
 </head>
 <body>
 
+    <div id="loading-screen" class="splash-screen">
+        <div class="splash-content">
+            <i class="fab fa-youtube splash-logo"></i>
+            <div id="loading-percentage" class="splash-counter">0%</div>
+            <div class="progress-bar-container">
+                <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+            <div class="splash-footer">Created by Haruukii79</div>
+        </div>
+    </div>
+
     <header class="mobile-header">
         <div class="header-left">
             <i class="fab fa-youtube youtube-logo-icon"></i>
@@ -116,27 +127,43 @@
     </nav>
 
     <script>
+        // --- ANIMASI LOADING SCREEN 0% SAMPAI 100% ---
+        window.addEventListener("DOMContentLoaded", () => {
+            let percentageElement = document.getElementById("loading-percentage");
+            let progressFill = document.getElementById("progress-bar-fill");
+            let loadingScreen = document.getElementById("loading-screen");
+            let count = 0;
+
+            // Interval kecepatan loading counter (bisa diganti nilainya, makin kecil makin cepat)
+            let loaderInterval = setInterval(() => {
+                count++;
+                percentageElement.innerText = count + "%";
+                progressFill.style.width = count + "%";
+
+                if (count >= 100) {
+                    clearInterval(loaderInterval);
+                    // Beri delay sedikit setelah 100% lalu hilangkan dengan efek pudar halus
+                    setTimeout(() => {
+                        loadingScreen.classList.add("fade-out");
+                        // Hapus elemen dari layout agar tidak mengganggu klik di beranda
+                        setTimeout(() => {
+                            loadingScreen.style.display = "none";
+                        }, 500); 
+                    }, 400);
+                }
+            }, 20); // 20ms per kenaikan angka
+        });
+
         function playVideo(videoId, title, channel) {
             const player = document.getElementById('main-youtube-player');
-            // Menambahkan parameter enablejsapi=1 agar browser mengenali perintah PiP
             player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1`;
             
             document.getElementById('playing-title').innerText = title;
             document.getElementById('playing-channel').innerText = channel;
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // Otomatis request Picture-in-Picture setelah video dimuat (agar musik tetap nyala saat keluar aplikasi)
-            setTimeout(() => {
-                if (document.pictureInPictureEnabled) {
-                    player.requestPictureInPicture().catch(err => {
-                        console.log("Tekan video secara manual untuk mengaktifkan pemutaran latar belakang.");
-                    });
-                }
-            }, 1500);
         }
 
-        // Efek toggle kolom pencarian
         const searchTrigger = document.getElementById('mobile-search-trigger');
         const searchContainer = document.querySelector('.mobile-search-bar-container');
         if(searchTrigger) {
