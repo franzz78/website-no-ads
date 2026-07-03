@@ -167,7 +167,6 @@ onValue(historyRef, (snapshot) => {
             li.querySelector('.btn-delete-item').addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 
-                // SweetAlert2 Konfirmasi Hapus Satuan
                 Swal.fire({
                     title: 'Hapus Item?',
                     text: 'Hapus lagu ini dari riwayat database?',
@@ -218,7 +217,7 @@ document.getElementById('backToMainBtn').addEventListener('click', () => {
     mainPage.style.display = 'block';
 });
 
-// SweetAlert2 Prompt Input Password Admin
+// Prompt Input Password Admin
 document.getElementById('toggleAdminBtn').addEventListener('click', () => {
     Swal.fire({
         title: 'Akses Admin',
@@ -250,12 +249,12 @@ document.getElementById('backToMainFromAdminBtn').addEventListener('click', () =
     mainPage.style.display = 'block';
 });
 
-// SweetAlert2 Konfirmasi Reset Semua Database
+// Konfirmasi Reset Semua Database
 document.getElementById('clearAllHistoryBtn').addEventListener('click', () => {
     Swal.fire({
         title: 'Reset Database?',
         text: 'Apakah Anda yakin ingin menghapus SELURUH riwayat database secara permanen?',
-        icon: 'danger',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
         cancelButtonColor: '#3085d6',
@@ -273,6 +272,71 @@ document.getElementById('clearAllHistoryBtn').addEventListener('click', () => {
             });
         }
     });
+});
+
+// --- INTEGRASI LOGIN OTOMATIS GOOGLE IDENTITY SERVICES ---
+function handleCredentialResponse(response) {
+    const responsePayload = parseJwt(response.credential);
+
+    document.getElementById('userLoggedOut').style.display = 'none';
+    document.getElementById('userLoggedIn').style.display = 'flex';
+    
+    document.getElementById('userName').innerText = responsePayload.name;
+    document.getElementById('userEmail').innerText = responsePayload.email;
+    document.getElementById('userAvatar').src = responsePayload.picture;
+
+    localStorage.setItem('cleanplayer_user', JSON.stringify(responsePayload));
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil Masuk',
+        text: `Selamat datang kembali, ${responsePayload.name}!`,
+        timer: 2000,
+        showConfirmButton: false
+    });
+}
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
+function initGoogleSignIn() {
+    // Catatan: Ganti nilai client_id di bawah ini dengan Client ID asli kamu dari Google Cloud Console
+    const clientId = "19006760644-kustom.apps.googleusercontent.com"; 
+
+    try {
+        google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleCredentialResponse,
+            auto_select: true
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("googleBtnWrapper"),
+            { theme: "dark", size: "medium", type: "standard", shape: "pill" }
+        );
+
+        google.accounts.id.prompt();
+    } catch (err) {
+        console.log("Inisialisasi Google Auth memerlukan konfigurasi domain asal yang valid.");
+    }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    try {
+        google.accounts.id.disableAutoSelect();
+    } catch(e){}
+    
+    localStorage.removeItem('cleanplayer_user');
+    document.getElementById('userLoggedIn').style.display = 'none';
+    document.getElementById('userLoggedOut').style.display = 'flex';
+
+    Swal.fire({ icon: 'info', title: 'Logged Out', text: 'Kamu telah keluar dari akun.', timer: 1500, showConfirmButton: false });
 });
 
 // Pengatur Tema (Dark / Light Mode)
@@ -315,5 +379,16 @@ if(installBtn) {
 
 window.addEventListener('DOMContentLoaded', () => {
     loadSavedEqualizer();
+    initGoogleSignIn();
+
+    const savedUser = localStorage.getItem('cleanplayer_user');
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        document.getElementById('userLoggedOut').style.display = 'none';
+        document.getElementById('userLoggedIn').style.display = 'flex';
+        document.getElementById('userName').innerText = user.name;
+        document.getElementById('userEmail').innerText = user.email;
+        document.getElementById('userAvatar').src = user.picture;
+    }
 });
-          
+              
