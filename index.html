@@ -21,8 +21,8 @@
         </header>
         
         <div class="input-group">
-            <input type="text" id="videoUrl" placeholder="Ketik judul lagu / nama artis, atau paste link...">
-            <button id="playBtn">🔍 Cari / Putar</button>
+            <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
+            <button id="playBtn">Putar</button>
         </div>
 
         <div class="video-wrapper">
@@ -30,23 +30,14 @@
         </div>
 
         <div class="options">
-            <button class="btn-secondary" id="musicModeBtn">🎵 Mode Musik Saja</button>
-            <button class="btn-download id-dl-mp3" id="downloadMp3Btn">📥 Save MP3 ke Drive</button>
-            <button class="btn-download id-dl-mp4" id="downloadMp4Btn">🎥 Save MP4 ke Drive</button>
+            <button class="btn-secondary" id="musicModeBtn">Mode Musik Saja</button>
         </div>
 
-        <div class="search-results-section" id="searchResultsSection" style="display: none;">
-            <h3>🎵 Panel Hasil Pencarian Musik</h3>
-            <div class="search-iframe-wrapper">
-                <iframe id="searchIframe" src="" allowfullscreen></iframe>
-            </div>
-        </div>
-
-        <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">📲 Install Aplikasi CleanPlayer</button>
+        <button id="installAppBtn" style="display: none; margin: 20px auto 0 auto; background: #10b981; padding: 10px 20px; font-size: 0.85rem;">Install Aplikasi CleanPlayer</button>
 
         <div class="history-section">
             <div class="history-header">
-                <h3>🕒 Riwayat Putar Terakhir</h3>
+                <h3>Riwayat Putar Terakhir</h3>
                 <span class="db-badge">Realtime DB</span>
             </div>
             <ul class="history-list" id="historyList">
@@ -62,7 +53,7 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         var player;
-        window.currentVideoId = 'dQw4w9WgXcQ'; 
+        window.currentVideoId = 'dQw4w9WgXcQ'; // Lagu default awal
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
@@ -74,14 +65,17 @@
                     'rel': 0,
                     'modestbranding': 1,
                     'controls': 1,
-                    'autoplay': 1
+                    'autoplay': 0
                 }
             });
         }
 
+        // Registrasi Service Worker asli untuk fitur PWA (Installable)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
+                navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker terdaftar!', reg))
+                .catch(err => console.log('Service Worker gagal:', err));
             });
         }
     </script>
