@@ -9,6 +9,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CleanPlayer">
@@ -29,6 +31,28 @@
         </header>
         
         <div id="mainPage">
+            
+            <div id="userAuthSection" class="settings-item user-auth-box">
+                <div id="userLoggedOut" class="auth-flex">
+                    <div class="settings-info">
+                        <span class="settings-title">Masuk ke CleanPlayer</span>
+                        <span class="settings-desc">Gunakan akun Google aktif di perangkat kamu</span>
+                    </div>
+                    <div id="googleBtnWrapper"></div>
+                </div>
+                
+                <div id="userLoggedIn" class="auth-flex" style="display: none; width: 100%;">
+                    <div class="profile-meta">
+                        <img id="userAvatar" src="" alt="Avatar">
+                        <div class="settings-info">
+                            <span id="userName" class="settings-title">Nama Pengguna</span>
+                            <span id="userEmail" class="settings-desc">email@gmail.com</span>
+                        </div>
+                    </div>
+                    <button id="logoutBtn" class="btn-small btn-danger-outline">Keluar</button>
+                </div>
+            </div>
+
             <div class="input-group">
                 <input type="text" id="videoUrl" placeholder="Tempel link YouTube atau ID video di sini...">
                 <button id="playBtn">Putar</button>
