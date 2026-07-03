@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD9BmV4XKXuMWa4PZHpb7Bbt-rHs61m3lE",
@@ -34,85 +34,78 @@ function updateMediaSession(videoId) {
     }
 }
 
-function playAndSave(videoId) {
-    if (window.player && typeof window.player.loadVideoById === 'function') {
-        window.player.loadVideoById(videoId);
-        window.currentVideoId = videoId;
-        updateMediaSession(videoId);
-    }
-
-    const newHistoryRef = push(historyRef);
-    set(newHistoryRef, {
-        url: `https://www.youtube.com/watch?v=${videoId}`,
-        videoId: videoId,
-        timestamp: Date.now()
-    });
-}
-
-// Logic Pencarian Baru - Menggunakan metode embed youtube search
+// Handler klik tombol Putar
 document.getElementById('playBtn').addEventListener('click', () => {
-    const queryInput = document.getElementById('videoUrl').value.trim();
-    if (!queryInput) return alert('Bro, isi teks pencariannya dulu!');
+    const urlInput = document.getElementById('videoUrl').value.trim();
+    if (!urlInput) return alert('Isi dulu kolom link YouTube atau ID video!');
 
-    const directId = extractVideoId(queryInput);
+    const videoId = extractVideoId(urlInput);
 
-    if (directId) {
-        // Jika yang di-paste adalah Link / ID langsung, mainkan segera
-        document.getElementById('searchResultsSection').style.display = 'none';
-        playAndSave(directId);
-        document.getElementById('videoUrl').value = '';
-    } else {
-        // Jika yang diketik kata kunci, tampilkan daftar hasil dari embed aman youtube
-        const searchSection = document.getElementById('searchResultsSection');
-        const searchIframe = document.getElementById('searchIframe');
-        
-        // Memanfaatkan engine pemutar playlist/pencarian terintegrasi YouTube resmi
-        const searchEmbedUrl = `https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(queryInput)}&modestbranding=1`;
-        
-        searchIframe.src = searchEmbedUrl;
-        searchSection.style.display = 'block';
-        
-        // Simpan log pencarian kata kunci ke DB (opsional buat record kamu)
+    if (videoId) {
+        if (window.player && typeof window.player.loadVideoById === 'function') {
+            window.player.loadVideoById(videoId);
+            window.currentVideoId = videoId;
+            updateMediaSession(videoId);
+        }
+
         const newHistoryRef = push(historyRef);
         set(newHistoryRef, {
-            url: `Pencarian Kata Kunci: ${queryInput}`,
-            videoId: `Cari: "${queryInput}"`,
+            url: urlInput,
+            videoId: videoId,
             timestamp: Date.now()
         });
+
+        document.getElementById('videoUrl').value = '';
+    } else {
+        alert('Format tautan salah!');
     }
 });
 
-// Real-time Database Listener untuk History
+// Real-time Database Listener (Menampilkan riwayat + Tombol Hapus per Item)
 onValue(historyRef, (snapshot) => {
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
     const data = snapshot.val();
+    
     if (data) {
-        const items = Object.keys(data).map(key => data[key]).reverse();
+        const items = Object.keys(data).map(key => ({
+            id: key,
+            ...data[key]
+        })).reverse();
+
         items.slice(0, 15).forEach(item => {
-            if(!item.videoId) return;
             const li = document.createElement('li');
             li.className = 'history-item';
             const formattedTime = new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+            // Bagian ini sudah bersih dari seluruh emoji
             li.innerHTML = `
-                <span class="video-id-text">▶️ <strong>${item.videoId}</strong></span>
-                <span class="time-stamp">${formattedTime}</span>
+                <div class="history-clickable">
+                    <span class="video-id-text">ID Video: <strong>${item.videoId}</strong></span>
+                    <span class="time-stamp">${formattedTime}</span>
+                </div>
+                <button class="btn-delete-item" title="Hapus dari riwayat">X</button>
             `;
             
-            li.addEventListener('click', () => {
-                // Jangan eksekusi jika itu hanya log teks pencarian biasa
-                if(item.videoId.startsWith('Cari:')) {
-                    document.getElementById('videoUrl').value = item.videoId.replace('Cari: "', '').slice(0, -1);
-                    document.getElementById('playBtn').click();
-                } else {
-                    if (window.player && typeof window.player.loadVideoById === 'function') {
-                        window.player.loadVideoById(item.videoId);
-                        window.currentVideoId = item.videoId;
-                        updateMediaSession(item.videoId);
-                    }
+            li.querySelector('.history-clickable').addEventListener('click', () => {
+                if (window.player && typeof window.player.loadVideoById === 'function') {
+                    window.player.loadVideoById(item.videoId);
+                    window.currentVideoId = item.videoId;
+                    updateMediaSession(item.videoId);
                 }
             });
+
+            // Event klik tombol silang (X) untuk hapus data spesifik dari Firebase
+            li.querySelector('.btn-delete-item').addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                if(confirm("Hapus lagu ini dari riwayat database?")) {
+                    const itemRef = ref(db, `player_history/${item.id}`);
+                    remove(itemRef)
+                    .then(() => console.log("Berhasil dihapus!"))
+                    .catch(err => console.error("Gagal hapus:", err));
+                }
+            });
+
             historyList.appendChild(li);
         });
     } else {
@@ -126,23 +119,10 @@ document.getElementById('musicModeBtn').addEventListener('click', () => {
     const btn = document.getElementById('musicModeBtn');
     container.classList.toggle('music-mode');
     btn.classList.toggle('active');
-    btn.innerHTML = container.classList.contains('music-mode') ? "📺 Mode Video Player" : "🎵 Mode Musik Saja";
+    btn.innerHTML = container.classList.contains('music-mode') ? "Mode Video Player" : "Mode Musik Saja";
 });
 
-// Tombol Drive
-document.getElementById('downloadMp3Btn').addEventListener('click', () => {
-    const id = window.currentVideoId;
-    if (!id) return alert("Belum ada video yang dimuat, bro.");
-    window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
-});
-
-document.getElementById('downloadMp4Btn').addEventListener('click', () => {
-    const id = window.currentVideoId;
-    if (!id) return alert("Belum ada video yang dimuat, bro.");
-    window.open(`https://www.savetodrive.net/?url=https://www.youtube.com/watch?v=${id}`, '_blank');
-});
-
-// PWA prompt
+// PWA prompt untuk install ke home screen
 let deferredPrompt;
 const installBtn = document.getElementById('installAppBtn');
 window.addEventListener('beforeinstallprompt', (e) => {
