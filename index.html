@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube - Pemutar Tanpa Iklan</title>
+    <title>MiniTube - Pemutar Bebas Iklan</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -59,6 +59,7 @@
             <div class="sidebar-group">
                 <a href="#" class="sidebar-item"><i class="fas fa-history"></i> <span>Histori</span></a>
                 <a href="#" class="sidebar-item"><i class="fas fa-clock"></i> <span>Tonton Nanti</span></a>
+                <a href="#" class="sidebar-item"><i class="fas fa-thumbs-up"></i> <span>Video Disukai</span></a>
             </div>
         </aside>
 
@@ -67,92 +68,44 @@
             <div class="player-section">
                 <div class="video-wrapper">
                     <iframe id="main-youtube-player" 
-                            src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1" 
+                            src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1" 
                             title="YouTube video player" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                             allowfullscreen>
-                    </iframe >
+                    </iframe>
                 </div>
-                <h2 id="playing-title" class="playing-title">Selamat Datang di MiniTube - Klik video di bawah untuk memutar</h2>
-                <p id="playing-channel" class="playing-channel">Pilih pemutaran bebas iklan komersial eksternal</p>
+                <h2 id="playing-title" class="playing-title">Selamat Datang di MiniTube - Pemutar Video YouTube Bebas Iklan</h2>
+                <p id="playing-channel" class="playing-channel">Silakan pilih atau cari video di bawah untuk mulai memutar</p>
                 <hr class="divider">
             </div>
 
             <div class="tags-container">
-                <span class="tag active">Semua</span>
-                <span class="tag">Musik</span>
-                <span class="tag">Pemrograman</span>
-                <span class="tag">Edukasi</span>
+                <span class="tag active">Musik Indonesia</span>
+                <span class="tag">Live Streaming</span>
+                <span class="tag">Gaming</span>
+                <span class="tag">Edukasi Web</span>
+                <span class="tag">Lo-Fi Beats</span>
             </div>
 
             <div class="video-grid">
-                
-                <div class="video-card" onclick="playVideo('dQw4w9WgXcQ', 'Rick Astley - Never Gonna Give You Up (Official Music Video)', 'Rick Astley')">
-                    <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Thumbnail">
-                        <span class="duration">03:32</span>
-                    </div>
-                    <div class="video-details">
-                        <img class="channel-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" alt="Channel">
-                        <div class="video-text">
-                            <h3 class="video-title">Rick Astley - Never Gonna Give You Up (Official Music Video)</h3>
-                            <p class="channel-name">Rick Astley <i class="fas fa-check-circle verification-badge"></i></p>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="video-card" onclick="playVideo('d747_6I37n8', 'Belajar HTML & CSS Lengkap Untuk Pemula dari Dasar', 'Web Programming UNPAS')">
-                    <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://img.youtube.com/vi/d747_6I37n8/mqdefault.jpg" alt="Thumbnail">
-                        <span class="duration">45:20</span>
-                    </div>
-                    <div class="video-details">
-                        <img class="channel-avatar" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100" alt="Channel">
-                        <div class="video-text">
-                            <h3 class="video-title">Belajar HTML & CSS Lengkap Untuk Pemula dari Dasar</h3>
-                            <p class="channel-name">Web Programming UNPAS</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card" onclick="playVideo('jfKfPfyJRdk', 'lofi hip hop radio 📚 beats to relax/study to', 'Lofi Girl')">
-                    <div class="thumbnail-container">
-                        <img class="thumbnail" src="https://img.youtube.com/vi/jfKfPfyJRdk/mqdefault.jpg" alt="Thumbnail">
-                        <span class="duration">LIVE</span>
-                    </div>
-                    <div class="video-details">
-                        <img class="channel-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Channel">
-                        <div class="video-text">
-                            <h3 class="video-title">lofi hip hop radio 📚 beats to relax/study to</h3>
-                            <p class="channel-name">Lofi Girl <i class="fas fa-check-circle verification-badge"></i></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </main>
     </div>
 
     <script>
-        // Fungsi untuk mengganti video yang sedang diputar di iframe
+        // Fungsi mengganti video di player utama
         function playVideo(videoId, title, channel) {
             const player = document.getElementById('main-youtube-player');
-            
-            // Mengubah source iframe dengan parameter pelindung iklan & auto play
-            // modestbranding=1 (menyembunyikan logo YouTube besar)
-            // rel=0 (mencegah rekomendasi video acak di akhir)
             player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1`;
             
-            // Perbarui judul teks di bawah player
             document.getElementById('playing-title').innerText = title;
             document.getElementById('playing-channel').innerText = channel;
             
-            // Otomatis scroll halus ke atas biar player langsung kelihatan di HP
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Handler Google Sign-In
+        // Handler Google Login
         function handleCredentialResponse(response) {
             const responsePayload = parseJwt(response.credential);
             document.getElementById("google-login-wrapper").classList.add("hidden");
@@ -170,5 +123,7 @@
             return JSON.parse(jsonPayload);
         }
     </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
