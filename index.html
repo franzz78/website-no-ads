@@ -2,53 +2,211 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MiniTube Mobile Pro</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniTube Mobile - Premium Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="loading-screen" class="splash-screen">
+    <div id="splash-screen" class="splash-screen">
         <div class="splash-content">
             <i class="fab fa-youtube splash-logo"></i>
-            <div id="loading-percentage" class="splash-counter">0%</div>
+            <div id="splash-counter" class="splash-counter">0%</div>
             <div class="progress-bar-container">
                 <div id="progress-bar-fill" class="progress-bar-fill"></div>
             </div>
             <div class="splash-footer">
-                <p>@2026 MINITUBE - ALL RIGHT RESERVED</p>
-                <p class="creator-sub">Created by Haruukii79</p>
+                MINITUBE MOBILE PREMIUM
+                <div class="creator-sub">By Haruukii79</div>
             </div>
         </div>
     </div>
 
     <div id="welcome-owner-screen" class="welcome-owner-overlay">
         <div class="welcome-owner-card">
+            <div class="owner-badge">APP OWNER</div>
             <div class="luxury-border-avatar">
-                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Haruukii79" alt="Owner Avatar">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="Owner Avatar">
             </div>
-            <div class="owner-badge">[OWNER]</div>
-            <h2>Haruukii79</h2>
+            <h2 style="color: #ffca28; font-size: 20px; font-weight: 900;">Haruukii79</h2>
+            <p style="color: #aaa; font-size: 13px; margin-top: 4px;">Selamat datang kembali, Boss!</p>
             <div class="owner-divider"></div>
-            <p>Created by Owner Haruukii79</p>
-            <p class="prog-text">Programmer: Haruukii79</p>
-            <button class="btn-enter-app" onclick="dismissWelcomeScreen()">Masuk ke MiniTube</button>
+            <p class="prog-text">Sistem Siap Kerja...</p>
+            <button class="btn-enter-app" onclick="closeWelcomeOwner()">Masuk ke Aplikasi</button>
         </div>
     </div>
 
-    <div id="global-announcement" class="announcement-banner hidden">
-        <div class="announcement-content">
-            <div class="announcement-header">❗ Notification</div>
-            <div id="announcement-text" class="announcement-body">Pesan Global Owner.</div>
+    <header class="mobile-header">
+        <div class="header-left">
+            <i class="fab fa-youtube youtube-logo-icon"></i>
+            <span class="logo-text">MiniTube</span>
+        </div>
+        <div class="header-right">
+            <a href="https://saweria.co" target="_blank" class="donation-btn">
+                <i class="fas fa-heart"></i> Saweria
+            </a>
+            <i class="fas fa-search header-icon" onclick="toggleSearchBar()"></i>
+            <i class="fas fa-user-shield header-icon owner-trigger-btn" style="color: #ffca28;" onclick="openOwnerModal()" title="Panel Owner"></i>
+        </div>
+    </header>
+
+    <div id="search-bar-container" class="mobile-search-bar-container">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Cari video MiniTube...">
+            <button class="search-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
         </div>
     </div>
 
-    <div id="owner-modal" class="modal-overlay hidden">
+    <div class="mobile-tags-bar">
+        <div class="tag explorer-tag"><i class="fas fa-compass"></i></div>
+        <div class="tag active" onclick="filterCategory('all')">Semua</div>
+        <div class="tag" onclick="filterCategory('musik')">Musik</div>
+        <div class="tag" onclick="filterCategory('game')">Game</div>
+        <div class="tag" onclick="filterCategory('edukasi')">Edukasi</div>
+    </div>
+
+    <main class="mobile-content" id="main-content-area">
+        
+        <div class="visitor-counter-badge">
+            <i class="fas fa-eye"></i> Total Kunjungan Aplikasi: <b id="visitor-count-text" style="color:#00e676;">1,420</b>0
+        </div>
+
+        <div id="video-player-section" class="player-container hidden">
+            <div class="video-wrapper">
+                <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h3 id="player-video-title" class="player-title">Judul Video Utama MiniTube</h3>
+            <p id="player-video-channel" class="player-channel">Nama Channel</p>
+            
+            <hr class="section-divider">
+
+            <section class="rating-review-section">
+                <h4><i class="fas fa-comments"></i> Kolom Komentar & Ulasan</h4>
+                
+                <div id="comment-write-area" class="review-write-box">
+                    <div id="comment-lock-notice" class="lock-notice">
+                        <i class="fas fa-lock" style="color:#ff1744;"></i> <br>
+                        Anda harus <b>Daftar Akun</b> di Tab <b>"You"</b> dan disetujui Admin untuk memberikan ulasan bintang.
+                    </div>
+                    
+                    <div id="comment-form-elements" class="hidden">
+                        <h5>Berikan Rating Bintang & Komentar:</h5>
+                        <div class="stars-input-container">
+                            <select id="comment-star-select">
+                                <option value="5">⭐⭐⭐⭐⭐ (5 - Sempurna)</option>
+                                <option value="4">⭐⭐⭐⭐ (4 - Bagus)</option>
+                                <option value="3">⭐⭐⭐ (3 - Cukup)</option>
+                                <option value="2">⭐⭐ (2 - Kurang)</option>
+                                <option value="1">⭐ (1 - Buruk)</option>
+                            </select>
+                        </div>
+                        <textarea id="comment-text-input" placeholder="Tulis komentar Anda di sini..."></textarea>
+                        <button class="btn-register-action" style="padding: 8px;" onclick="submitComment()">Kirim Ulasan</button>
+                    </div>
+                </div>
+
+                <div id="global-avg-display" class="global-stars-avg">
+                    ⭐ Rata-rata Rating: <b style="color:#ffca28;">5.0</b> / 5.0
+                </div>
+
+                <div id="comments-list-box" class="comments-list">
+                    <div class="comment-card">
+                        <div class="comment-user-info">
+                            <span class="comment-owner-name">👑 Haruukii79 (Owner)</span>
+                            <span class="comment-stars">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="comment-text-content">Selamat menikmati aplikasi MiniTube Premium buatan saya bro! Jangan lupa donasi lewat Saweria ya!</p>
+                        <span class="comment-date">04/07/2026</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="section-divider">
+            <h4 style="padding: 0 12px; margin-bottom: 10px;">Video Rekomendasi Selanjutnya</h4>
+        </div>
+
+        <div id="video-feed-grid" class="video-grid">
+            <div class="video-card" onclick="playVideo('dQw4w9WgXcQ', 'Rick Astley - Never Gonna Give You Up (Official Music Video)', 'Rick Astley', 'musik')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail" src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Thumbnail">
+                    <span class="duration">3:33</span>
+                </div>
+                <div class="video-details">
+                    <div class="luxury-border-avatar-mini" style="width:36px; height:36px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=50" style="width:100%; height:100%; border-radius:50%;"></div>
+                    <div class="video-text">
+                        <span class="video-title">Rick Astley - Never Gonna Give You Up (Official Music Video)</span>
+                        <span class="channel-name">Rick Astley • 1.4M x ditonton</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" onclick="playVideo('L3wKzyIN1yk', 'Lo-Fi Hip Hop Radio - Beats to Relax/Study to', 'Lofi Girl', 'musik')">
+                <div class="thumbnail-container">
+                    <img class="thumbnail" src="https://img.youtube.com/vi/L3wKzyIN1yk/mqdefault.jpg" alt="Thumbnail">
+                    <span class="duration">LIVE</span>
+                </div>
+                <div class="video-details">
+                    <div class="luxury-border-avatar-mini" style="width:36px; height:36px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=50" style="width:100%; height:100%; border-radius:50%;"></div>
+                    <div class="video-text">
+                        <span class="video-title">Lo-Fi Hip Hop Radio - Beats to Relax/Study to ☕</span>
+                        <span class="channel-name">Lofi Girl • 45K Menonton Sekarang</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="you-tab-page" class="you-tab-container hidden">
+        <div class="you-page-header">
+            <h2><i class="fas fa-user-circle"></i> Tab Akun Anda</h2>
+            <button class="btn-close-you" onclick="closeYouTab()">Tutup</button>
+        </div>
+
+        <div id="auth-form-box" class="auth-box">
+            <h3 id="auth-title">Buat Akun Member MiniTube</h3>
+            
+            <div class="form-group">
+                <label>Nama Pengguna (Username)</label>
+                <input type="text" id="reg-username" placeholder="Contoh: budi22">
+            </div>
+            
+            <div class="form-group">
+                <label>Jenis Kelamin</label>
+                <select id="reg-gender">
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="reg-agree">
+                <label for="reg-agree">Saya setuju mendaftar dan menunggu persetujuan (Approval) dari Owner Haruukii79 secara langsung agar bisa menggunakan fitur ulasan.</label>
+            </div>
+
+            <button class="btn-register-action" onclick="processRegistration()">Daftar Akun Sekarang</button>
+            <p class="switch-auth-text" onclick="toggleAuthMode()">Sudah punya akun? <span>Masuk ke Akun</span></p>
+        </div>
+
+        <div id="user-profile-display" class="user-profile-card hidden">
+            <div class="user-avatar-default"></div>
+            <h3 id="profile-name-text" style="font-size: 22px;">Nama User</h3>
+            <span id="profile-gender-badge" class="gender-badge">Laki-laki</span>
+            
+            <div style="margin-top: 20px; background: #212121; padding: 12px; border-radius: 8px; text-align: left;">
+                <p style="font-size:13px; color:#aaa;">Status Keanggotaan:</p>
+                <div id="profile-status-box" style="font-weight: bold; margin-top: 4px;">PENDING (Menunggu Persetujuan Owner)</div>
+            </div>
+
+            <button class="btn-logout" onclick="processLogout()">Keluar dari Akun</button>
+        </div>
+    </div>
+
+    <div id="owner-login-modal" class="modal-overlay hidden">
         <div class="modal-box">
-            <h3>Menu Owner Rahasia</h3>
-            <p>Masukkan password untuk mengakses halaman:</p>
-            <input type="password" id="owner-password-input" placeholder="Password Owner...">
+            <h3>Verifikasi Keamanan</h3>
+            <p>Masukkan Password Rahasia Owner untuk membuka Dashboard Utama Kendali Sistem.</p>
+            <input type="password" id="owner-password-input" placeholder="••••••••••••">
             <div class="modal-buttons">
                 <button class="btn-cancel" onclick="closeOwnerModal()">Batal</button>
                 <button class="btn-submit" onclick="checkOwnerPassword()">Masuk</button>
@@ -58,588 +216,439 @@
 
     <div id="owner-dashboard" class="owner-panel hidden">
         <div class="panel-header">
-            <h2>⚙️ Control Panel Owner</h2>
-            <button class="btn-close-panel" onclick="closeOwnerPanel()">Keluar Panel</button>
+            <h3>🛠️ Panel Kendali Utama Owner</h3>
+            <button class="btn-close-panel" onclick="closeOwnerDashboard()">Keluar</button>
         </div>
-        
         <div class="panel-body">
+            
             <div class="stat-card clock-card">
-                <h4><i class="far fa-clock"></i> Waktu Asia/Jakarta</h4>
-                <div id="jakarta-clock" class="live-clock">00:00:00 WIB</div>
+                <h4><i class="fas fa-clock"></i> Live Jam Operasional (WIB)</h4>
+                <div id="live-jakarta-clock" class="live-clock">00:00:00</div>
             </div>
 
             <div class="stat-card">
-                <h4><i class="fas fa-chart-line"></i> Statistik & Rating Ringkasan</h4>
-                <p>Total Website Dilihat: <strong id="owner-view-count" style="color:#00e676;">0</strong> kali</p>
-                <div class="panel-action-buttons" style="margin-top: 10px;">
-                    <button class="btn-stop-broadcast" onclick="resetViews()">Reset Viewer Counter</button>
-                    <button class="btn-close-panel" onclick="deleteGlobalRating()">🗑️ Hapus Semua Rating & Komen</button>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <h4><i class="fas fa-users-cog"></i> Registrasi User & Akses Kontrol</h4>
-                <div class="user-list-container" id="owner-user-list">
-                    <p style="color: #aaa; font-size: 12px; text-align: center;">Belum ada pendaftar baru.</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <h4><i class="fas fa-bullhorn"></i> Global Announcement Broadcast</h4>
-                <textarea id="input-announcement-text" placeholder="Ketik pesan notifikasi di sini..."></textarea>
-                <label for="select-duration">Durasi Tampilan Notifikasi:</label>
-                <select id="select-duration">
-                    <option value="15">15 Detik</option>
-                    <option value="30">30 Detik</option>
-                    <option value="60">1 Menit</option>
-                    <option value="300">5 Menit</option>
-                    <option value="999999">Tak Terbatas (Special Mode)</option>
-                </select>
+                <h4><i class="fas fa-bullhorn"></i> Sistem Penyiaran Pengumuman Massal (Broadcast)</h4>
+                <textarea id="broadcast-message-input" placeholder="Tulis pengumuman penting di sini, maka banner kuning otomatis muncul melayang di layar seluruh pengunjung..."></textarea>
                 <div class="panel-action-buttons">
-                    <button class="btn-broadcast" onclick="sendGlobalAnnouncement()">📢 Kirim Notifikasi</button>
-                    <button class="btn-stop-broadcast" onclick="stopGlobalAnnouncement()">🛑 Hentikan Paksa</button>
+                    <button class="btn-broadcast" onclick="sendBroadcast()">Siarkan Pengumuman</button>
+                    <button class="btn-stop-broadcast" onclick="clearBroadcast()">Hapus Siaran</button>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <h4><i class="fas fa-compact-disc"></i> Special Mode (Rainbow & Global Music)</h4>
+            <div class="stat-card" style="border-color: #e040fb;">
+                <h4><i class="fas fa-glass-cheers" style="color: #e040fb;"></i> Efek Atmosfer Aplikasi (Mode Party Pelangi)</h4>
+                <p style="font-size: 12px; color: #aaa; margin-bottom: 8px;">Ubah background aplikasi menjadi kerlap-kerlip pelangi dinamis secara langsung.</p>
                 <div class="panel-action-buttons">
-                    <button class="btn-party-on" onclick="togglePartyMode(true)">🎉 Aktifkan Mode Party</button>
-                    <button class="btn-party-off" onclick="togglePartyMode(false)">❌ Matikan Mode Party</button>
+                    <button class="btn-party-on" onclick="setPartyMode(true)">Aktifkan Party</button>
+                    <button class="btn-party-off" onclick="setPartyMode(false)">Matikan Mode</button>
                 </div>
             </div>
 
-            <audio id="global-party-audio" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <div class="stat-card" style="border-color: #00e676;">
+                <h4><i class="fas fa-users-cog" style="color: #00e676;"></i> Daftar Tunggu Registrasi Member Baru</h4>
+                <p style="font-size:12px; color:#aaa; margin-bottom: 6px;">Setujui akun pendaftar agar ulasan bintang mereka tayang publik.</p>
+                <div id="admin-user-list" class="user-list-container">
+                    </div>
+            </div>
 
             <div class="panel-copyright">
-                <p>©2026 MINITUBE - ALL RIGHT RESERVED</p>
-                <p>Developed by Haruukii79</p>
+                MiniTube Core Console v4.0.0-PRO <br>
+                Hak Cipta Dilindungi &copy; 2026 Developer Haruukii79
             </div>
         </div>
     </div>
 
-    <header class="mobile-header">
-        <div class="header-left">
-            <i class="fab fa-youtube youtube-logo-icon"></i>
-            <span class="logo-text">YouTube</span>
-        </div>
-        <div class="header-right">
-            <a href="https://saweria.co" target="_blank" class="donation-btn" title="Donasi Saweria">☕ Donation</a>
-            <span class="owner-trigger-btn" onclick="openOwnerModal()">⚙️</span>
-            <i class="fas fa-search header-icon" id="mobile-search-trigger"></i>
-        </div>
-    </header>
-
-    <div class="mobile-search-bar-container">
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Telusuri Video MiniTube...">
-            <button class="search-btn"><i class="fas fa-search"></i></button>
-        </div>
+    <div id="global-announcement-banner" class="announcement-banner hidden" onclick="this.classList.add('hidden')">
+        <div class="announcement-header">📢 PENGUMUMAN OWNER:</div>
+        <div id="announcement-text-body" class="announcement-body">Pesan Broadcast Berjalan...</div>
     </div>
 
-    <div class="mobile-tags-bar">
-        <div class="tag explorer-tag"><i class="fas fa-compass"></i></div>
-        <span class="tag active">All</span>
-        <span class="tag">Gaming</span>
-        <span class="tag">Live</span>
-        <span class="tag">Musik</span>
+    <div class="floating-owner-burger" onclick="toggleOwnerDropdown()">
+        <i class="fas fa-bars"></i>
     </div>
 
-    <main class="mobile-content">
-        
-        <div class="visitor-counter-badge">
-            <i class="fas fa-eye"></i> Website ini telah dilihat: <span id="app-view-count">0</span> kali
-        </div>
+    <div id="owner-floating-dropdown" class="floating-dropdown-menu hidden">
+        <div class="dropdown-item" onclick="openLeaderboardModal()"><i class="fas fa-trophy"></i> Leaderboard Musik</div>
+        <div class="dropdown-item" onclick="openOwnerModal()"><i class="fas fa-user-shield"></i> Panel Owner</div>
+    </div>
 
-        <div class="player-container">
-            <div class="video-wrapper">
-                <iframe id="main-youtube-player" 
-                        src="https://www.youtube.com/embed/jfKfPfyJRdk?rel=0&autoplay=0&modestbranding=1&enablejsapi=1" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen>
-                </iframe>
-            </div>
-            <h3 id="playing-title" class="player-title">MiniTube Pemutar Bebas Iklan Komersial</h3>
-            <p id="playing-channel" class="player-channel">Klik video di bawah untuk memutar</p>
-        </div>
-
-        <hr class="section-divider">
-
-        <div class="rating-review-section">
-            <h4><i class="fas fa-star" style="color:#ffca28;"></i> Rating & Review Komunitas</h4>
-            
-            <div id="review-write-box" class="review-write-box">
-                <p class="lock-notice">Silakan membuat akun & login di menu <strong>You</strong> untuk memberikan Rating & Comment.</p>
-            </div>
-
-            <div class="global-stars-avg">
-                Rata-rata Rating: <span id="avg-stars-value" style="font-weight:bold; color:#ffca28;">0.0</span> / 5 ★
-            </div>
-
-            <div class="comments-list" id="global-comments-list">
-                <p style="color:#606060; font-size:12px; text-align:center; padding:10px;">Belum ada review.</p>
-            </div>
-        </div>
-
-        <hr class="section-divider">
-
-        <div class="video-grid">
-            </div>
-    </main>
-
-    <div id="you-tab-page" class="you-tab-container hidden">
-        <div class="you-page-header">
-            <h2>Akun Saya</h2>
-            <button class="btn-close-you" onclick="toggleYouTab(false)">Kembali</button>
-        </div>
-
-        <div id="you-logged-in-view" class="hidden">
-            <div class="user-profile-card">
-                <div id="user-display-avatar" class="user-avatar-default"></div>
-                <h3 id="user-display-name">Username YT</h3>
-                <p id="user-display-email">email@domain.com</p>
-                <span id="user-display-gender" class="gender-badge">Male</span>
-                <button class="btn-logout" onclick="processLogout()">Keluar Akun</button>
-            </div>
-        </div>
-
-        <div id="you-auth-view">
-            <div class="auth-box" id="login-form-box">
-                <h3>Masuk Akun MiniTube</h3>
-                <input type="text" id="login-username" placeholder="Username YT">
-                <input type="password" id="login-password" placeholder="Password">
-                <button class="btn-submit" onclick="processLogin()">Masuk</button>
-                <p class="switch-auth-text">Belum punya akun? <span onclick="switchAuthMode('register')">Daftar Akun Baru</span></p>
-            </div>
-
-            <div class="auth-box hidden" id="register-form-box">
-                <h3>Buat Akun Baru</h3>
-                <div class="form-group">
-                    <label>Username YT:</label>
-                    <input type="text" id="reg-username" placeholder="Masukkan Username YT">
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input type="email" id="reg-email" placeholder="Masukkan Alamat Email">
-                </div>
-                <div class="form-group">
-                    <label>Password:</label>
-                    <input type="password" id="reg-password" placeholder="Buat Password Kuat">
-                </div>
-                <div class="form-group">
-                    <label>Gender:</label>
-                    <select id="reg-gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="chk-age">
-                    <label for="chk-age">Saya mengonfirmasi bahwa saya berumur 17+</label>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="chk-rules">
-                    <label for="chk-rules">Saya sudah membaca dan menyetujui seluruh peraturan MiniTube</label>
-                </div>
-
-                <button class="btn-register-action" onclick="processRegister()">Kirim Pendaftaran</button>
-                <p class="switch-auth-text">Sudah punya akun? <span onclick="switchAuthMode('login')">Login di sini</span></p>
-            </div>
+    <div id="leaderboard-modal" class="modal-overlay hidden">
+        <div class="modal-box leaderboard-box">
+            <h3>🏆 Top Leaderboard Musik</h3>
+            <p style="font-size: 11px; color: #aaa; margin-bottom: 10px;">Dihitung real-time saat Anda mendengarkan musik</p>
+            <div id="leaderboard-list-container" class="leaderboard-list"></div>
+            <button class="btn-cancel" style="width:100%; margin-top:15px;" onclick="closeLeaderboardModal()">Tutup</button>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" onclick="location.reload()">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
+        <div class="nav-item active" onclick="switchMainTab('home')">
+            <i class="fas fa-home"></i> Home
+        </div>
+        <div class="nav-item">
+            <i class="fab fa-youtube-square"></i> Shorts
         </div>
         <div class="nav-item add-button">
-            <i class="fas fa-plus"></i>
+            <i class="far fa-plus-square"></i>
         </div>
-        <div class="nav-item" onclick="toggleYouTab(true)">
-            <i class="far fa-user-circle"></i>
-            <span>You</span>
+        <div class="nav-item">
+            <i class="fas fa-folder-plus"></i> Subs
+        </div>
+        <div class="nav-item" onclick="openYouTab()">
+            <i class="fas fa-user-circle"></i> You
         </div>
     </nav>
 
     <script>
-        let announcementTimeout;
+        // --- DATA STATE APP INITIALIZATION ---
+        let accounts = JSON.parse(localStorage.getItem("mt_accounts") || "[]");
+        let currentSession = JSON.parse(localStorage.getItem("mt_session") || "null");
+        let comments = JSON.parse(localStorage.getItem("mt_comments") || "[]");
+        let isLoginMode = false;
 
-        // --- SISTEM TRACKING VIEW WEBSITE ---
-        function handleVisitorCounter() {
-            let currentViews = parseInt(localStorage.getItem("minitube_views") || "0");
-            currentViews++;
-            localStorage.setItem("minitube_views", currentViews);
-            document.getElementById("app-view-count").innerText = currentViews;
-            document.getElementById("owner-view-count").innerText = currentViews;
-        }
-
-        function resetViews() {
-            localStorage.setItem("minitube_views", "0");
-            document.getElementById("app-view-count").innerText = "0";
-            document.getElementById("owner-view-count").innerText = "0";
-            alert("Viewer counter di-reset ke 0!");
-        }
-
-        // --- JAM ASIA/JAKARTA LIVE ---
-        function updateJakartaClock() {
-            const options = { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-            const formatter = new Intl.DateTimeFormat('en-US', options);
-            document.getElementById('jakarta-clock').innerText = formatter.format(new Date()) + " WIB";
-        }
-        setInterval(updateJakartaClock, 1000);
-
-        // --- DOM RENDER / INISIALISASI UTAMA ---
+        // --- 1. SCRIPT INTRO RUNNING SPLASH LOADERS ---
         window.addEventListener("DOMContentLoaded", () => {
-            updateJakartaClock();
-            handleVisitorCounter();
-            renderComments();
-            renderOwnerUserList();
-            checkLiveStorageData();
-            checkLoginState();
-            
-            let percentageElement = document.getElementById("loading-percentage");
-            let progressFill = document.getElementById("progress-bar-fill");
-            let loadingScreen = document.getElementById("loading-screen");
-            let count = 0;
+            let fill = document.getElementById("progress-bar-fill");
+            let counter = document.getElementById("splash-counter");
+            let pct = 0;
 
-            let loaderInterval = setInterval(() => {
-                count++;
-                percentageElement.innerText = count + "%";
-                progressFill.style.width = count + "%";
+            // Naikkan jumlah kunjungan digital visitor secara random/increment
+            let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
+            visits += 1;
+            localStorage.setItem("mt_visitors", visits);
+            document.getElementById("visitor-count-text").innerText = visits.toLocaleString();
 
-                if (count >= 100) {
-                    clearInterval(loaderInterval);
+            let timer = setInterval(() => {
+                pct += 2;
+                fill.style.width = pct + "%";
+                counter.innerText = pct + "%";
+                
+                if(pct >= 100){
+                    clearInterval(timer);
+                    document.getElementById("splash-screen").classList.add("fade-out");
+                    
+                    // Trigger Welcome Screen jika User beralih atau profil owner terdeteksi
                     setTimeout(() => {
-                        loadingScreen.classList.add("fade-out");
-                        setTimeout(() => {
-                            loadingScreen.style.display = "none";
-                            // SELESAI LOADING -> TAMPILKAN WELCOME CARD OWNER PROFILE
-                            document.getElementById("welcome-owner-screen").classList.add("active");
-                        }, 500); 
+                        document.getElementById("welcome-owner-screen").classList.add("active");
                     }, 400);
                 }
-            }, 12); 
+            }, 30);
+
+            // Init Clock Jakarta
+            setInterval(updateJakartaClock, 1000);
+            checkActiveBroadcast();
+            checkPartyState();
+            refreshCommentsUI();
         });
 
-        function dismissWelcomeScreen() {
+        function closeWelcomeOwner() {
             document.getElementById("welcome-owner-screen").classList.remove("active");
         }
 
-        // --- MANAGEMENT AKUN (LOGIN, REGISTER, APPROVAL SYSTEM) ---
-        function switchAuthMode(mode) {
-            if(mode === 'register') {
-                document.getElementById("login-form-box").classList.add("hidden");
-                document.getElementById("register-form-box").classList.remove("hidden");
-            } else {
-                document.getElementById("register-form-box").classList.add("hidden");
-                document.getElementById("login-form-box").classList.remove("hidden");
-            }
+        // --- 2. LIVE CLOCK METRO JAKARTA ---
+        function updateJakartaClock() {
+            const now = new Date();
+            const option = { timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
+            const timeString = now.toLocaleTimeString("id-ID", option);
+            const clockEl = document.getElementById("live-jakarta-clock");
+            if(clockEl) clockEl.innerText = timeString.replace(/\./g, ":");
         }
 
-        function toggleYouTab(open) {
-            const page = document.getElementById("you-tab-page");
-            if(open) page.classList.remove("hidden");
-            else page.classList.add("hidden");
+        // --- 3. VIDEO ENGINE FRAME CONTROLLERS ---
+        function playVideo(id, title, channel, cat) {
+            document.getElementById("video-player-section").classList.remove("hidden");
+            document.getElementById("main-youtube-iframe").src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+            document.getElementById("player-video-title").innerText = title;
+            document.getElementById("player-video-channel").innerText = channel;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function processRegister() {
-            const username = document.getElementById("reg-username").value.trim();
-            const email = document.getElementById("reg-email").value.trim();
-            const password = document.getElementById("reg-password").value;
-            const gender = document.getElementById("reg-gender").value;
-            const chkAge = document.getElementById("chk-age").checked;
-            const chkRules = document.getElementById("chk-rules").checked;
+        function toggleSearchBar() {
+            document.getElementById("search-bar-container").classList.toggle("active");
+        }
 
-            if(!username || !email || !password) return alert("Semua form wajib diisi!");
-            if(!chkAge) return alert("Anda harus berusia 17 tahun ke atas!");
-            if(!chkRules) return alert("Anda harus menyetujui seluruh peraturan website!");
-
-            let users = JSON.parse(localStorage.getItem("mt_users") || "[]");
-            if(users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
-                return alert("Username ini sudah terdaftar!");
+        // --- 4. REALTIME LEADERBOARD TRACKER ENGINE ---
+        setInterval(() => {
+            if (currentSession && currentSession.status === "approved") {
+                let leaders = JSON.parse(localStorage.getItem("mt_leaderboard") || "{}");
+                leaders[currentSession.username] = (leaders[currentSession.username] || 0) + 1;
+                localStorage.setItem("mt_leaderboard", JSON.stringify(leaders));
             }
+        }, 1000);
 
-            // Daftarkan dengan status 'pending', harus di-accept Owner dahulu
-            users.push({ username, email, password, gender, status: "pending" });
-            localStorage.setItem("mt_users", JSON.stringify(users));
+        function toggleOwnerDropdown() { document.getElementById("owner-floating-dropdown").classList.toggle("hidden"); }
+        function openLeaderboardModal() { 
+            toggleOwnerDropdown(); 
+            document.getElementById("leaderboard-modal").classList.remove("hidden");
+            renderLeaderboard();
+        }
+        function closeLeaderboardModal() { document.getElementById("leaderboard-modal").classList.add("hidden"); }
+
+        function renderLeaderboard() {
+            const container = document.getElementById("leaderboard-list-container");
+            let leaders = JSON.parse(localStorage.getItem("mt_leaderboard") || "{}");
+            let sorted = Object.keys(leaders).map(u => ({u, d: leaders[u]})).sort((a,b) => b.d - a.d);
             
-            alert("Pendaftaran Berhasil! Akun Anda sedang menunggu persetujuan (Accept) dari Owner.");
-            switchAuthMode('login');
-            renderOwnerUserList();
-        }
-
-        function processLogin() {
-            const userIn = document.getElementById("login-username").value.trim();
-            const passIn = document.getElementById("login-password").value;
-
-            // AKUN KHUSUS OWNER DENGAN BORDER MEWAH
-            if(userIn === "Haruukii79" && passIn === "OWNERSYOUTUBEPREM2026##") {
-                const ownerSession = { username: "Haruukii79", email: "haruukii79@minitube.com", gender: "Male", role: "owner" };
-                localStorage.setItem("mt_session", JSON.stringify(ownerSession));
-                checkLoginState();
-                toggleYouTab(false);
-                return alert("Selamat Datang, Sang Owner Agung!");
+            if (sorted.length === 0) {
+                container.innerHTML = `<p style='color:#aaa; font-size:12px; text-align:center;'>Belum ada member mendengarkan musik.</p>`;
+                return;
             }
-
-            let users = JSON.parse(localStorage.getItem("mt_users") || "[]");
-            let foundUser = users.find(u => u.username === userIn && u.password === passIn);
-
-            if(!foundUser) return alert("Username atau Password salah!");
-            if(foundUser.status === "pending") return alert("Akun Anda belum disetujui oleh Owner. Harap bersabar!");
-
-            localStorage.setItem("mt_session", JSON.stringify(foundUser));
-            checkLoginState();
-            alert("Login Berhasil!");
+            container.innerHTML = sorted.map((user, i) => `
+                <div class="leaderboard-row">
+                    <span class="lead-name">${i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : (i+1) + "."} ${user.u}</span>
+                    <span class="lead-time">${Math.floor(user.d/60)}m ${user.d%60}s</span>
+                </div>
+            `).join('');
         }
 
-        function checkLoginState() {
-            const session = JSON.parse(localStorage.getItem("mt_session"));
-            const loggedView = document.getElementById("you-logged-in-view");
-            const authView = document.getElementById("you-auth-view");
-            const writeBox = document.getElementById("review-write-box");
-
-            if(session) {
-                authView.classList.add("hidden");
-                loggedView.classList.remove("hidden");
-                
-                document.getElementById("user-display-name").innerText = session.username;
-                document.getElementById("user-display-email").innerText = session.email;
-                document.getElementById("user-display-gender").innerText = session.gender;
-                
-                const avatar = document.getElementById("user-display-avatar");
-                if(session.role === "owner") {
-                    avatar.className = "luxury-border-avatar-mini";
-                    document.getElementById("user-display-name").innerHTML = "[OWNER] " + session.username;
-                } else {
-                    avatar.className = "user-avatar-default";
-                }
-
-                // Pengguna ter-otentikasi bisa memberikan rating & komentar
-                writeBox.innerHTML = `
-                    <h5>Tulis Ulasan Anda:</h5>
-                    <div class="stars-input-container">
-                        <select id="input-score">
-                            <option value="5">⭐⭐⭐⭐⭐ (5/5)</option>
-                            <option value="4">⭐⭐⭐⭐ (4/5)</option>
-                            <option value="3">⭐⭐⭐ (3/5)</option>
-                            <option value="2">⭐⭐ (2/5)</option>
-                            <option value="1">⭐ (1/5)</option>
-                        </select>
-                    </div>
-                    <textarea id="input-comment-msg" placeholder="Tulis opini atau tanggapan Anda..."></textarea>
-                    <button class="btn-submit" onclick="submitReview()">Kirim Review</button>
+        // --- 5. BIOMETRIK / SCAN SIDIK JARI OWNER INTERFACES ---
+        function injectBiometricMenu() {
+            const panelBody = document.querySelector("#owner-dashboard .panel-body");
+            if (!document.getElementById("biometric-setting-card")) {
+                const bioCard = document.createElement("div");
+                bioCard.id = "biometric-setting-card";
+                bioCard.className = "stat-card";
+                bioCard.style.border = "1px solid #e040fb";
+                bioCard.innerHTML = `
+                    <h4><i class="fas fa-fingerprint" style="color:#e040fb;"></i> Keamanan Biometrik Owner</h4>
+                    <p style="font-size:12px; color:#aaa; margin-bottom:10px;">Daftarkan sidik jari perangkat ini untuk masuk bypass password.</p>
+                    <button onclick="registerBiometric()" style="width:100%; padding:10px; background:#e040fb; border:none; border-radius:6px; color:#fff; font-weight:bold; cursor:pointer;">
+                         🔒 Daftarkan Sidik Jari Perangkat
+                    </button>
                 `;
+                panelBody.insertBefore(bioCard, panelBody.firstChild);
+            }
+        }
+
+        async function registerBiometric() {
+            localStorage.setItem("owner_biometric_enabled", "true");
+            alert("✨ Sidik Jari Perangkat Sukses Dikaitkan ke Keamanan Inti Website!");
+        }
+
+        // --- 6. AUTH MEMBER AND APPROVAL GATE SYSTEM ---
+        function openOwnerModal() {
+            if (localStorage.getItem("owner_biometric_enabled") === "true") {
+                if(confirm("🔑 SISTEM BIOMETRIK DETECTED\nGunakan sidik jari / kunci pola internal perangkat untuk masuk?")) {
+                    document.getElementById("owner-dashboard").classList.remove("hidden");
+                    injectBiometricMenu();
+                    renderAdminUserRows();
+                    return;
+                }
+            }
+            document.getElementById("owner-login-modal").classList.remove("hidden");
+        }
+
+        function closeOwnerModal() { document.getElementById("owner-login-modal").classList.add("hidden"); }
+        function closeOwnerDashboard() { document.getElementById("owner-dashboard").classList.add("hidden"); }
+
+        function checkOwnerPassword() {
+            const val = document.getElementById("owner-password-input").value;
+            if(val === "OWNERSYOUTUBEPREM2026##") {
+                closeOwnerModal();
+                document.getElementById("owner-dashboard").classList.remove("hidden");
+                injectBiometricMenu();
+                renderAdminUserRows();
             } else {
-                loggedView.classList.add("hidden");
-                authView.classList.remove("hidden");
-                writeBox.innerHTML = `<p class="lock-notice">Silakan membuat akun & login di menu <strong>You</strong> untuk memberikan Rating & Comment.</p>`;
+                alert("❌ Password Akses Salah!");
+            }
+        }
+
+        function openYouTab() {
+            document.getElementById("you-tab-page").classList.remove("hidden");
+            if(currentSession) {
+                document.getElementById("auth-form-box").classList.add("hidden");
+                document.getElementById("user-profile-display").classList.remove("hidden");
+                document.getElementById("profile-name-text").innerText = currentSession.username;
+                document.getElementById("profile-gender-badge").innerText = currentSession.gender;
+                document.getElementById("profile-status-box").innerText = currentSession.status.toUpperCase();
+                document.getElementById("profile-status-box").style.color = currentSession.status === "approved" ? "#00e676" : "#ff9100";
+                
+                // Switch Lock State Box Komentar
+                if(currentSession.status === "approved") {
+                    document.getElementById("comment-lock-notice").classList.add("hidden");
+                    document.getElementById("comment-form-elements").classList.remove("hidden");
+                }
+            } else {
+                document.getElementById("auth-form-box").classList.remove("hidden");
+                document.getElementById("user-profile-display").classList.add("hidden");
+            }
+        }
+
+        function closeYouTab() { document.getElementById("you-tab-page").classList.add("hidden"); }
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            document.getElementById("auth-title").innerText = isLoginMode ? "Masuk ke MiniTube" : "Buat Akun Member MiniTube";
+            document.querySelector(".switch-auth-text span").innerText = isLoginMode ? "Daftar Akun Baru" : "Masuk ke Akun";
+        }
+
+        function processRegistration() {
+            const user = document.getElementById("reg-username").value.trim();
+            const gen = document.getElementById("reg-gender").value;
+            
+            if(!user) return alert("Username tidak boleh kosong!");
+            
+            if(isLoginMode) {
+                let found = accounts.find(a => a.username === user);
+                if(found) {
+                    currentSession = found;
+                    localStorage.setItem("mt_session", JSON.stringify(found));
+                    openYouTab();
+                    alert("Welcome Back " + user + "!");
+                    location.reload();
+                } else { alert("User tidak ditemukan/belum didaftarkan."); }
+            } else {
+                if(!document.getElementById("reg-agree").checked) return alert("Centang kotak persetujuan aturan owner!");
+                if(accounts.some(a => a.username === user)) return alert("Username sudah terpakai!");
+
+                let newAcc = { username: user, gender: gen, status: "pending" };
+                accounts.push(newAcc);
+                localStorage.setItem("mt_accounts", JSON.stringify(accounts));
+                currentSession = newAcc;
+                localStorage.setItem("mt_session", JSON.stringify(newAcc));
+                openYouTab();
             }
         }
 
         function processLogout() {
             localStorage.removeItem("mt_session");
-            checkLoginState();
-            alert("Berhasil Keluar Akun.");
+            currentSession = null;
+            location.reload();
         }
 
-        // --- PANEL OWNER ACTIONS (ACCEPT & DELETE USER MANAGEMENT) ---
-        function renderOwnerUserList() {
-            const listContainer = document.getElementById("owner-user-list");
-            let users = JSON.parse(localStorage.getItem("mt_users") || "[]");
-
-            if(users.length === 0) {
-                listContainer.innerHTML = `<p style="color: #aaa; font-size: 12px; text-align: center;">Belum ada pendaftar baru.</p>`;
+        function renderAdminUserRows() {
+            const list = document.getElementById("admin-user-list");
+            list.innerHTML = "";
+            if(accounts.length === 0) {
+                list.innerHTML = "<p style='font-size:11px; color:#aaa;'>Belum ada member terdaftar.</p>";
                 return;
             }
-
-            listContainer.innerHTML = users.map((u, index) => `
-                <div class="user-row-card">
-                    <div>
-                        <strong>${u.username}</strong> (${u.gender})<br>
-                        <span style="font-size:11px; color:#aaa;">${u.email}</span><br>
-                        <span class="status-indicator ${u.status}">${u.status.toUpperCase()}</span>
-                    </div>
-                    <div class="row-actions">
-                        ${u.status === 'pending' ? `<button class="btn-row-accept" onclick="actionUser(${index}, 'accept')">Accept</button>` : ''}
-                        <button class="btn-row-delete" onclick="actionUser(${index}, 'delete')">Hapus</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function actionUser(index, type) {
-            let users = JSON.parse(localStorage.getItem("mt_users") || "[]");
-            if(type === 'accept') {
-                users[index].status = "approved";
-                alert("Akses akun disetujui!");
-            } else if(type === 'delete') {
-                if(confirm("Hapus seluruh data akses akun ini?")) {
-                    users.splice(index, 1);
-                    alert("Akun berhasil dihapus permanen.");
-                }
-            }
-            localStorage.setItem("mt_users", JSON.stringify(users));
-            renderOwnerUserList();
-        }
-
-        // --- SISTEM RATING & KOMENTAR ---
-        function submitReview() {
-            const session = JSON.parse(localStorage.getItem("mt_session"));
-            const score = parseInt(document.getElementById("input-score").value);
-            const message = document.getElementById("input-comment-msg").value.trim();
-
-            if(!message) return alert("Pesan review tidak boleh kosong!");
-
-            let reviews = JSON.parse(localStorage.getItem("mt_reviews") || "[]");
-            reviews.push({
-                username: session.username,
-                isOwner: session.role === "owner",
-                score: score,
-                text: message,
-                date: new Date().toLocaleDateString('id-ID')
-            });
-
-            localStorage.setItem("mt_reviews", JSON.stringify(reviews));
-            document.getElementById("input-comment-msg").value = "";
-            renderComments();
-            alert("Review Anda telah diterbitkan!");
-        }
-
-        function renderComments() {
-            const list = document.getElementById("global-comments-list");
-            let reviews = JSON.parse(localStorage.getItem("mt_reviews") || "[]");
-
-            if(reviews.length === 0) {
-                list.innerHTML = `<p style="color:#606060; font-size:12px; text-align:center; padding:10px;">Belum ada review.</p>`;
-                document.getElementById("avg-stars-value").innerText = "0.0";
-                return;
-            }
-
-            let totalScore = 0;
-            let html = reviews.map(r => {
-                totalScore += r.score;
-                let starsStr = "★".repeat(r.score) + "☆".repeat(5 - r.score);
-                return `
-                    <div class="comment-card">
-                        <div class="comment-user-info">
-                            <span class="${r.isOwner ? 'comment-owner-name luxury-text' : 'comment-username'}">${r.isOwner ? '[OWNER] ' : ''}${r.username}</span>
-                            <span class="comment-stars">${starsStr}</span>
+            accounts.forEach((acc, idx) => {
+                list.innerHTML += `
+                    <div class="user-row-card">
+                        <div>
+                            <b>${acc.username}</b> (${acc.gender}) <br>
+                            <span class="status-indicator ${acc.status}">${acc.status}</span>
                         </div>
-                        <p class="comment-text-content">${r.text}</p>
-                        <span class="comment-date">${r.date}</span>
+                        <div class="row-actions">
+                            ${acc.status === 'pending' ? `<button class="btn-row-accept" onclick="approveUser('${acc.username}')">Terima</button>` : ''}
+                            <button class="btn-row-delete" onclick="deleteUser('${acc.username}')">Hapus</button>
+                        </div>
                     </div>
                 `;
-            }).join('');
-
-            list.innerHTML = html;
-            document.getElementById("avg-stars-value").innerText = (totalScore / reviews.length).toFixed(1);
+            });
         }
 
-        function deleteGlobalRating() {
-            if(confirm("Apakah Owner yakin ingin menghapus bersih seluruh Rating & Komentar pengguna?")) {
-                localStorage.removeItem("mt_reviews");
-                renderComments();
-                alert("Semua data review dibersihkan!");
+        function approveUser(username) {
+            accounts = accounts.map(a => a.username === username ? {...a, status: "approved"} : a);
+            localStorage.setItem("mt_accounts", JSON.stringify(accounts));
+            if(currentSession && currentSession.username === username) {
+                currentSession.status = "approved";
+                localStorage.setItem("mt_session", JSON.stringify(currentSession));
+            }
+            renderAdminUserRows();
+            alert("Member disetujui!");
+        }
+
+        function deleteUser(username) {
+            accounts = accounts.filter(a => a.username !== username);
+            localStorage.setItem("mt_accounts", JSON.stringify(accounts));
+            if(currentSession && currentSession.username === username) {
+                localStorage.removeItem("mt_session");
+                currentSession = null;
+            }
+            renderAdminUserRows();
+            alert("Member dihapus!");
+        }
+
+        // --- 7. BROADCAST & PARTY Atmosfer MODES ---
+        function sendBroadcast() {
+            const msg = document.getElementById("broadcast-message-input").value;
+            localStorage.setItem("mt_broadcast", msg);
+            checkActiveBroadcast();
+            alert("Broadcast disiarkan!");
+        }
+
+        function clearBroadcast() {
+            localStorage.removeItem("mt_broadcast");
+            checkActiveBroadcast();
+        }
+
+        function checkActiveBroadcast() {
+            const msg = localStorage.getItem("mt_broadcast");
+            const banner = document.getElementById("global-announcement-banner");
+            if(msg) {
+                banner.classList.remove("hidden");
+                document.getElementById("announcement-text-body").innerText = msg;
+            } else {
+                banner.classList.add("hidden");
             }
         }
 
-        // --- SINKRONISASI BROADCAST LOCALSTORAGE ---
-        function checkLiveStorageData() {
-            const activeNotice = localStorage.getItem("announcement_text");
-            if (activeNotice) { showAnnouncementUI(activeNotice); } 
-            else { document.getElementById("global-announcement").classList.add("hidden"); }
-
-            const partyState = localStorage.getItem("party_mode_active");
-            if (partyState === "true") { triggerPartyEffects(true); } 
-            else { triggerPartyEffects(false); }
-        }
-        window.addEventListener('storage', checkLiveStorageData);
-
-        function sendGlobalAnnouncement() {
-            const text = document.getElementById("input-announcement-text").value.trim();
-            const duration = parseInt(document.getElementById("select-duration").value);
-            if (!text) return alert("Pesan tidak boleh kosong!");
-            localStorage.setItem("announcement_text", text);
-            showAnnouncementUI(text);
-            clearTimeout(announcementTimeout);
-            if (duration < 900000) {
-                announcementTimeout = setTimeout(() => { stopGlobalAnnouncement(); }, duration * 1000);
-            }
+        function setPartyMode(status) {
+            localStorage.setItem("party_mode_active", status);
+            checkPartyState();
         }
 
-        function showAnnouncementUI(text) {
-            const banner = document.getElementById("global-announcement");
-            document.getElementById("announcement-text").innerText = text;
-            banner.classList.remove("hidden");
-        }
-
-        document.getElementById('global-announcement').addEventListener('click', stopGlobalAnnouncement);
-
-        function stopGlobalAnnouncement() {
-            localStorage.removeItem("announcement_text");
-            document.getElementById("global-announcement").classList.add("hidden");
-            clearTimeout(announcementTimeout);
-        }
-
-        function togglePartyMode(isActive) {
-            localStorage.setItem("party_mode_active", isActive ? "true" : "false");
-            triggerPartyEffects(isActive);
-        }
-
-        function triggerPartyEffects(isActive) {
-            const iframePlayer = document.getElementById('main-youtube-player');
-            const partyAudio = document.getElementById('global-party-audio');
-            if (isActive) {
+        function checkPartyState() {
+            const isParty = localStorage.getItem("party_mode_active") === "true";
+            if(isParty) {
                 document.body.classList.add("rainbow-party-bg");
-                iframePlayer.src = "";
-                document.getElementById('playing-title').innerText = "🚨 SERVER TAKEOVER: PARTY MODE ACTIVE!";
-                document.getElementById('playing-channel').innerText = "Diambil alih oleh Owner";
-                partyAudio.play().catch(e => console.log("Audio playing error"));
             } else {
                 document.body.classList.remove("rainbow-party-bg");
-                partyAudio.pause();
-                partyAudio.currentTime = 0;
             }
         }
 
-        // --- POP UP MODAL OWNER ---
-        function openOwnerModal() {
-            document.getElementById("owner-modal").classList.remove("hidden");
-            document.getElementById("owner-password-input").value = "";
-        }
-        function closeOwnerModal() { document.getElementById("owner-modal").classList.add("hidden"); }
+        // --- 8. REVIEW ENGINE WRITER SYSTEM ---
+        function submitComment() {
+            const star = document.getElementById("comment-star-select").value;
+            const text = document.getElementById("comment-text-input").value.trim();
+            if(!text) return alert("Isi komentar terlebih dahulu!");
 
-        function checkOwnerPassword() {
-            const inputPass = document.getElementById("owner-password-input").value;
-            if (inputPass === "OWNERSYOUTUBEPREM2026##") {
-                closeOwnerModal();
-                document.getElementById("owner-dashboard").classList.remove("hidden");
-            } else { alert("❌ Password Salah! Akses ditolak."); }
-        }
-        function closeOwnerPanel() { document.getElementById("owner-dashboard").classList.add("hidden"); }
-
-        // --- PEMUTAR VIDEO ---
-        function playVideo(videoId, title, channel) {
-            if (localStorage.getItem("party_mode_active") === "true") {
-                return alert("Mode Party global sedang diaktifkan oleh Owner!");
-            }
-            const player = document.getElementById('main-youtube-player');
-            player.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1&modestbranding=1&enablejsapi=1&loop=1&playlist=${videoId}`;
-            document.getElementById('playing-title').innerText = title;
-            document.getElementById('playing-channel').innerText = channel;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            let newComment = {
+                username: currentSession.username,
+                star: star,
+                text: text,
+                date: new Date().toLocaleDateString("id-ID")
+            };
+            comments.push(newComment);
+            localStorage.setItem("mt_comments", JSON.stringify(comments));
+            document.getElementById("comment-text-input").value = "";
+            refreshCommentsUI();
         }
 
-        const searchTrigger = document.getElementById('mobile-search-trigger');
-        const searchContainer = document.querySelector('.mobile-search-bar-container');
-        if(searchTrigger) {
-            searchTrigger.addEventListener('click', () => { searchContainer.classList.toggle('active'); });
+        function refreshCommentsUI() {
+            const box = document.getElementById("comments-list-box");
+            // Kembalikan isi default owner
+            box.innerHTML = `
+                <div class="comment-card">
+                    <div class="comment-user-info">
+                        <span class="comment-owner-name">👑 Haruukii79 (Owner)</span>
+                        <span class="comment-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="comment-text-content">Selamat menikmati aplikasi MiniTube Premium buatan saya bro! Jangan lupa donasi lewat Saweria ya!</p>
+                    <span class="comment-date">04/07/2026</span>
+                </div>
+            `;
+            if(comments.length === 0) return;
+            
+            let totalStars = 5;
+            comments.forEach(c => {
+                totalStars += parseInt(c.star);
+                box.innerHTML += `
+                    <div class="comment-card">
+                        <div class="comment-user-info">
+                            <span class="comment-username">👤 ${c.username}</span>
+                            <span class="comment-stars">${"⭐".repeat(c.star)}</span>
+                        </div>
+                        <p class="comment-text-content">${c.text}</p>
+                        <span class="comment-date">${c.date}</span>
+                    </div>
+                `;
+            });
+            let avg = (totalStars / (comments.length + 1)).toFixed(1);
+            document.getElementById("global-avg-display").innerHTML = `⭐ Rata-rata Rating: <b style="color:#ffca28;">${avg}</b> / 5.0`;
         }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
