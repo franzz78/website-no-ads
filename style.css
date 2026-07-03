@@ -100,7 +100,6 @@ button:hover { transform: translateY(-2px); }
     border-color: var(--accent-green);
 }
 
-/* Style Section Options & Download Button */
 .options {
     margin-top: 20px;
     display: flex;
@@ -109,13 +108,10 @@ button:hover { transform: translateY(-2px); }
     gap: 12px;
 }
 
-.btn-secondary, .btn-download {
+.btn-secondary {
     padding: 12px 20px;
     font-size: 0.85rem;
     box-shadow: none;
-}
-
-.btn-secondary {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--glass-border);
 }
@@ -124,17 +120,56 @@ button:hover { transform: translateY(-2px); }
     border-color: var(--accent-green);
 }
 
-.btn-download {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* Style Bagian Tampilan Lirik */
+.lyrics-section {
+    margin-top: 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: left;
 }
-.id-dl-mp3:hover {
-    background: #e11d48; /* Warna Merah Rose */
-    border-color: #e11d48;
+.lyrics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
 }
-.id-dl-mp4:hover {
-    background: #2563eb; /* Warna Biru */
-    border-color: #2563eb;
+.lyrics-header h3 {
+    font-size: 1.05rem;
+    color: #38bdf8;
+}
+.btn-small {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+.lyrics-body {
+    max-height: 180px;
+    overflow-y: auto;
+}
+.lyrics-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    white-space: pre-wrap;
+    text-align: center;
+}
+.lyrics-textarea {
+    width: 100%;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: #fff;
+    padding: 10px;
+    font-size: 0.9rem;
+    resize: none;
+    outline: none;
 }
 
 /* History Section */
@@ -156,45 +191,42 @@ button:hover { transform: translateY(-2px); }
     padding: 12px 16px;
     border-radius: 10px;
     margin-bottom: 8px;
-    cursor: pointer;
     font-size: 0.9rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.02);
 }
-.history-item:hover { background: rgba(56, 189, 248, 0.08); transform: translateX(2px); }
-.video-id-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; color: #e2e8f0; }
-.time-stamp { font-size: 0.75rem; color: var(--text-muted); }
-.loading-state { color: var(--text-muted); text-align: center; padding: 15px 0; font-style: italic; }
+.history-item:hover { background: rgba(255, 255, 255, 0.05); }
 
-/* Style Baru Frame Pencarian */
-.search-results-section {
-    margin-top: 25px;
-    text-align: left;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 15px;
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.search-results-section h3 {
-    font-size: 1rem;
-    color: #38bdf8;
-    margin-bottom: 12px;
-}
-
-.search-iframe-wrapper {
-    position: relative;
-    width: 100%;
-    height: 350px; /* Tinggi kotak pencarian */
-    border-radius: 12px;
+.history-clickable {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 15px;
     overflow: hidden;
-    background: #111;
 }
 
-.search-iframe-wrapper iframe {
-    width: 100%;
-    height: 100%;
+.video-id-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e2e8f0; }
+.time-stamp { font-size: 0.75rem; color: var(--text-muted); margin-left: 10px; }
+
+.btn-delete-item {
+    background: transparent;
     border: none;
+    color: #ef4444;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    box-shadow: none;
+    transition: background 0.2s;
 }
+.btn-delete-item:hover {
+    background: rgba(239, 68, 68, 0.15);
+    transform: scale(1.1);
+    box-shadow: none;
+}
+.loading-state { color: var(--text-muted); text-align: center; padding: 15px 0; font-style: italic; width: 100%; }
