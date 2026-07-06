@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://minitube-premium.vercel.app/sitemap.xml
+
