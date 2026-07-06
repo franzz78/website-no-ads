@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube X YouTube - Gate Edition</title>
-    <!-- Font Awesome CDN untuk Ikon -->
+    
+    <!-- MASTER TAG SEO ON-PAGE -->
+    <title>MiniTube X YouTube Premium Free - Streaming Musik & Video Tanpa Iklan</title>
+    <meta name="description" content="Nikmati MiniTube X YouTube Premium Free buatan Haruukii79. Platform Super App streaming video MP4 HD dan MP3 musik hemat kuota, cepat, aman, dan tanpa iklan.">
+    <meta name="keywords" content="MiniTube, YouTube Premium Free, Haruukii79, streaming mp3 youtube, streaming video tanpa iklan, web player youtube mp3, minitube garuda edition">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Haruukii79">
+    <link rel="canonical" href="https://minitube-premium.vercel.app/">
+
+    <!-- META OPEN GRAPH (PREVIEW SAAT LINK DI-SHARE KE WA/FB) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MiniTube X YouTube Premium Free - Edisi Garuda">
+    <meta property="og:description" content="Platform multifungsi streaming video MP4 & MP3 musik tanpa iklan dengan transisi mewah.">
+    <meta property="og:image" content="https://minitube-premium.vercel.app/assets/logo-app.png">
+    <meta property="og:url" content="https://minitube-premium.vercel.app/">
+
+    <!-- EXTERNAL ASSETS & LIBRARIES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SweetAlert2 CDN untuk Pop-up Mewah -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Menghubungkan ke file style.css -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-dark"> <!-- Default awal adalah Dark Mode -->
+<body class="theme-dark"> <!-- Default awal aplikasi adalah Dark Mode -->
 
     <!-- ==========================================================================
        1. LOADING SCREEN SPLASH (MINITUBE X YOUTUBE)
@@ -20,7 +33,7 @@
         <div class="splash-content">
             <i class="fab fa-youtube splash-logo-red"></i>
             <h1 class="splash-title-brand">MINITUBE X YOUTUBE</h1>
-            <div style="font-size: 11px; color: #ff9100; font-weight: bold; margin-top: 2px;">PREMIUM FREE</div>
+            <div class="splash-sub-text">PREMIUM FREE</div>
             <div id="splash-counter" class="splash-counter-id">0%</div>
             <div class="progress-bar-container-id">
                 <div id="progress-bar-fill" class="progress-bar-fill-id"></div>
@@ -32,7 +45,7 @@
     </div>
 
     <!-- ==========================================================================
-       2. MAIN MENU GATEWAY (HALAMAN PILIHAN UTAMA SETELAH LOADING)
+       2. MAIN MENU GATEWAY (HALAMAN GERBANG PILIHAN UTAMA SETELAH LOADING)
        ========================================================================== -->
     <div id="main-gate-screen" class="gate-container">
         <div class="gate-content">
@@ -73,7 +86,7 @@
 
                 <!-- MENU 4: PROFILE OWNER -->
                 <button class="btn-gate btn-owner-profile" onclick="showOwnerProfileAlert()">
-                    <div class="btn-gate-icon"><i class="fas fa-user-crown" style="color: #ffca28;"></i></div>
+                    <div class="btn-gate-icon"><i class="fas fa-crown" style="color: #ffca28;"></i></div>
                     <div class="btn-gate-text">
                         <b>Menu Profile Owner</b>
                         <small>Kartu Identitas Pengembang</small>
@@ -89,13 +102,13 @@
 
             <!-- COPYRIGHT FOOTER -->
             <footer class="gate-footer">
-                @2026 MINITUBE - ALL RIGHT RESERVED
+                &copy; 2026 MINITUBE - ALL RIGHT RESERVED
             </footer>
         </div>
     </div>
 
     <!-- ==========================================================================
-       3. INTERNAL CORE APPLICATION VIEW (DASHBOARD LAYANAN)
+       3. INTERNAL CORE APPLICATION VIEW (DASHBOARD HUB LAYANAN)
        ========================================================================== -->
     <div id="main-app-interface" class="hidden">
         
@@ -106,7 +119,7 @@
                 <span class="logo-text" onclick="backToGateMenu()">MiniTube <span class="badge-id">ID</span></span>
             </div>
             <div class="header-right">
-                <a href="https://saweria.co" target="_blank" class="donation-btn-id">
+                <a href="https://saweria.co" target="_blank" class="donation-btn-id" rel="noopener">
                     <i class="fas fa-heart"></i> Saweria
                 </a>
                 <i class="fas fa-search header-icon hidden" id="global-search-trigger" onclick="toggleSearchBar()"></i>
@@ -118,7 +131,7 @@
         <div id="search-bar-container" class="mobile-search-bar-container">
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Cari video atau lagu..." onkeypress="handleSearchKeyPress(event)">
-                <button class="search-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
+                <button class="search-btn" onclick="executeSearch()" aria-label="Cari"><i class="fas fa-search"></i></button>
             </div>
         </div>
 
@@ -130,19 +143,19 @@
             </div>
 
             <div class="dashboard-grid">
-                <!-- MENU 1 -->
+                <!-- MENU 1: YOUTUBE PREMIUM FREE -->
                 <div class="menu-item-id prem-card" onclick="activateService('premium')">
                     <div class="icon-box-id bg-premium"><i class="fas fa-crown"></i></div>
                     <span>YouTube Premium Free</span>
                     <small>Tanpa Iklan / Ringan</small>
                 </div>
-                <!-- MENU 2 -->
+                <!-- MENU 2: YOUTUBE BIASA MP4 -->
                 <div class="menu-item-id mp4-card" onclick="activateService('mp4')">
                     <div class="icon-box-id bg-mp4"><i class="fas fa-video"></i></div>
                     <span>YouTube Biasa MP4</span>
                     <small>Streaming Format Video HD</small>
                 </div>
-                <!-- MENU 3 -->
+                <!-- MENU 3: YOUTUBE MP3 -->
                 <div class="menu-item-id mp3-card" onclick="activateService('mp3')">
                     <div class="icon-box-id bg-mp3"><i class="fas fa-music"></i></div>
                     <span>YouTube MP3 / Lagu</span>
@@ -160,6 +173,7 @@
             <button class="btn-back-menu" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Menu Pilihan</button>
             <div class="current-mode-badge" id="current-mode-text">Mode: YouTube Premium</div>
 
+            <!-- PLAYER LAYOUT CONTAINER -->
             <div id="video-player-section" class="player-container hidden">
                 <div class="video-wrapper">
                     <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -168,10 +182,11 @@
                 <p id="player-video-channel" class="player-channel">Nama Channel</p>
             </div>
 
+            <!-- AREA FEED CONTAINER -->
             <div id="video-feed-grid" class="video-grid"></div>
         </main>
 
-        <!-- BOTTOM NAV -->
+        <!-- BOTTOM NAVIGATION MENU BAR -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="backToDashboardHub()">
                 <i class="fas fa-home"></i> Home
@@ -186,7 +201,7 @@
     </div>
 
     <!-- ==========================================================================
-       4. CORE SYSTEM JAVASCRIPT
+       4. CORE SYSTEM LOGIC ENGINE
        ========================================================================== -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
@@ -198,11 +213,13 @@
             let counter = document.getElementById("splash-counter");
             let pct = 0;
 
+            // Logika Penyimpanan Data Kunjungan Visitor
             let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
             visits += 1;
             localStorage.setItem("mt_visitors", visits);
             document.getElementById("visitor-count-text").innerText = visits.toLocaleString();
 
+            // Animasi Splash Screen Counter Engine
             let timer = setInterval(() => {
                 pct += 4;
                 if (pct > 100) pct = 100;
@@ -212,13 +229,12 @@
                 if(pct >= 100){
                     clearInterval(timer);
                     document.getElementById("splash-screen").classList.add("fade-out");
-                    // Pindahkan fokus ke Menu Gate setelah loading selesai
                     document.getElementById("main-gate-screen").classList.add("active");
                 }
             }, 30);
         });
 
-        // ACTION BUTTONS GATEWAY LOGIC
+        // ACTIONS GATEWAY MENU CONTROLLER
         function enterAppWithoutAccount() {
             Swal.fire({
                 title: 'Akses Tamu Berhasil',
@@ -244,8 +260,8 @@
                 confirmButtonText: 'Masuk',
                 confirmButtonColor: '#ff1744',
                 preConfirm: () => {
-                    const username = Swal.getOctet?.getElementById('swal-username')?.value || document.getElementById('swal-username').value;
-                    const password = Swal.getOctet?.getElementById('swal-password')?.value || document.getElementById('swal-password').value;
+                    const username = document.getElementById('swal-username').value;
+                    const password = document.getElementById('swal-password').value;
                     if (!username || !password) {
                         Swal.showValidationMessage(`Harap isi semua kolom!`)
                     }
@@ -253,7 +269,6 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Contoh bypass dummy, ubah logika database di sini sesuai kebutuhan
                     if(result.value.username === "member" && result.value.password === "12345") {
                         Swal.fire('Login Sukses', 'Selamat Datang Member Berharga!', 'success');
                         document.getElementById("main-gate-screen").classList.remove("active");
@@ -294,7 +309,7 @@
                         </div>
                         <h3 style="margin:0; color:#ff1744;">Haruukii79</h3>
                         <p style="margin:5px 0 15px; font-size:13px; color:#777;">Fullstack Architect MiniTube</p>
-                        <div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:8px; font-size:13px; text-align:left;">
+                        <div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:8px; font-size:13px; text-align:left; color: inherit;">
                            <b>• Owner :</b> Haruukii79 <br>
                            <b>• Programmer :</b> Haruukii79 <br>
                            <b>• Build Version :</b> v5.2.0-Garuda
@@ -306,7 +321,7 @@
             });
         }
 
-        // NAVIGATION SWITCH LOGIC
+        // NAVIGATION SWITCH LOGIC SYSTEM
         function backToGateMenu() {
             document.getElementById("main-app-interface").classList.add("hidden");
             document.getElementById("main-gate-screen").classList.add("active");
@@ -345,7 +360,7 @@
             }
         }
 
-        // STREAM ENGINE FETCH API
+        // STREAM DATA ENGINE AJAX FETCH
         async function fetchYouTubeData(searchQuery) {
             const grid = document.getElementById("video-feed-grid");
             grid.innerHTML = "<p style='text-align: center; color: #aaa; padding: 20px;'>Sinkronisasi Data YouTube...</p>";
@@ -355,7 +370,7 @@
                 let response = await fetch(url);
                 let data = await response.json();
                 if (!data.items || data.items.length === 0) {
-                    grid.innerHTML = "<p style='text-align: center; color: #aaa; padding: 20px;'>Data Kosong.</p>";
+                    grid.innerHTML = "<p style='text-align: center; color: #aaa; padding: 20px;'>Data Kosong atau Limit API Tercapai.</p>";
                     return;
                 }
                 grid.innerHTML = "";
@@ -369,18 +384,18 @@
                     grid.innerHTML += `
                         <div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')">
                             <div class="thumbnail-container">
-                                <img class="thumbnail" src="${thumbnail}">
+                                <img class="thumbnail" src="${thumbnail}" alt="thumbnail">
                                 <span class="duration" style="background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}">${badgeType}</span>
                             </div>
-                            <div class="video-text" style="padding:10px;">
-                                <span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4;">${title}</span>
+                            <div class="video-text" style="padding:10px; text-align: left;">
+                                <span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px;">${title}</span>
                                 <span class="channel-name" style="font-size:11px; color:#888;">${channel}</span>
                             </div>
                         </div>
                     `;
                 });
             } catch (e) {
-                grid.innerHTML = "<p style='text-align: center; color: #ff1744;'>Gagal request API.</p>";
+                grid.innerHTML = "<p style='text-align: center; color: #ff1744;'>Gagal request API data YouTube.</p>";
             }
         }
 
