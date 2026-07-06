@@ -1429,3 +1429,101 @@ body {
     50% { transform: scale(1.05); opacity: 1; text-shadow: 0 0 35px rgba(255, 23, 68, 0.9); }
     100% { transform: scale(1); opacity: 0.9; }
 }
+
+/* ==========================================================================
+   STYLE DOCK GATEWAY SYSTEM CONFIG (EDISI HARUUKII79 CORE)
+   ========================================================================== */
+
+/* Tema Manajemen */
+body.theme-dark {
+    background-color: #0c0c0c;
+    color: #ffffff;
+}
+body.theme-light {
+    background-color: #f5f5f7;
+    color: #1c1c1e;
+}
+body.theme-light .gate-container {
+    background: radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%);
+}
+body.theme-light .btn-gate {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+body.theme-light .btn-gate b { color: #222; }
+body.theme-light .owner-credits-box { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); color: #444; }
+
+/* Gate Container Setup */
+.gate-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 900;
+    opacity: 0; visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.1, 0.8, 0.25, 1);
+    transform: scale(1.05);
+}
+.gate-container.active {
+    opacity: 1; visibility: visible;
+    transform: scale(1);
+}
+
+.gate-content {
+    width: 90%; max-width: 400px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Brand Identity Zone */
+.gate-brand { margin-bottom: 30px; }
+.gate-logo {
+    font-size: 55px; color: #ff1744;
+    text-shadow: 0 4px 15px rgba(255,23,68,0.4);
+}
+.gate-brand h2 { font-size: 20px; font-weight: 900; margin-top: 10px; letter-spacing: 1px; }
+.sub-premium {
+    font-size: 11px; color: #aaa; background: rgba(255,255,255,0.08);
+    padding: 3px 10px; border-radius: 12px; font-weight: bold; letter-spacing: 0.5px;
+}
+
+/* Layout Button Gate */
+.gate-buttons-group {
+    display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;
+}
+.btn-gate {
+    display: flex; align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 14px 18px; border-radius: 16px;
+    cursor: pointer; text-align: left;
+    transition: all 0.3s ease;
+}
+.btn-gate:hover {
+    transform: translateX(4px);
+    border-color: #ff1744;
+    background: rgba(255, 23, 68, 0.05);
+}
+.btn-gate-icon { font-size: 22px; width: 40px; color: #ff1744; text-align: center; }
+.btn-gate-text { display: flex; flex-direction: column; }
+.btn-gate-text b { font-size: 14px; color: #fff; }
+.btn-gate-text small { font-size: 11px; color: #777; margin-top: 2px; }
+
+/* Panel Credits Box Info */
+.owner-credits-box {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px; padding: 12px 16px;
+    margin-bottom: 25px; font-size: 12px; color: #aaa;
+}
+.credit-row {
+    display: flex; justify-content: space-between; margin: 4px 0;
+}
+.credit-row span { color: #666; }
+.credit-row b { color: #ff1744; }
+
+/* Footer Copyright */
+.gate-footer {
+    font-size: 10px; color: #555; font-weight: bold; letter-spacing: 0.5px;
+}
