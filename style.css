@@ -1527,3 +1527,466 @@ body.theme-light .owner-credits-box { background: rgba(0,0,0,0.03); border-color
 .gate-footer {
     font-size: 10px; color: #555; font-weight: bold; letter-spacing: 0.5px;
 }
+
+/* ==========================================================================
+   TAMBAHAN INTERFACE: ENGINE GATE SYSTEM & DUA TEMA (EDISI HARUUKII79)
+   ========================================================================== */
+
+/* SISTEM DRIVER TEMA (DARK & LIGHT) */
+body.theme-dark {
+    background-color: #0c0c0c;
+    color: #ffffff;
+}
+body.theme-light {
+    background-color: #f4f4f7;
+    color: #1c1c1e;
+}
+body.theme-light #main-app-interface {
+    background: #ffffff;
+    box-shadow: 0 0 30px rgba(0,0,0,0.05);
+}
+body.theme-light .gate-container {
+    background: radial-gradient(circle at center, #ffffff 0%, #e5e5ea 100%);
+}
+body.theme-light .btn-gate {
+    background: #ffffff;
+    border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+body.theme-light .btn-gate-text b {
+    color: #222;
+}
+body.theme-light .owner-credits-box {
+    background: rgba(0,0,0,0.02);
+    border-color: rgba(0,0,0,0.06);
+    color: #444;
+}
+body.theme-light .bottom-nav {
+    background: #ffffff;
+}
+
+/* LOADING SCREEN SPLASH INDONESIA */
+.splash-screen-indonesia {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #0f0f0f;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.splash-screen-indonesia.fade-out {
+    opacity: 0; visibility: hidden;
+}
+.splash-content { 
+    text-align: center; 
+}
+.splash-logo-red {
+    font-size: 75px; 
+    color: #ff1744;
+    text-shadow: 0 0 30px rgba(255, 23, 68, 0.7);
+    animation: pulseLogo 1.5s infinite ease-in-out;
+}
+.splash-title-brand {
+    color: #ffffff; 
+    font-size: 24px; 
+    font-weight: 900;
+    margin-top: 15px; 
+    letter-spacing: 2px;
+}
+.splash-sub-text {
+    font-size: 11px; 
+    color: #ff9100; 
+    font-weight: bold; 
+    letter-spacing: 1px;
+}
+.splash-counter-id {
+    color: #ff1744; 
+    font-weight: bold; 
+    margin-top: 15px; 
+    font-size: 16px;
+}
+.progress-bar-container-id {
+    width: 220px; 
+    height: 6px; 
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px; 
+    margin: 10px auto 0; 
+    overflow: hidden;
+}
+.progress-bar-fill-id {
+    width: 0%; 
+    height: 100%;
+    background: linear-gradient(90deg, #ffffff, #ff1744);
+    box-shadow: 0 0 12px #ff1744;
+}
+.splash-footer-id {
+    position: absolute; 
+    bottom: 30px; 
+    left: 50%; 
+    transform: translateX(-50%);
+    font-size: 11px; 
+    color: #555; 
+    letter-spacing: 1px; 
+    font-weight: bold;
+}
+
+/* GATEWAY MAIN CONTAINER LAYOUT */
+.gate-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 900; 
+    opacity: 0; 
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.1, 0.8, 0.25, 1);
+    transform: scale(1.05);
+}
+body.theme-dark .gate-container { 
+    background: radial-gradient(circle at center, #1c1c1c 0%, #050505 100%); 
+}
+.gate-container.active { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: scale(1); 
+}
+.gate-content { 
+    width: 90%; 
+    max-width: 400px; 
+    text-align: center; 
+    padding: 20px; 
+}
+.gate-brand { 
+    margin-bottom: 25px; 
+}
+.gate-logo { 
+    font-size: 60px; 
+    color: #ff1744; 
+    text-shadow: 0 4px 15px rgba(255,23,68,0.3); 
+}
+.gate-brand h2 { 
+    font-size: 22px; 
+    font-weight: 900; 
+    margin-top: 10px; 
+    letter-spacing: 1px; 
+}
+.sub-premium {
+    font-size: 11px; 
+    color: #ff1744; 
+    background: rgba(255,23,68,0.1);
+    padding: 3px 12px; 
+    border-radius: 12px; 
+    font-weight: bold;
+}
+
+/* BUTTONS GROUP LIST STYLE */
+.gate-buttons-group { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-bottom: 25px; 
+}
+.btn-gate {
+    display: flex; 
+    align-items: center; 
+    padding: 15px 20px; 
+    border-radius: 16px;
+    cursor: pointer; 
+    text-align: left; 
+    transition: all 0.3s ease; 
+    border: 1px solid transparent;
+}
+body.theme-dark .btn-gate { 
+    background: rgba(255,255,255,0.03); 
+    border-color: rgba(255,255,255,0.05); 
+}
+.btn-gate:hover { 
+    transform: translateX(5px); 
+    border-color: #ff1744; 
+}
+body.theme-dark .btn-gate:hover { 
+    background: rgba(255, 23, 68, 0.05); 
+}
+body.theme-light .btn-gate:hover { 
+    background: rgba(255, 23, 68, 0.02); 
+}
+.btn-gate-icon { 
+    font-size: 22px; 
+    width: 35px; 
+    color: #ff1744; 
+}
+.btn-gate-text { 
+    display: flex; 
+    flex-direction: column; 
+}
+.btn-gate-text b { 
+    font-size: 14px; 
+}
+body.theme-dark .btn-gate-text b { 
+    color: #fff; 
+}
+.btn-gate-text small { 
+    font-size: 11px; 
+    color: #777; 
+    margin-top: 1px; 
+}
+
+/* PANEL CREDITS DISPLAY DATA */
+.owner-credits-box {
+    border-radius: 12px; 
+    padding: 12px 18px; 
+    margin-bottom: 25px; 
+    font-size: 12px; 
+    border: 1px solid;
+}
+body.theme-dark .owner-credits-box { 
+    background: rgba(255,255,255,0.02); 
+    border-color: rgba(255,255,255,0.05); 
+    color: #aaa; 
+}
+.credit-row { 
+    display: flex; 
+    justify-content: space-between; 
+    margin: 4px 0; 
+}
+.credit-row span { 
+    color: #777; 
+}
+.credit-row b { 
+    color: #ff1744; 
+    font-weight: bold; 
+}
+.gate-footer { 
+    font-size: 10px; 
+    color: #666; 
+    font-weight: bold; 
+    letter-spacing: 0.5px; 
+}
+
+/* APP CONTAINER HUB */
+#main-app-interface { 
+    max-width: 500px; 
+    margin: 0 auto; 
+    min-height: 100vh; 
+    position: relative; 
+    padding-bottom: 80px; 
+}
+.header-indonesia {
+    background: linear-gradient(135px, #ff1744, #b71c1c) !important;
+    border-bottom: 3px solid #ffffff !important;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px 20px; 
+    position: sticky; 
+    top: 0; 
+    z-index: 100;
+}
+.header-left { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    color: white; 
+    cursor: pointer; 
+}
+.youtube-logo-icon { 
+    font-size: 24px; 
+    color: white; 
+}
+.logo-text { 
+    font-size: 18px; 
+    font-weight: 900; 
+    letter-spacing: 0.5px; 
+}
+.badge-id { 
+    background: #ffffff; 
+    color: #ff1744; 
+    padding: 2px 5px; 
+    font-size: 9px; 
+    border-radius: 4px; 
+    font-weight: 900; 
+    margin-left: 4px; 
+}
+.donation-btn-id { 
+    background: #ffffff; 
+    color: #ff1744 !important; 
+    padding: 4px 10px; 
+    border-radius: 20px; 
+    font-size: 11px; 
+    font-weight: bold; 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center; 
+    gap: 3px; 
+}
+.header-icon { 
+    font-size: 18px; 
+    color: white; 
+    margin-left: 12px; 
+    cursor: pointer; 
+}
+
+/* SEARCH SYSTEM */
+.mobile-search-bar-container { 
+    display: none; 
+    padding: 10px 15px; 
+    background: rgba(0,0,0,0.03); 
+}
+.mobile-search-bar-container.active { 
+    display: block; 
+}
+.search-box { 
+    display: flex; 
+    width: 100%; 
+    background: rgba(255,255,255,0.08); 
+    border-radius: 25px; 
+    border: 1px solid rgba(0,0,0,0.1); 
+    overflow: hidden; 
+}
+body.theme-dark .search-box { 
+    background: #222; 
+    border-color: #333; 
+}
+.search-box input { 
+    flex: 1; 
+    padding: 10px 15px; 
+    background: transparent; 
+    border: none; 
+    color: inherit; 
+    font-size: 13px; 
+    outline: none; 
+}
+.search-btn { 
+    padding: 0 18px; 
+    background: #ff1744; 
+    border: none; 
+    color: white; 
+    cursor: pointer; 
+}
+
+/* WELCOME BANNER DISPLAY */
+.welcome-banner-id {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1626050918506-6022812d1f9a?q=80&w=400') center/cover;
+    padding: 25px 15px; 
+    text-align: center; 
+    border-radius: 16px; 
+    margin: 15px; 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.welcome-banner-id h3 { color: white; font-size: 16px; font-weight: 800; }
+.welcome-banner-id p { color: #ddd; font-size: 11px; margin-top: 4px; }
+
+/* SERVICES GRID MENU HUB */
+.dashboard-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+    gap: 12px; 
+    padding: 15px; 
+}
+.menu-item-id {
+    padding: 22px 10px; 
+    border-radius: 16px; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    border: 1px solid transparent;
+}
+body.theme-dark .menu-item-id { 
+    background: #161616; 
+    border-color: rgba(255,255,255,0.03); 
+}
+body.theme-light .menu-item-id { 
+    background: #ffffff; 
+    border-color: rgba(0,0,0,0.05); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+}
+.menu-item-id:hover { 
+    transform: translateY(-4px); 
+    border-color: #ff1744; 
+}
+.menu-item-id span { 
+    display: block; 
+    font-weight: bold; 
+    font-size: 13px; 
+    margin-top: 10px; 
+}
+.menu-item-id small { 
+    display: block; 
+    font-size: 10px; 
+    color: #777; 
+    margin-top: 2px; 
+}
+
+.icon-box-id { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin: 0 auto; 
+    font-size: 20px; 
+    color: white; 
+}
+.bg-premium { background: linear-gradient(135px, #ffd700, #ff8f00); }
+.bg-mp4 { background: linear-gradient(135px, #2196f3, #1565c0); }
+.bg-mp3 { background: linear-gradient(135px, #4caf50, #2e7d32); }
+
+/* CONTENT FEED AND PLAYER LAYOUT */
+.btn-back-menu { 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    background: rgba(255, 17, 68, 0.1); 
+    border: 1px solid rgba(255, 17, 68, 0.2); 
+    color: #ff1744; 
+    padding: 8px 15px; 
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    margin: 15px; 
+}
+.btn-back-menu:hover { background: #ff1744; color: white; }
+.current-mode-badge { padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; color: white; margin: 0 15px 15px; display: inline-block; }
+
+.player-container { padding: 0 15px 15px; }
+.video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; background: black; }
+.video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.player-title { font-size: 14px; font-weight: bold; margin-top: 8px; line-height: 1.4; }
+.player-channel { font-size: 12px; color: #777; margin-top: 2px; }
+
+.video-grid { display: flex; flex-direction: column; gap: 15px; padding: 15px; }
+.video-card { display: flex; flex-direction: column; cursor: pointer; overflow: hidden; border-radius: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+body.theme-dark .video-card { background: #121212; border-color: #1a1a1a; }
+.thumbnail-container { position: relative; width: 100%; padding-bottom: 56.25%; background: #333; }
+.thumbnail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.duration { position: absolute; bottom: 8px; right: 8px; padding: 2px 6px; border-radius: 4px; color: white; font-size: 10px; font-weight: bold; }
+
+/* BOTTOM DOCK NAV BAR */
+.bottom-nav { 
+    position: fixed; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 100%; 
+    max-width: 500px; 
+    display: flex; 
+    justify-content: space-around; 
+    padding: 12px 0; 
+    border-top: 1px solid rgba(0,0,0,0.05); 
+    z-index: 100; 
+}
+body.theme-dark .bottom-nav { background: #0f0f0f; border-color: #1e1e1e; }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; color: #777; cursor: pointer; flex: 1; }
+.nav-item i { font-size: 18px; }
+.nav-item.active { color: #ff1744; }
+
+/* UTILITY CONFIG CLASSES */
+.hidden { display: none !important; }
+
+/* KEYFRAME SPLASH ANIMATION */
+@keyframes pulseLogo {
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.04); opacity: 1; text-shadow: 0 0 40px rgba(255, 23, 68, 0.9); }
+    100% { transform: scale(1); opacity: 0.9; }
+}
