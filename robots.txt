@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://minitube-premium.vercel.app/sitemap.xml
-
+Sitemap: https://website-no-ads.vercel.app/sitemap.xml
