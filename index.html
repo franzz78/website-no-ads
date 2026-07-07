@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- MASTER GOOGLE VERIFICATION TAG -->
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
     
-    <!-- MASTER TAG SEO ON-PAGE REAL DOMAIN -->
     <title>MiniTube X YouTube Premium Free - Edisi Khusus HUT RI Ke-81</title>
     <meta name="description" content="Nikmati MiniTube X YouTube Premium Free buatan Haruukii79. Platform Super App streaming video MP4 HD dan MP3 musik edisi spesial Hari Kemerdekaan RI ke-81.">
     <meta name="keywords" content="MiniTube, YouTube Premium Free, Haruukii79, kemerdekaan ri 81, hut ri 2026, streaming mp3 youtube, streaming video tanpa iklan">
@@ -15,19 +13,16 @@
     <meta name="author" content="Haruukii79">
     <link rel="canonical" href="https://website-no-ads.vercel.app/">
 
-    <!-- META OPEN GRAPH -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="MiniTube X YouTube Premium Free - Edisi Merdeka RI 81">
     <meta property="og:description" content="Platform multifungsi streaming video MP4 & MP3 edisi khusus peringatan HUT RI ke-81.">
     <meta property="og:image" content="https://website-no-ads.vercel.app/assets/logo-app.png">
     <meta property="og:url" content="https://website-no-ads.vercel.app/">
 
-    <!-- EXTERNAL ASSETS & LIBRARIES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 
-    <!-- OVERRIDE CSS TEMATIK KEMERDEKAAN RI ke-81 -->
     <style>
         /* Reset transisi bermasalah agar tidak stuck */
         #splash-screen, #main-gate-screen {
@@ -76,36 +71,104 @@
             font-size: 14px;
             border: 1px solid #ffffff;
             box-shadow: 0 0 10px rgba(255,23,68,0.5);
+            z-index: 10;
+        }
+
+        /* ==========================================
+           BINGKAI DENGAN CAHAYA ANIMASI MERAH BERPUTAR 
+           ========================================== */
+        .neon-marquee-container {
+            position: relative;
+            width: 100%;
+            margin: 15px 0;
+            padding: 3px; /* Ketebalan bingkai cahaya */
+            background: #121212;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Efek Lampu Sorot Cahaya Berputar di Belakang */
+        .neon-marquee-container::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 400%;
+            background: conic-gradient(#ff0033, #ffffff, #ff0033, #121212, #ff0033);
+            animation: rotateCahaya 4s linear infinite;
+            z-index: 1;
+        }
+
+        /* Area Dalam Teks Berjalan Agar Tetap Gelap & Rapi */
+        .neon-marquee-inner {
+            position: relative;
+            width: 100%;
+            background: #1a1a1a;
+            padding: 10px 5px;
+            border-radius: 8px;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .neon-marquee-inner marquee {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 13px;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        /* Keyframes Gerakan Rotasi Cahaya Bingkai */
+        @keyframes rotateCahaya {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Penyesuaian Layout Tombol Admin Modal */
+        .admin-action-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-action-btn:hover {
+            background: #3a3a3a;
         }
     </style>
 </head>
 <body class="theme-dark">
 
-    <!-- TICKER TEXT BANNER ADMIN -->
     <div id="admin-announcement-banner" class="admin-ticker-hide">
         <div class="ticker-content-wrapper">
-            <i class="fas fa-flag-usa"></i> <span id="ticker-text-target">Pengumuman Kemerdekaan Aktif!</span>
+            <i class="fas fa-flag"></i> <span id="ticker-text-target">Pengumuman Kemerdekaan Aktif!</span>
         </div>
     </div>
 
-    <!-- AUDIO PLAYER KHUSUS BACKSOUND ADMIN -->
-    <div id="admin-audio-dock" class="audio-dock-hide">
+    <div id="admin-audio-dock" class="audio-dock-hide" style="border-left: 4px solid #ff1744;">
         <div class="dock-info">
-            <i class="fas fa-compact-disc fa-spin text-red"></i>
+            <i class="fas fa-broadcast-tower fa-spin style-merdeka" style="color: #ff1744;"></i>
             <div>
-                <small>Memutar MP3 Utama (Admin)</small>
-                <span id="dock-song-title">Judul Lagu...</span>
+                <small style="color: #ff1744; font-weight: bold; display: block;">🔴 SIARAN LIVE AUDIO GLOBAL (ADMIN)</small>
+                <span id="dock-song-title" style="font-weight: bold;">Lagu Kebangsaan...</span>
             </div>
         </div>
-        <button onclick="stopAdminAudio()" class="btn-stop-dock"><i class="fas fa-stop"></i></button>
+        <button onclick="stopAdminAudio()" class="btn-stop-dock" style="background: #ff1744; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;"><i class="fas fa-stop"></i> Stop</button>
     </div>
 
-    <!-- ==========================================================================
-       1. LOADING SCREEN SPLASH (EDISI HUT RI 81)
-       ========================================================================== -->
     <div id="splash-screen" class="splash-screen-indonesia" style="display: flex;">
         <div class="splash-content">
-            <div style="margin-bottom: 10px;"><i class="fas fa-flag-checkered" style="color: #ffffff; font-size: 24px; margin-right: 8px;"></i><i class="fab fa-youtube splash-logo-red"></i></div>
+            <div style="margin-bottom: 10px;"><i class="fas fa-flag" style="color: #ffffff; font-size: 24px; margin-right: 8px;"></i><i class="fab fa-youtube splash-logo-red"></i></div>
             <h1 class="splash-title-brand">MINITUBE X YOUTUBE</h1>
             <div class="splash-sub-text" style="letter-spacing: 3px; color: #ffffff; font-weight: 900;">DIRGAHAYU RI KE-81</div>
             <div id="splash-counter" class="splash-counter-id">0%</div>
@@ -118,12 +181,7 @@
         </div>
     </div>
 
-        <!-- ==========================================================================
-       2. MAIN MENU GATEWAY (DESAIN HUT RI 81 MERAH PUTIH)
-       ========================================================================== -->
-    <!-- KITA PAKSA MENGGUNAKAN STYLE INLINE AGAR TIDAK TERTUTUP OLEH STYLE.CSS BAWAAN -->
     <div id="main-gate-screen" style="display: none; position: relative; width: 100%; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; background: #121212;">
-        <!-- Watermark RI 81 -->
         <div class="ri-badge-81">RI 81</div>
 
         <div class="gate-content" style="width: 100%; max-width: 480px; text-align: center;">
@@ -133,9 +191,15 @@
                 <div class="hut-badge-banner">🇮🇩 EDISI KEMERDEKAAN KE-81 🇮🇩</div>
             </div>
 
-            <!-- BUTTON INTERACTION ZONE -->
-            <div class="gate-buttons-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px; width: 100%;">
-                <!-- MENU 1: NEXT -->
+            <div class="neon-marquee-container">
+                <div class="neon-marquee-inner">
+                    <marquee behavior="scroll" direction="left" scrollamount="6">
+                         🔥 NUSANTARA BARU , INDONESIA MAJU - MINITUBE X YOUTUBE PREMIUM FREE! 🇮🇩 🔥
+                    </marquee>
+                </div>
+            </div>
+
+            <div class="gate-buttons-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px; width: 100%;">
                 <button class="btn-gate btn-next" onclick="enterAppWithoutAccount()" style="border-left: 5px solid #ff1744; display: flex; align-items: center; padding: 15px; background: #1e1e1e; border-top: none; border-right: none; border-bottom: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
                     <div class="btn-gate-icon" style="color: #ff1744; font-size: 20px; margin-right: 15px;"><i class="fas fa-arrow-right"></i></div>
                     <div class="btn-gate-text">
@@ -144,7 +208,6 @@
                     </div>
                 </button>
 
-                <!-- MENU 2: LOG-IN MEMBER -->
                 <button class="btn-gate btn-login" onclick="openLoginModal()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
                     <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-sign-in-alt"></i></div>
                     <div class="btn-gate-text">
@@ -153,7 +216,6 @@
                     </div>
                 </button>
 
-                <!-- MENU 3: ADMINISTRATOR -->
                 <button class="btn-gate btn-admin-menu" onclick="openAdminGateway()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
                     <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-user-shield"></i></div>
                     <div class="btn-gate-text">
@@ -162,7 +224,6 @@
                     </div>
                 </button>
 
-                <!-- MENU 4: SETTINGS (LOCKED) -->
                 <button class="btn-gate btn-theme feature-locked-style" onclick="toggleThemeSetting()" style="display: flex; align-items: center; padding: 15px; background: #151515; border: 1px dashed #333; border-radius: 8px; cursor: not-allowed; text-align: left; width: 100%;">
                     <div class="btn-gate-icon" id="theme-btn-icon" style="color: #666; font-size: 20px; margin-right: 15px;"><i class="fas fa-lock"></i></div>
                     <div class="btn-gate-text">
@@ -171,7 +232,6 @@
                     </div>
                 </button>
 
-                <!-- MENU 5: PROFILE OWNER -->
                 <button class="btn-gate btn-owner-profile" onclick="showOwnerProfileAlert()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
                     <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-id-card"></i></div>
                     <div class="btn-gate-text">
@@ -181,25 +241,19 @@
                 </button>
             </div>
 
-            <!-- LUXURY OWNER BADGE DATA DISPLAY -->
             <div class="owner-credits-box" style="border: 1px solid rgba(255,23,68,0.3); background: rgba(255, 17, 68, 0.05); margin-top: 25px; padding: 12px; border-radius: 8px; font-size: 13px;">
                 <div class="credit-row" style="color: #ccc; margin-bottom: 5px;"><span>Owner</span> : <b class="text-merdeka">Haruukii79</b></div>
                 <div class="credit-row" style="color: #ccc;"><span>Sistem</span> : <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
             </div>
 
-            <!-- COPYRIGHT FOOTER -->
             <footer class="gate-footer" style="margin-top: 30px; font-size: 11px; color: #555; letter-spacing: 1px;">
                 &copy; 2026 MINITUBE - NUSANTARA BARU INDONESIA MAJU
             </footer>
         </div>
     </div>
 
-    <!-- ==========================================================================
-       3. INTERNAL CORE APPLICATION VIEW
-       ========================================================================== -->
     <div id="main-app-interface" class="hidden">
         
-        <!-- APP BAR HEADER (Gradasi Merah Putih Kemerdekaan) -->
         <header class="mobile-header header-indonesia" style="background: linear-gradient(90deg, #b71c1c 0%, #ff1744 100%) !important;">
             <div class="header-left">
                 <i class="fas fa-flag" style="color: #fff; margin-right: 8px; font-size: 14px;"></i>
@@ -214,7 +268,6 @@
             </div>
         </header>
 
-        <!-- CONTAINER SEARCH BAR -->
         <div id="search-bar-container" class="mobile-search-bar-container">
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Cari video perjuangan, musik, atau lagu..." onkeypress="handleSearchKeyPress(event)">
@@ -222,7 +275,6 @@
             </div>
         </div>
 
-        <!-- DASHBOARD HUB -->
         <main class="mobile-content" id="home-dashboard-view">
             <div class="welcome-banner-id" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://website-no-ads.vercel.app/assets/logo-app.png'); background-size: cover; border-bottom: 3px solid #ff1744;">
                 <h3 style="color: #ff1744; font-weight: 900;">🇮🇩 Semangat Proklamasi RI ke-81</h3>
@@ -230,19 +282,16 @@
             </div>
 
             <div class="dashboard-grid">
-                <!-- MENU 1: YOUTUBE PREMIUM FREE -->
                 <div class="menu-item-id prem-card" onclick="activateService('premium')" style="border-bottom: 4px solid #d32f2f;">
                     <div class="icon-box-id bg-premium"><i class="fas fa-crown"></i></div>
                     <span>YouTube Premium Free</span>
                     <small>Bebas Iklan / Ringan Merdeka</small>
                 </div>
-                <!-- MENU 2: YOUTUBE BIASA MP4 -->
                 <div class="menu-item-id mp4-card" onclick="activateService('mp4')" style="border-bottom: 4px solid #1976d2;">
                     <div class="icon-box-id bg-mp4"><i class="fas fa-video"></i></div>
                     <span>YouTube Biasa MP4</span>
                     <small>Streaming Format Video HD</small>
                 </div>
-                <!-- MENU 3: YOUTUBE MP3 -->
                 <div class="menu-item-id mp3-card" onclick="activateService('mp3')" style="border-bottom: 4px solid #388e3c;">
                     <div class="icon-box-id bg-mp3"><i class="fas fa-music"></i></div>
                     <span>YouTube MP3 / Lagu</span>
@@ -255,12 +304,10 @@
             </div>
         </main>
 
-        <!-- AREA KONTEN STREAMING VIDEO -->
         <main class="mobile-content hidden" id="streaming-content-view">
             <button class="btn-back-menu" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Menu Utama</button>
             <div class="current-mode-badge" id="current-mode-text">Mode: YouTube Premium</div>
 
-            <!-- PLAYER LAYOUT CONTAINER -->
             <div id="video-player-section" class="player-container hidden">
                 <div class="video-wrapper" style="border: 2px solid #ff1744; border-radius: 8px; overflow: hidden;">
                     <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -269,11 +316,9 @@
                 <p id="player-video-channel" class="player-channel">Nama Channel</p>
             </div>
 
-            <!-- AREA FEED CONTAINER -->
             <div id="video-feed-grid" class="video-grid"></div>
         </main>
 
-        <!-- BOTTOM NAVIGATION MENU BAR -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="backToDashboardHub()">
                 <i class="fas fa-home"></i> Beranda
@@ -287,16 +332,11 @@
         </nav>
     </div>
 
-    <!-- IFRAME SILUMAN AUDIO ADMIN -->
-    <iframe id="hidden-audio-engine" src="" style="display: none; width: 0; height: 0; border: none;"></iframe>
+    <iframe id="hidden-audio-engine" src="" allow="autoplay" style="display: none; width: 0; height: 0; border: none;"></iframe>
 
-    <!-- ==========================================================================
-       4. CORE SYSTEM LOGIC ENGINE (INSTAN & TERINTEGRASI)
-       ========================================================================== -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
         let currentMode = "premium";
-        let isDarkMode = true;
 
         window.addEventListener("DOMContentLoaded", () => {
             let fill = document.getElementById("progress-bar-fill");
@@ -316,7 +356,6 @@
                 
                 if(pct >= 100){
                     clearInterval(timer);
-                    // Langsung switch display tanpa delay css transition
                     document.getElementById("splash-screen").style.display = "none";
                     document.getElementById("main-gate-screen").style.display = "flex";
                 }
@@ -324,12 +363,7 @@
         });
 
         function toggleThemeSetting() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Akses Ditolak!',
-                text: 'Fitur pengaturan tema saat ini telah DIKUNCI secara global oleh Owner.',
-                confirmButtonColor: '#ff1744'
-            });
+            Swal.fire({ icon: 'error', title: 'Akses Ditolak!', text: 'Fitur pengaturan tema saat ini telah DIKUNCI secara global oleh Owner.', confirmButtonColor: '#ff1744' });
         }
 
         function enterAppWithoutAccount() {
@@ -391,11 +425,11 @@
             Swal.fire({
                 title: '🛠️ CORE CONTROL ADMINISTRATOR',
                 html: `
-                    <div class="admin-modal-layout">
-                        <p style="font-size:12px; margin-bottom:15px; color:#aaa;">Silakan pilih eksekusi perintah global:</p>
-                        <button class="admin-action-btn" onclick="triggerAdminTickerText()"><i class="fas fa-comment-dots"></i> Kirim Teks Broadcast (15 Detik)</button>
-                        <button class="admin-action-btn" onclick="triggerAdminMp3Direct()"><i class="fas fa-play-circle"></i> Putar Lagu Utama (Direct MP3)</button>
-                        <button class="admin-action-btn btn-action-merdeka" onclick="triggerMerdekaCelebration()" style="background:#ff1744 !important;"><i class="fas fa-flag"></i> Peringatan Hari Kemerdekaan RI ke-81</button>
+                    <div class="admin-modal-layout" style="text-align:left;">
+                        <p style="font-size:12px; margin-bottom:10px; color:#aaa; text-align:center;">Pilih instruksi siaran sistem nasional:</p>
+                        <button class="admin-action-btn" onclick="triggerAdminTickerText()"><i class="fas fa-comment-dots" style="color:#ff1744;"></i> Kirim Teks Broadcast Global</button>
+                        <button class="admin-action-btn" onclick="triggerAdminMp3Direct()"><i class="fas fa-broadcast-tower" style="color:#ff1744;"></i> Putar Lagu Wajib Nasional (Real-Time)</button>
+                        <button class="admin-action-btn" onclick="triggerMerdekaCelebration()" style="background:#ff1744 !important; color:#fff;"><i class="fas fa-flag"></i> Pop-Up Peringatan Kemerdekaan RI</button>
                     </div>
                 `,
                 showConfirmButton: false,
@@ -424,34 +458,55 @@
             });
         }
 
+        /* METODE LIVE AUDIO STREAMING SECARA GLOBAL DAN OTOMATIS KEDENGARAN */
         function triggerAdminMp3Direct() {
             Swal.fire({
-                title: 'Putar Musik Pengantar Hari Merdeka',
-                text: 'Cari musik/lagu kebangsaan nasional langsung melalui YouTube API:',
-                input: 'text',
-                inputPlaceholder: 'Contoh: Hari Merdeka, Hari Kebangsaan...',
+                title: '🎵 LIVE AUDIO BROADCAST SYSTEM',
+                text: 'Pilih Lagu Kebangsaan/Wajib Nasional untuk diputar secara live otomatis di semua user browser:',
+                input: 'select',
+                inputOptions: {
+                    'Lagu Indonesia Raya': 'Indonesia Raya (Lagu Kebangsaan)',
+                    'Lagu Hari Merdeka 17 Agustus': 'Hari Merdeka (17 Agustus 1945)',
+                    'Lagu Garuda Pancasila': 'Garuda Pancasila',
+                    'Lagu Bagimu Negeri': 'Padamu Negeri',
+                    'Lagu Kebangsaan Populer': 'Lagu Perjuangan Nasional Indonesia'
+                },
+                inputPlaceholder: 'Pilih Lagu...',
                 showCancelButton: true,
-                confirmButtonText: 'Mainkan',
+                confirmButtonText: '⚡ Siarkan Sekarang',
                 confirmButtonColor: '#ff1744'
             }).then(async (res) => {
-                if(res.isConfirmed && res.value.trim() !== "") {
-                    const query = res.value.trim();
+                if(res.isConfirmed && res.value !== "") {
+                    const query = res.value;
                     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
+                    
+                    Swal.fire({ title: 'Menghubungkan Server...', didOpen: () => { Swal.showLoading() } });
+                    
                     try {
                         let response = await fetch(url);
                         let data = await response.json();
                         if (data.items && data.items.length > 0) {
                             const videoId = data.items[0].id.videoId;
                             const title = data.items[0].snippet.title;
-                            document.getElementById("hidden-audio-engine").src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+                            
+                            /* Sinkronisasi paksa mesin utama secara global (Autoplay ON & Mute OFF) */
+                            const audioEngine = document.getElementById("hidden-audio-engine");
+                            audioEngine.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=0&loop=1`;
+                            
                             document.getElementById("dock-song-title").innerText = title;
                             document.getElementById("admin-audio-dock").className = "audio-dock-show";
-                            Swal.fire('Musik Berkumandang!', 'Berhasil memutar: ' + title, 'success');
+                            
+                            Swal.fire({
+                                icon: 'success',
+                                title: '🔴 SIARAN LIVE AKTIF',
+                                text: 'Berhasil memutar lagu "' + title + '" secara live ke seluruh sistem.',
+                                confirmButtonColor: '#ff1744'
+                            });
                         } else {
-                            Swal.fire('Gagal', 'Lagu tidak ditemukan.', 'error');
+                            Swal.fire('Gagal', 'Lagu kebangsaan tidak ditemukan.', 'error');
                         }
                     } catch(e) {
-                        Swal.fire('Error', 'Gagal memproses pemicu lagu.', 'error');
+                        Swal.fire('Error', 'Gagal memproses transmisi audio.', 'error');
                     }
                 }
             });
@@ -460,7 +515,7 @@
         function stopAdminAudio() {
             document.getElementById("hidden-audio-engine").src = "";
             document.getElementById("admin-audio-dock").className = "audio-dock-hide";
-            Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Audio Admin Dihentikan', showConfirmButton: false, timer: 1500 });
+            Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Siaran Audio Dihentikan', showConfirmButton: false, timer: 1500 });
         }
 
         function triggerMerdekaCelebration() {
