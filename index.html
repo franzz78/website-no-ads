@@ -118,76 +118,77 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
+        <!-- ==========================================================================
        2. MAIN MENU GATEWAY (DESAIN HUT RI 81 MERAH PUTIH)
        ========================================================================== -->
-    <div id="main-gate-screen" class="gate-container" style="display: none; position: relative;">
+    <!-- KITA PAKSA MENGGUNAKAN STYLE INLINE AGAR TIDAK TERTUTUP OLEH STYLE.CSS BAWAAN -->
+    <div id="main-gate-screen" style="display: none; position: relative; width: 100%; min-height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; background: #121212;">
         <!-- Watermark RI 81 -->
         <div class="ri-badge-81">RI 81</div>
 
-        <div class="gate-content">
+        <div class="gate-content" style="width: 100%; max-width: 480px; text-align: center;">
             <div class="gate-brand">
-                <i class="fab fa-youtube gate-logo" style="color: #ff1744;"></i>
-                <h2>MINITUBE X YOUTUBE</h2>
+                <i class="fab fa-youtube gate-logo" style="color: #ff1744; font-size: 50px;"></i>
+                <h2 style="color: #fff; margin-top: 10px;">MINITUBE X YOUTUBE</h2>
                 <div class="hut-badge-banner">🇮🇩 EDISI KEMERDEKAAN KE-81 🇮🇩</div>
             </div>
 
             <!-- BUTTON INTERACTION ZONE -->
-            <div class="gate-buttons-group">
+            <div class="gate-buttons-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px; width: 100%;">
                 <!-- MENU 1: NEXT -->
-                <button class="btn-gate btn-next" onclick="enterAppWithoutAccount()" style="border-left: 5px solid #ff1744;">
-                    <div class="btn-gate-icon" style="color: #ff1744;"><i class="fas fa-arrow-right"></i></div>
+                <button class="btn-gate btn-next" onclick="enterAppWithoutAccount()" style="border-left: 5px solid #ff1744; display: flex; align-items: center; padding: 15px; background: #1e1e1e; border-top: none; border-right: none; border-bottom: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
+                    <div class="btn-gate-icon" style="color: #ff1744; font-size: 20px; margin-right: 15px;"><i class="fas fa-arrow-right"></i></div>
                     <div class="btn-gate-text">
-                        <b>Menu Next (Masuk Aplikasi)</b>
+                        <b style="color: #fff; display: block;">Menu Next (Masuk Aplikasi)</b>
                         <small style="color: #ff1744; font-weight: bold;">Merdeka! Langsung tanpa login</small>
                     </div>
                 </button>
 
                 <!-- MENU 2: LOG-IN MEMBER -->
-                <button class="btn-gate btn-login" onclick="openLoginModal()">
-                    <div class="btn-gate-icon"><i class="fas fa-sign-in-alt"></i></div>
+                <button class="btn-gate btn-login" onclick="openLoginModal()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
+                    <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-sign-in-alt"></i></div>
                     <div class="btn-gate-text">
-                        <b>Menu Log-in</b>
-                        <small>Masuk ke akun member resmi</small>
+                        <b style="color: #fff; display: block;">Menu Log-in</b>
+                        <small style="color: #aaa;">Masuk ke akun member resmi</small>
                     </div>
                 </button>
 
                 <!-- MENU 3: ADMINISTRATOR -->
-                <button class="btn-gate btn-admin-menu" onclick="openAdminGateway()">
-                    <div class="btn-gate-icon"><i class="fas fa-user-shield"></i></div>
+                <button class="btn-gate btn-admin-menu" onclick="openAdminGateway()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
+                    <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-user-shield"></i></div>
                     <div class="btn-gate-text">
-                        <b>Administrator Panel</b>
-                        <small>Kendali sistem internal & broadcast</small>
+                        <b style="color: #fff; display: block;">Administrator Panel</b>
+                        <small style="color: #aaa;">Kendali sistem internal & broadcast</small>
                     </div>
                 </button>
 
                 <!-- MENU 4: SETTINGS (LOCKED) -->
-                <button class="btn-gate btn-theme feature-locked-style" onclick="toggleThemeSetting()">
-                    <div class="btn-gate-icon" id="theme-btn-icon"><i class="fas fa-lock"></i></div>
+                <button class="btn-gate btn-theme feature-locked-style" onclick="toggleThemeSetting()" style="display: flex; align-items: center; padding: 15px; background: #151515; border: 1px dashed #333; border-radius: 8px; cursor: not-allowed; text-align: left; width: 100%;">
+                    <div class="btn-gate-icon" id="theme-btn-icon" style="color: #666; font-size: 20px; margin-right: 15px;"><i class="fas fa-lock"></i></div>
                     <div class="btn-gate-text">
-                        <b>Menu Settings <span class="lock-badge">🔒 Locked</span></b>
-                        <small id="theme-status-text">Fitur Dikunci Global oleh Owner</small>
+                        <b style="color: #666; display: block;">Menu Settings <span class="lock-badge" style="background: #333; color: #fff; padding: 2px 6px; font-size: 10px; border-radius: 4px;">🔒 Locked</span></b>
+                        <small id="theme-status-text" style="color: #555;">Fitur Dikunci Global oleh Owner</small>
                     </div>
                 </button>
 
                 <!-- MENU 5: PROFILE OWNER -->
-                <button class="btn-gate btn-owner-profile" onclick="showOwnerProfileAlert()">
-                    <div class="btn-gate-icon"><i class="fas fa-id-card"></i></div>
+                <button class="btn-gate btn-owner-profile" onclick="showOwnerProfileAlert()" style="display: flex; align-items: center; padding: 15px; background: #1e1e1e; border: none; border-radius: 8px; cursor: pointer; text-align: left; width: 100%;">
+                    <div class="btn-gate-icon" style="color: #fff; font-size: 20px; margin-right: 15px;"><i class="fas fa-id-card"></i></div>
                     <div class="btn-gate-text">
-                        <b>Menu Profile Owner</b>
-                        <small>Kartu Identitas Resmi Pengembang</small>
+                        <b style="color: #fff; display: block;">Menu Profile Owner</b>
+                        <small style="color: #aaa;">Kartu Identitas Resmi Pengembang</small>
                     </div>
                 </button>
             </div>
 
             <!-- LUXURY OWNER BADGE DATA DISPLAY -->
-            <div class="owner-credits-box" style="border: 1px solid rgba(255,23,68,0.3); background: rgba(255, 17, 68, 0.05);">
-                <div class="credit-row"><span>Owner</span> : <b class="text-merdeka">Haruukii79</b></div>
-                <div class="credit-row"><span>Sistem</span> : <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
+            <div class="owner-credits-box" style="border: 1px solid rgba(255,23,68,0.3); background: rgba(255, 17, 68, 0.05); margin-top: 25px; padding: 12px; border-radius: 8px; font-size: 13px;">
+                <div class="credit-row" style="color: #ccc; margin-bottom: 5px;"><span>Owner</span> : <b class="text-merdeka">Haruukii79</b></div>
+                <div class="credit-row" style="color: #ccc;"><span>Sistem</span> : <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
             </div>
 
             <!-- COPYRIGHT FOOTER -->
-            <footer class="gate-footer">
+            <footer class="gate-footer" style="margin-top: 30px; font-size: 11px; color: #555; letter-spacing: 1px;">
                 &copy; 2026 MINITUBE - NUSANTARA BARU INDONESIA MAJU
             </footer>
         </div>
