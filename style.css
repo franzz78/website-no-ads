@@ -2064,3 +2064,197 @@ body.theme-dark .menu-item-id:hover {
     background: linear-gradient(90deg, rgba(255,23,68,0.1) 0%, rgba(255,255,255,0.05) 100%) !important;
     transform: scale(1.02) translateX(5px) !important;
 }
+
+/* ==========================================================================
+   EDISI HARI KEMERDEKAAN RI KE-81: ADMINISTRATOR SYSTEM & FORMAL ARCHITECTURE
+   ========================================================================== */
+
+/* BARU: DESAIN TOMBOL PANEL ADMINISTRATOR DI GERBANG */
+.btn-admin-menu {
+    background: linear-gradient(135px, #263238 0%, #1a237e 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+.btn-admin-menu:hover {
+    box-shadow: 0 0 15px rgba(26, 35, 126, 0.6) !important;
+    border-color: #ff1744 !important;
+}
+
+/* GLOBAL FEATURE LOCK LOCKING SYSTEM STYLE */
+.feature-locked-style {
+    background: #1a1a1a !important;
+    border: 1px dashed #333 !important;
+    opacity: 0.75;
+    cursor: not-allowed !important;
+}
+.lock-badge {
+    background: #ff1744;
+    color: #fff;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+    text-transform: uppercase;
+}
+
+/* LAYOUT PANEL KENDALI MODAL DI DALAM SWEETALERT */
+.admin-modal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px 5px;
+}
+.admin-action-btn {
+    width: 100%;
+    padding: 12px;
+    background: #252525;
+    color: #fff;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.admin-action-btn i {
+    margin-right: 10px;
+    color: #ff1744;
+    width: 18px;
+    text-align: center;
+}
+.admin-action-btn:hover {
+    background: #333;
+    border-color: #555;
+    transform: translateX(3px);
+}
+.btn-action-merdeka {
+    background: linear-gradient(90deg, #b71c1c 0%, #ff1744 100%) !important;
+    border: none !important;
+}
+.btn-action-merdeka i {
+    color: #fff !important;
+}
+.btn-action-merdeka:hover {
+    box-shadow: 0 0 12px rgba(255, 23, 68, 0.4);
+}
+
+/* TICKER BANNER PENGUMUMAN 15 DETIK (TOP STICKY) */
+#admin-announcement-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(90deg, #ff1744 0%, #b71c1c 100%);
+    color: white;
+    z-index: 99999;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.5);
+    transition: transform 0.4s ease-in-out;
+}
+.admin-ticker-hide { transform: translateY(-100%); pointer-events: none; }
+.admin-ticker-show { transform: translateY(0); }
+
+/* AUDIO DOCK INFO ADMIN (TOP FLOATING) */
+#admin-audio-dock {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+    background: #1e1e1e;
+    border: 2px solid #ff1744;
+    border-radius: 10px;
+    padding: 8px 15px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+.audio-dock-hide { opacity: 0; transform: scale(0.8); pointer-events: none; }
+.audio-dock-show { opacity: 1; transform: scale(1); }
+.dock-info { display: flex; align-items: center; gap: 10px; color: #fff; text-align: left;}
+.dock-info small { display: block; color: #888; font-size: 10px; }
+.dock-info span { font-size: 12px; font-weight: bold; display: block; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn-stop-dock { background: #ff1744; border: none; color: white; width: 25px; height: 25px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+.text-red { color: #ff1744; font-size: 18px; }
+
+/* LAYOUT BARU: KARTU PROFIL FORMAL DAN ELEGAN OWNER */
+.formal-profile-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 23, 68, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: left;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.4);
+}
+.formal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 2px solid #ff1744;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+.formal-avatar {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135px, #ff1744 0%, #b71c1c 100%);
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(255, 23, 68, 0.3);
+}
+.formal-header-meta h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+.formal-header-meta span {
+    font-size: 11px;
+    color: #888;
+    display: block;
+    margin-top: 2px;
+}
+.formal-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.formal-table td {
+    padding: 8px 4px;
+    font-size: 12.5px;
+    color: #ddd;
+}
+.formal-table td.lbl {
+    width: 40%;
+    font-weight: bold;
+    color: #aaa;
+}
+.formal-table td.lbl i {
+    width: 15px;
+    margin-right: 5px;
+}
+.formal-table td.vlu {
+    font-weight: bold;
+    color: #ffffff;
+}
+.formal-card-footer {
+    margin-top: 15px;
+    background: rgba(255, 25, 68, 0.08);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #ff1744;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 23, 68, 0.15);
+}
