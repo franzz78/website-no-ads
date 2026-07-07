@@ -612,6 +612,127 @@
         function executeSearch() { const query = document.getElementById("search-input").value.trim(); if(query) fetchYouTubeData(query); }
         function handleSearchKeyPress(e) { if(e.key === "Enter") executeSearch(); }
         function toggleSearchBar() { document.getElementById("search-bar-container").classList.toggle("active"); }
+
+        // ==========================================================================
+// INTEGRASI REAL-TIME DATABASE FIREBASE (GLOBAL BROADCAST ENGINE)
+// ==========================================================================
+
+// 1. Load Script Firebase secara dinamis
+const fbAppScript = document.createElement('script');
+fbAppScript.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js";
+document.head.appendChild(fbAppScript);
+
+const fbDbScript = document.createElement('script');
+fbDbScript.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js";
+document.head.appendChild(fbDbScript);
+
+let database;
+
+// Wait until Firebase Scripts are fully loaded
+fbDbScript.onload = () => {
+    // Konfigurasi menggunakan URL database milikmu
+    const firebaseConfig = {
+        databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    database = firebase.database();
+    
+    // SINKRONISASI REAL-TIME: Dengar perintah dari database untuk semua user
+    database.ref('global_broadcast').on('value', (snapshot) => {
+        const data = snapshot.val();
+        
+        if (data && data.status === "playing") {
+            // Paksa jalankan engine audio di semua HP yang sedang membuka web
+            const audioEngine = document.getElementById("hidden-audio-engine");
+            audioEngine.src = `https://www.youtube.com/embed/${data.videoId}?autoplay=1&mute=0&controls=0&loop=1`;
+            
+            document.getElementById("dock-song-title").innerText = data.title;
+            document.getElementById("admin-audio-dock").className = "audio-dock-show";
+        } else {
+            // Jika status mati atau kosong, matikan audio di semua HP
+            document.getElementById("hidden-audio-engine").src = "";
+            document.getElementById("admin-audio-dock").className = "audio-dock-hide";
+        }
+    });
+};
+
+/* MODIFIKASI FUNGSI: SEKARANG ADMIN MENEMBAK DATA KE FIREBASE KILAT */
+function triggerAdminMp3Direct() {
+    if (!database) {
+        Swal.fire('Error', 'Firebase belum siap, tunggu sebentar bro.', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: '🎵 LIVE AUDIO BROADCAST SYSTEM',
+        text: 'Pilih Lagu Kebangsaan/Wajib Nasional untuk diputar secara live OTOMATIS ke semua HP user:',
+        input: 'select',
+        inputOptions: {
+            'Lagu Indonesia Raya': 'Indonesia Raya (Lagu Kebangsaan)',
+            'Lagu Hari Merdeka 17 Agustus': 'Hari Merdeka (17 Agustus 1945)',
+            'Lagu Garuda Pancasila': 'Garuda Pancasila',
+            'Lagu Bagimu Negeri': 'Padamu Negeri',
+            'Lagu Kebangsaan Populer': 'Lagu Perjuangan Nasional Indonesia'
+        },
+        inputPlaceholder: 'Pilih Lagu...',
+        showCancelButton: true,
+        confirmButtonText: '⚡ Siarkan ke Semua HP',
+        confirmButtonColor: '#ff1744'
+    }).then(async (res) => {
+        if(res.isConfirmed && res.value !== "") {
+            const query = res.value;
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
+            
+            Swal.fire({ title: 'Mengirim Komando ke Cloud...', didOpen: () => { Swal.showLoading() } });
+            
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                if (data.items && data.items.length > 0) {
+                    const videoId = data.items[0].id.videoId;
+                    const title = data.items[0].snippet.title;
+                    
+                    // Set data ke Firebase agar tersiar secara global real-time
+                    database.ref('global_broadcast').set({
+                        status: "playing",
+                        videoId: videoId,
+                        title: title,
+                        timestamp: Date.now()
+                    });
+                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: '🔴 GLOBAL LIVE BROADCAST AKTIF',
+                        text: 'Berhasil memancarkan lagu "' + title + '" ke seluruh HP pengunjung secara real-time.',
+                        confirmButtonColor: '#ff1744'
+                    });
+                } else {
+                    Swal.fire('Gagal', 'Lagu kebangsaan tidak ditemukan.', 'error');
+                }
+            } catch(e) {
+                Swal.fire('Error', 'Gagal memproses transmisi audio ke cloud.', 'error');
+            }
+        }
+    });
+}
+
+/* MODIFIKASI FUNGSI STOP: MEMATIKAN SUARA DI SEMUA HP SEKALIGUS */
+function stopAdminAudio() {
+    if (!database) return;
+    
+    // Update status di Firebase menjadi stopped
+    database.ref('global_broadcast').set({
+        status: "stopped",
+        videoId: "",
+        title: "",
+        timestamp: Date.now()
+    });
+    
+    Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Siaran Global Dihentikan Admin', showConfirmButton: false, timer: 1500 });
+        }
+        
     </script>
 </body>
 </html>
