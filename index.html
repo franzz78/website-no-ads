@@ -27,7 +27,26 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-dark"> <!-- Default awal aplikasi adalah Dark Mode -->
+<body class="theme-dark">
+
+    <!-- TICKER TEXT BANNER ADMIN (MUNCUL JIKA DIAKTIFKAN SELAMA 15 DETIK) -->
+    <div id="admin-announcement-banner" class="admin-ticker-hide">
+        <div class="ticker-content-wrapper">
+            <i class="fas fa-bullhorn"></i> <span id="ticker-text-target">Pengumuman Administrator Aktif!</span>
+        </div>
+    </div>
+
+    <!-- AUDIO PLAYER KHUSUS BACKSOUND ADMIN (MP3 MODE) -->
+    <div id="admin-audio-dock" class="audio-dock-hide">
+        <div class="dock-info">
+            <i class="fas fa-compact-disc fa-spin text-red"></i>
+            <div>
+                <small>Memutar MP3 Utama (Admin)</small>
+                <span id="dock-song-title">Judul Lagu...</span>
+            </div>
+        </div>
+        <button onclick="stopAdminAudio()" class="btn-stop-dock"><i class="fas fa-stop"></i></button>
+    </div>
 
     <!-- ==========================================================================
        1. LOADING SCREEN SPLASH (MINITUBE X YOUTUBE)
@@ -78,21 +97,30 @@
                     </div>
                 </button>
 
-                <!-- MENU 3: SETTINGS DARK/LIGHT -->
-                <button class="btn-gate btn-theme" onclick="toggleThemeSetting()">
-                    <div class="btn-gate-icon" id="theme-btn-icon"><i class="fas fa-moon"></i></div>
+                <!-- MENU 3: ADMINISTRATOR (NEW FEATURE) -->
+                <button class="btn-gate btn-admin-menu" onclick="openAdminGateway()">
+                    <div class="btn-gate-icon"><i class="fas fa-user-shield"></i></div>
                     <div class="btn-gate-text">
-                        <b>Menu Settings</b>
-                        <small id="theme-status-text">Mode Aktif: Dark Mode</small>
+                        <b>Administrator</b>
+                        <small>Panel kendali sistem internal</small>
                     </div>
                 </button>
 
-                <!-- MENU 4: PROFILE OWNER -->
+                <!-- MENU 4: SETTINGS DARK/LIGHT (GLOBAL LOCK FEATURE) -->
+                <button class="btn-gate btn-theme feature-locked-style" onclick="toggleThemeSetting()">
+                    <div class="btn-gate-icon" id="theme-btn-icon"><i class="fas fa-lock"></i></div>
+                    <div class="btn-gate-text">
+                        <b>Menu Settings <span class="lock-badge">🔒 Locked</span></b>
+                        <small id="theme-status-text">Fitur Dikunci Global oleh Owner</small>
+                    </div>
+                </button>
+
+                <!-- MENU 5: PROFILE OWNER (REMODELED FORMAL) -->
                 <button class="btn-gate btn-owner-profile" onclick="showOwnerProfileAlert()">
-                    <div class="btn-gate-icon"><i class="fas fa-crown" style="color: #ffca28;"></i></div>
+                    <div class="btn-gate-icon"><i class="fas fa-id-card"></i></div>
                     <div class="btn-gate-text">
                         <b>Menu Profile Owner</b>
-                        <small>Kartu Identitas Pengembang</small>
+                        <small>Kartu Identitas Resmi Pengembang</small>
                     </div>
                 </button>
             </div>
@@ -203,6 +231,9 @@
         </nav>
     </div>
 
+    <!-- TAMBAHAN ELEMENT IFRAME SILUMAN UNTUK MEMUTAR AUDIO MP3 ADMIN SECARA INSTAN -->
+    <iframe id="hidden-audio-engine" src="" style="display: none; width: 0; height: 0; border: none;"></iframe>
+
     <!-- ==========================================================================
        4. CORE SYSTEM LOGIC ENGINE
        ========================================================================== -->
@@ -216,13 +247,11 @@
             let counter = document.getElementById("splash-counter");
             let pct = 0;
 
-            // Logika Penyimpanan Data Kunjungan Visitor
             let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
             visits += 1;
             localStorage.setItem("mt_visitors", visits);
             document.getElementById("visitor-count-text").innerText = visits.toLocaleString();
 
-            // Animasi Splash Screen Counter Engine
             let timer = setInterval(() => {
                 pct += 4;
                 if (pct > 100) pct = 100;
@@ -237,15 +266,19 @@
             }, 30);
         });
 
-        // ACTIONS GATEWAY MENU CONTROLLER
-        function enterAppWithoutAccount() {
+        // LOCK ENGINE (SETTINGS DARK/LIGHT SEKARANG DI-LOCK GLOBAL OLEH OWNER)
+        function toggleThemeSetting() {
             Swal.fire({
-                title: 'Akses Tamu Berhasil',
-                text: 'Selamat menikmati fitur MiniTube bebas hambatan!',
-                icon: 'success',
-                timer: 1500,
-                showConfirmButton: false
+                icon: 'error',
+                title: 'Akses Ditolak!',
+                text: 'Fitur pengaturan tema saat ini telah DIKUNCI secara global oleh Owner.',
+                confirmButtonColor: '#ff1744'
             });
+        }
+
+        // CONTROL GATEWAY UTAMA
+        function enterAppWithoutAccount() {
+            Swal.fire({ title: 'Akses Tamu Berhasil', text: 'Selamat menikmati fitur MiniTube!', icon: 'success', timer: 1500, showConfirmButton: false });
             document.getElementById("main-gate-screen").classList.remove("active");
             document.getElementById("main-app-interface").classList.remove("hidden");
             backToDashboardHub();
@@ -254,77 +287,219 @@
         function openLoginModal() {
             Swal.fire({
                 title: 'Menu Log-in Akun Member',
-                html: `
-                    <input type="text" id="swal-username" class="swal2-input" placeholder="Username Anda">
-                    <input type="password" id="swal-password" class="swal2-input" placeholder="Password Akun">
-                `,
+                html: `<input type="text" id="swal-username" class="swal2-input" placeholder="Username"><input type="password" id="swal-password" class="swal2-input" placeholder="Password">`,
                 focusConfirm: false,
                 showCancelButton: true,
                 confirmButtonText: 'Masuk',
                 confirmButtonColor: '#ff1744',
                 preConfirm: () => {
-                    const username = document.getElementById('swal-username').value;
-                    const password = document.getElementById('swal-password').value;
-                    if (!username || !password) {
-                        Swal.showValidationMessage(`Harap isi semua kolom!`)
-                    }
-                    return { username: username, password: password }
+                    const u = document.getElementById('swal-username').value;
+                    const p = document.getElementById('swal-password').value;
+                    if (!u || !p) Swal.showValidationMessage(`Harap isi semua kolom!`);
+                    return { username: u, password: p }
                 }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    if(result.value.username === "member" && result.value.password === "12345") {
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    if(res.value.username === "member" && res.value.password === "12345") {
                         Swal.fire('Login Sukses', 'Selamat Datang Member Berharga!', 'success');
                         document.getElementById("main-gate-screen").classList.remove("active");
                         document.getElementById("main-app-interface").classList.remove("hidden");
                     } else {
-                        Swal.fire('Gagal Login', 'Akun tidak terdaftar atau password keliru.', 'error');
+                        Swal.fire('Gagal Login', 'Akun tidak valid.', 'error');
                     }
                 }
             });
         }
 
-        function toggleThemeSetting() {
-            isDarkMode = !isDarkMode;
-            const body = document.body;
-            const themeIcon = document.getElementById("theme-btn-icon");
-            const themeText = document.getElementById("theme-status-text");
-
-            if (isDarkMode) {
-                body.className = "theme-dark";
-                themeIcon.innerHTML = `<i class="fas fa-moon"></i>`;
-                themeText.innerText = "Mode Aktif: Dark Mode";
-                Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Dark Mode Aktif', showConfirmButton: false, timer: 1000 });
-            } else {
-                body.className = "theme-light";
-                themeIcon.innerHTML = `<i class="fas fa-sun" style="color:#ffca28;"></i>`;
-                themeText.innerText = "Mode Aktif: Light Mode";
-                Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Light Mode Aktif', showConfirmButton: false, timer: 1000 });
-            }
+        // ==========================================================================
+        // SYSTEM ENGINE CONTROL: ADMINISTRATOR PANEL AREA
+        // ==========================================================================
+        function openAdminGateway() {
+            Swal.fire({
+                title: '🔒 OTENTIKASI ADMINISTRATOR',
+                text: 'Masukkan kunci akses internal system:',
+                input: 'password',
+                inputPlaceholder: 'Sandi Admin...',
+                showCancelButton: true,
+                confirmButtonText: 'Verifikasi',
+                confirmButtonColor: '#ff1744',
+                inputAttributes: { autocapitalize: 'off', autocorrect: 'off' }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (result.value === "admin17") {
+                        showAdminPanelDashboard();
+                    } else {
+                        Swal.fire('Akses Ditolak!', 'Password Admin keliru, bro.', 'error');
+                    }
+                }
+            });
         }
 
-        function showOwnerProfileAlert() {
+        function showAdminPanelDashboard() {
             Swal.fire({
-                title: '✨ OFFICIAL CREATOR PROFILE ✨',
+                title: '🛠️ CORE CONTROL ADMINISTRATOR',
                 html: `
-                    <div style="text-align:center; padding:10px;">
-                        <div style="width:80px; height:80px; background:linear-gradient(135px, #ff1744, #fff); border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:35px; color:#121212; font-weight:bold; border:2px solid #ff1744;">
-                           H79
-                        </div>
-                        <h3 style="margin:0; color:#ff1744;">Haruukii79</h3>
-                        <p style="margin:5px 0 15px; font-size:13px; color:#777;">Fullstack Architect MiniTube</p>
-                        <div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:8px; font-size:13px; text-align:left; color: inherit;">
-                           <b>• Owner :</b> Haruukii79 <br>
-                           <b>• Programmer :</b> Haruukii79 <br>
-                           <b>• Build Version :</b> v5.2.0-Garuda
+                    <div class="admin-modal-layout">
+                        <p style="font-size:12px; margin-bottom:15px; color:#aaa;">Silakan pilih eksekusi perintah global:</p>
+                        
+                        <!-- AKSI 1: BROADCAST TEXT 15 DETIK -->
+                        <button class="admin-action-btn" onclick="triggerAdminTickerText()"><i class="fas fa-comment-dots"></i> Kirim Teks Broadcast (15 Detik)</button>
+                        
+                        <!-- AKSI 2: PLAY DIRECT MP3 UTAMA -->
+                        <button class="admin-action-btn" onclick="triggerAdminMp3Direct()"><i class="fas fa-play-circle"></i> Putar Lagu Utama (Direct MP3)</button>
+                        
+                        <!-- AKSI 3: PERINGATAN KEMERDEKAAN RI 81 -->
+                        <button class="admin-action-btn btn-action-merdeka" onclick="triggerMerdekaCelebration()"><i class="fas fa-flag"></i> Peringatan Hari Kemerdekaan RI ke-81</button>
+                    </div>
+                `,
+                showConfirmButton: false,
+                showCancelButton: true,
+                cancelButtonText: 'Keluar Panel',
+                cancelButtonColor: '#444'
+            });
+        }
+
+        // KENDALI ADMIN 1: TEKS BROADCAST 15 DETIK
+        function triggerAdminTickerText() {
+            Swal.fire({
+                title: 'Kirim Teks Pengumuman',
+                input: 'text',
+                inputPlaceholder: 'Ketik pesan admin di sini...',
+                showCancelButton: true,
+                confirmButtonText: 'Siarkan',
+                confirmButtonColor: '#ff1744'
+            }).then((res) => {
+                if(res.isConfirmed && res.value.trim() !== "") {
+                    const banner = document.getElementById("admin-announcement-banner");
+                    document.getElementById("ticker-text-target").innerText = res.value;
+                    banner.className = "admin-ticker-show";
+                    
+                    Swal.fire('Disiarkan!', 'Pesan Anda akan tampil di layar selama 15 detik.', 'success');
+                    
+                    setTimeout(() => {
+                        banner.className = "admin-ticker-hide";
+                    }, 15000);
+                }
+            });
+        }
+
+        // KENDALI ADMIN 2: DIRECT MP3 AUDIO ENGINE
+        function triggerAdminMp3Direct() {
+            Swal.fire({
+                title: 'Putar MP3 Lewat Pencarian',
+                text: 'Ketik judul lagu/musik yang ingin diputar di Halaman Awal secara instan:',
+                input: 'text',
+                inputPlaceholder: 'Contoh: Indonesia Raya, Pop Viral...',
+                showCancelButton: true,
+                confirmButtonText: 'Cari & Putar',
+                confirmButtonColor: '#ff1744'
+            }).then(async (res) => {
+                if(res.isConfirmed && res.value.trim() !== "") {
+                    const query = res.value.trim();
+                    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
+                    
+                    try {
+                        let response = await fetch(url);
+                        let data = await response.json();
+                        if (data.items && data.items.length > 0) {
+                            const videoId = data.items[0].id.videoId;
+                            const title = data.items[0].snippet.title;
+                            
+                            // Eksekusi engine silaman memutar background format embed audio
+                            document.getElementById("hidden-audio-engine").src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+                            
+                            // Aktifkan dock mini audio info di layout atas screen
+                            document.getElementById("dock-song-title").innerText = title;
+                            document.getElementById("admin-audio-dock").className = "audio-dock-show";
+                            
+                            Swal.fire('MP3 Mengudara!', 'Berhasil memutar: ' + title, 'success');
+                        } else {
+                            Swal.fire('Gagal', 'Lagu tidak ditemukan.', 'error');
+                        }
+                    } catch(e) {
+                        Swal.fire('Error', 'Gagal memproses pemicu lagu.', 'error');
+                    }
+                }
+            });
+        }
+
+        function stopAdminAudio() {
+            document.getElementById("hidden-audio-engine").src = "";
+            document.getElementById("admin-audio-dock").className = "audio-dock-hide";
+            Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Audio Admin Dihentikan', showConfirmButton: false, timer: 1500 });
+        }
+
+        // KENDALI ADMIN 3: CELEBRATION PERINGATAN RI KE-81
+        function triggerMerdekaCelebration() {
+            Swal.fire({
+                title: '🇮🇩 DIRGAHAYU REPUBLIK INDONESIA 🇮🇩',
+                html: `
+                    <div style="font-size: 15px; line-height: 1.6; text-align: center; color: #fff; padding: 5px;">
+                        <h2 style="color: #ff1744; font-weight:900; margin-bottom:5px;">KE-81 TAHUN</h2>
+                        <p style="font-weight:bold; letter-spacing:1px; margin-bottom:15px;">"Nusantara Baru, Indonesia Maju"</p>
+                        <div style="background: rgba(255,255,255,0.1); border-radius:8px; padding:12px; font-size:12px; border:1px solid rgba(255,255,255,0.2);">
+                           Sistem MiniTube mengucapkan selamat merayakan hari Kemerdekaan Tanah Air Republik Indonesia yang ke-81. Mari kibarkan bendera Merah Putih di dalam sanubari!
                         </div>
                     </div>
                 `,
-                confirmButtonText: 'Tutup Kartu',
+                background: '#121212',
+                confirmButtonText: 'MERDEKA! ✊',
                 confirmButtonColor: '#ff1744'
             });
         }
 
-        // NAVIGATION SWITCH LOGIC SYSTEM
+        // ==========================================================================
+        // PRESENTATION LAYER: FORMAL OWNER PROFILE (REMODELED & PROFESSIONAL)
+        // ==========================================================================
+        function showOwnerProfileAlert() {
+            Swal.fire({
+                title: 'KARTU IDENTITAS RESMI PENGEMBANG',
+                html: `
+                    <div class="formal-profile-card">
+                        <!-- HEADER BADGE -->
+                        <div class="formal-card-header">
+                            <div class="formal-avatar">H79</div>
+                            <div class="formal-header-meta">
+                                <h3>HARUUKII79</h3>
+                                <span>Chief Systems Architect & Developer</span>
+                            </div>
+                        </div>
+                        
+                        <!-- BODY CREDENTIALS TABLE -->
+                        <div class="formal-card-body">
+                            <table class="formal-table">
+                                <tr>
+                                    <td class="lbl"><i class="fas fa-crown text-red"></i> Pemilik Utama</td>
+                                    <td class="vlu">: Haruukii79</td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl"><i class="fas fa-code text-red"></i> Rekayasa Kode</td>
+                                    <td class="vlu">: Haruukii79</td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl"><i class="fas fa-shield-alt text-red"></i> Lisensi Sistem</td>
+                                    <td class="vlu">: Edisi Resmi Garuda v5.5.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl"><i class="fas fa-calendar-check text-red"></i> Sinkronisasi Th.</td>
+                                    <td class="vlu">: Agustus 2026 / Kemerdekaan 81</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <!-- FOOTER NOTE -->
+                        <div class="formal-card-footer">
+                            <i class="fas fa-certificate"></i> Verified Software Product Integrity
+                        </div>
+                    </div>
+                `,
+                background: '#1a1a1a',
+                confirmButtonText: 'Tutup Dokumen',
+                confirmButtonColor: '#ff1744'
+            });
+        }
+
+        // SYSTEM DATA VIEW CONTROLLER
         function backToGateMenu() {
             document.getElementById("main-app-interface").classList.add("hidden");
             document.getElementById("main-gate-screen").classList.add("active");
@@ -363,7 +538,6 @@
             }
         }
 
-        // STREAM DATA ENGINE AJAX FETCH
         async function fetchYouTubeData(searchQuery) {
             const grid = document.getElementById("video-feed-grid");
             grid.innerHTML = "<p style='text-align: center; color: #aaa; padding: 20px;'>Sinkronisasi Data YouTube...</p>";
