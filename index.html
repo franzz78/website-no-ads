@@ -25,15 +25,30 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* ==========================================================================
-           UPGRADE STYLE KHUSUS MAIN MENU GATEWAY (EDISI PREMIUM MERDEKA 81)
-           ========================================================================== */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background: #09090b;
         }
 
-        /* Lencana Melayang RI 81 Premium di Kanan Atas */
+        /* ==========================================================================
+           NOMOR 2: ANIMASI TRANSISI HALUS (PAGE TRANSITIONS)
+           ========================================================================== */
+        .animate-fade-in {
+            animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Styles Utama Main Menu */
         .ri-badge-81 {
             position: absolute;
             top: 20px;
@@ -56,7 +71,6 @@
             100% { box-shadow: 0 0 25px rgba(255, 23, 68, 0.8); transform: scale(1.03); }
         }
 
-        /* Container Box Utama dengan Efek Glassmorphism Mewah */
         .gate-forced-layout {
             background: radial-gradient(circle at top, rgba(255, 23, 68, 0.15) 0%, rgba(0, 0, 0, 0) 70%), #09090b;
             min-height: 100vh;
@@ -83,11 +97,6 @@
             box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
         }
 
-        /* Animasi Glow & Logo YouTube */
-        .gate-brand {
-            margin-bottom: 24px;
-        }
-
         .gate-logo-icon {
             font-size: 54px;
             color: #ff1744;
@@ -109,7 +118,6 @@
             margin: 0 0 8px 0;
         }
 
-        /* Banner Badge Kemerdekaan Baru */
         .hut-badge-banner {
             background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,23,68,0.15) 50%, rgba(255,255,255,0.05) 100%);
             border-top: 1px solid rgba(255, 23, 68, 0.3);
@@ -122,7 +130,6 @@
             text-shadow: 0 0 8px rgba(255, 23, 68, 0.5);
         }
 
-        /* Marquee Neon Bar */
         .neon-marquee-container {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 50px;
@@ -138,7 +145,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Group Tombol Menu Super Bulat (Sesuai Layout Asli tapi Lebih HD) */
         .gate-buttons-group {
             display: flex;
             flex-direction: column;
@@ -149,20 +155,17 @@
         .btn-gate {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 40px; /* Lengkungan besar super mulus seperti foto kedua */
+            border-radius: 40px;
             padding: 14px 20px;
             display: flex;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: left;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Aksen Efek Highlight Menyala Merah di Sisi Kiri Tombol Pertama (Next Menu) */
         .btn-gate-custom-next {
-            background: linear-gradient(90deg, rgba(255, 23, 68, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            background: linear-gradient(90deg, rgba(255, 2, 54, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
             border-left: 3.5px solid #ff1744 !important;
             box-shadow: 0 4px 20px rgba(255, 23, 68, 0.1);
         }
@@ -171,11 +174,6 @@
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
-        }
-
-        .btn-gate-custom-next:hover {
-            background: linear-gradient(90deg, rgba(255, 23, 68, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
-            box-shadow: 0 6px 24px rgba(255, 23, 68, 0.2);
         }
 
         .btn-gate-icon {
@@ -193,12 +191,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .btn-gate-text {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
         .btn-gate-text b {
             color: #ffffff;
             font-size: 14px;
@@ -211,7 +203,6 @@
             font-size: 11px;
         }
 
-        /* Badge Terkunci */
         .lock-badge {
             background: rgba(255, 23, 68, 0.15);
             color: #ff1744;
@@ -220,11 +211,8 @@
             font-size: 9px;
             font-weight: 700;
             margin-left: 6px;
-            border: 1px solid rgba(255, 23, 68, 0.2);
-            text-transform: uppercase;
         }
 
-        /* Kotak Informasi Owner (Renggang Melebar Sempurna / Justified Layout) */
         .owner-credits-box {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 23, 68, 0.15);
@@ -238,15 +226,11 @@
 
         .credit-row {
             display: flex;
-            justify-content: space-between; /* Membuat tulisan renggang otomatis seperti aslinya */
+            justify-content: space-between;
             align-items: center;
             color: #a1a1aa;
             font-size: 12px;
             width: 100%;
-        }
-
-        .credit-row span {
-            font-weight: 500;
         }
 
         .text-merdeka {
@@ -254,7 +238,6 @@
             text-shadow: 0 0 10px rgba(255, 23, 68, 0.3);
         }
 
-        /* Footer Halaman */
         .gate-footer {
             font-size: 10px;
             color: #ff1744;
@@ -264,7 +247,6 @@
             margin-top: 10px;
         }
 
-        /* Tambahan Sosmed Mini biar tambah estetik */
         .gate-social-dev {
             display: flex;
             justify-content: center;
@@ -272,13 +254,128 @@
             margin-top: -15px;
             margin-bottom: 20px;
         }
-        .gate-social-dev a {
-            color: rgba(255,255,255,0.3);
-            font-size: 14px;
-            transition: color 0.3s;
+        .gate-social-dev a { color: rgba(255,255,255,0.3); font-size: 14px; }
+
+        /* ==========================================================================
+           NOMOR 3: UI MODE HEMAT KUOTA (DATA SAVER MODE)
+           ========================================================================== */
+        .data-saver-container {
+            display: none;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 8px;
         }
-        .gate-social-dev a:hover {
-            color: #ff1744;
+        .data-saver-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e4e4e7;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .data-saver-btn.active {
+            background: #388e3c;
+            color: #fff;
+            border-color: #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Mode Hemat Kuota Aktif - Sembunyikan Gambar Utama */
+        .hide-thumbnails .thumbnail {
+            display: none !important;
+        }
+        .hide-thumbnails .thumbnail-placeholder {
+            display: flex !important;
+        }
+
+        .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #27272a 0%, #18181b 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #388e3c;
+        }
+
+        /* ==========================================================================
+           NOMOR 4: COMPONENT FLOATING MINI PLAYER BACKGROUND
+           ========================================================================== */
+        #floating-mini-player {
+            position: fixed;
+            bottom: 68px; /* Tepat di atas bottom navigation bar mobile */
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 388px;
+            background: rgba(20, 20, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 10px 14px;
+            display: none; /* Default Hidden */
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .mini-player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 70%;
+        }
+        .mini-player-icon-box {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: #ff1744;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 14px;
+        }
+        .mini-player-text {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .mini-player-title {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mini-player-channel {
+            color: #a1a1aa;
+            font-size: 10px;
+        }
+        .mini-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .mini-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .mini-btn-close {
+            color: #ef4444;
         }
     </style>
 </head>
@@ -302,6 +399,7 @@
         <button id="unmute-audio-btn" class="btn-unmute-pulse" onclick="unlockGlobalAudio()"><i class="fas fa-volume-up"></i> Buka Suara</button>
     </div>
 
+    <!-- SPLASH SCREEN -->
     <div id="splash-screen" class="splash-screen-indonesia" style="display: flex;">
         <div class="splash-content">
             <div style="margin-bottom: 10px;">
@@ -314,14 +412,12 @@
             <div class="progress-bar-container-id">
                 <div id="progress-bar-fill" class="progress-bar-fill-id"></div>
             </div>
-            <div class="splash-footer-id">
-                NUSANTARA BARU, INDONESIA MAJU 🇮🇩
-            </div>
+            <div class="splash-footer-id">NUSANTARA BARU, INDONESIA MAJU 🇮🇩</div>
         </div>
     </div>
 
-    <div id="main-gate-screen" class="gate-forced-layout" style="display: none;">
-        
+    <!-- MAIN MENU GATEWAY SCREEN -->
+    <div id="main-gate-screen" class="gate-forced-layout animate-fade-in" style="display: none;">
         <div class="ri-badge-81">RI 81</div>
 
         <div class="gate-content-box">
@@ -382,9 +478,9 @@
             </div>
 
             <div class="gate-social-dev">
-                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
 
             <div class="owner-credits-box">
@@ -392,12 +488,11 @@
                 <div class="credit-row"><span>Sistem :</span> <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
             </div>
 
-            <footer class="gate-footer">
-                &copy; 2026 MINITUBE - NUSANTARA BARU INDONESIA MAJU
-            </footer>
+            <footer class="gate-footer">&copy; 2026 MINITUBE - NUSANTARA BARU INDONESIA MAJU</footer>
         </div>
     </div>
 
+    <!-- MAIN APPLICATION INTERFACE -->
     <div id="main-app-interface" class="hidden">
         
         <header class="mobile-header header-indonesia">
@@ -406,22 +501,21 @@
                 <span class="logo-text" onclick="backToGateMenu()">MiniTube <span class="badge-id">RI 81</span></span>
             </div>
             <div class="header-right">
-                <a href="https://saweria.co" target="_blank" class="donation-btn-id" rel="noopener">
-                    <i class="fas fa-heart"></i> Saweria
-                </a>
+                <a href="https://saweria.co" target="_blank" class="donation-btn-id" rel="noopener"><i class="fas fa-heart"></i> Saweria</a>
                 <i class="fas fa-search header-icon hidden" id="global-search-trigger" onclick="toggleSearchBar()"></i>
-                <i class="fas fa-power-off header-icon" style="color: #ffffff; font-size: 14px;" onclick="backToGateMenu()" title="Keluar"></i>
+                <i class="fas fa-power-off header-icon" style="color: #ffffff; font-size: 14px;" onclick="backToGateMenu()"></i>
             </div>
         </header>
 
         <div id="search-bar-container" class="mobile-search-bar-container">
             <div class="search-box">
                 <input type="text" id="search-input" placeholder="Cari video perjuangan, musik, atau lagu..." onkeypress="handleSearchKeyPress(event)">
-                <button class="search-btn" onclick="executeSearch()" aria-label="Cari"><i class="fas fa-search"></i></button>
+                <button class="search-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
             </div>
         </div>
 
-        <main class="mobile-content" id="home-dashboard-view">
+        <!-- DASHBOARD HUB -->
+        <main class="mobile-content animate-fade-in" id="home-dashboard-view">
             <div class="welcome-banner-id">
                 <h3>🇮🇩 Semangat Proklamasi RI ke-81</h3>
                 <p>Nusantara Baru, Indonesia Maju. Pilih format sistem streaming premium pilihanmu:</p>
@@ -450,10 +544,22 @@
             </div>
         </main>
 
-        <main class="mobile-content hidden" id="streaming-content-view">
+        <!-- STREAMING VIEW CONTAINER -->
+        <main class="mobile-content hidden animate-fade-in" id="streaming-content-view">
             <button class="btn-back-menu" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Menu Utama</button>
-            <div class="current-mode-badge" id="current-mode-text">Mode: YouTube Premium</div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <div class="current-mode-badge" id="current-mode-text" style="margin: 0;">Mode: YouTube Premium</div>
+                
+                <!-- NOMOR 3: DOM ACTION CONTROL DATA SAVER -->
+                <div class="data-saver-container" id="data-saver-wrapper">
+                    <button class="data-saver-btn" id="data-saver-toggle-btn" onclick="toggleDataSaverMode()">
+                        <i class="fas fa-bolt"></i> <span>Hemat Kuota: OFF</span>
+                    </button>
+                </div>
+            </div>
 
+            <!-- PLAYER SECTION (HIDDEN ON BACKGROUND) -->
             <div id="video-player-section" class="player-container hidden">
                 <div class="video-wrapper">
                     <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -465,27 +571,44 @@
             <div id="video-feed-grid" class="video-grid"></div>
         </main>
 
+        <!-- BOTTOM NAV BAR MOBILE -->
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="backToDashboardHub()">
-                <i class="fas fa-home"></i> Beranda
-            </div>
-            <div class="nav-item" onclick="Swal.fire('Info Merdeka', 'Fitur Hub Shorts Spesial menyusul!', 'info')">
-                <i class="fab fa-youtube-square"></i> Shorts
-            </div>
-            <div class="nav-item" onclick="backToGateMenu()">
-                <i class="fas fa-door-open"></i> Menu Gerbang
-            </div>
+            <div class="nav-item active" onclick="backToDashboardHub()"><i class="fas fa-home"></i> Beranda</div>
+            <div class="nav-item" onclick="Swal.fire('Info Merdeka', 'Fitur Hub Shorts Spesial menyusul!', 'info')"><i class="fab fa-youtube-square"></i> Shorts</div>
+            <div class="nav-item" onclick="backToGateMenu()"><i class="fas fa-door-open"></i> Menu Gerbang</div>
         </nav>
+    </div>
+
+    <!-- ==================== NOMOR 4: ELEMENT FLOATING MINI PLAYER ==================== -->
+    <div id="floating-mini-player">
+        <div class="mini-player-info" onclick="restoreActivePlayerView()">
+            <div class="mini-player-icon-box" id="mini-player-badge">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="mini-player-text">
+                <span class="mini-player-title" id="mini-title-text">Judul Lagu Sedang Berputar...</span>
+                <span class="mini-player-channel" id="mini-channel-text">Nama Channel</span>
+            </div>
+        </div>
+        <div class="mini-player-controls">
+            <button class="mini-btn" id="mini-play-pause-btn" onclick="toggleMiniPlayerPlayback()"><i class="fas fa-pause"></i></button>
+            <button class="mini-btn mini-btn-close" onclick="closeMiniPlayerEntirely()"><i class="fas fa-times"></i></button>
+        </div>
     </div>
 
     <iframe id="hidden-audio-engine" src="" allow="autoplay" style="display: none; width: 0; height: 0; border: none;"></iframe>
 
+    <!-- JAVASCRIPT SYSTEM ENGINE WITH UPGRADED RECENT INJECTED LOGIC -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
         let currentMode = "premium";
         let isAdmin = false; 
         let currentBroadcastVideoId = "";
         let database;
+
+        // Active Track State (Nomor 4)
+        let activeMediaTrack = { id: "", title: "", channel: "", isPlaying: false, mode: "" };
+        let isDataSaverOn = false; // Nomor 3
 
         const fbAppScript = document.createElement('script');
         fbAppScript.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js";
@@ -496,9 +619,7 @@
         document.head.appendChild(fbDbScript);
 
         fbDbScript.onload = () => {
-            const firebaseConfig = {
-                databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app"
-            };
+            const firebaseConfig = { databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app" };
             firebase.initializeApp(firebaseConfig);
             database = firebase.database();
             
@@ -542,10 +663,89 @@
                 if(pct >= 100){
                     clearInterval(timer);
                     document.getElementById("splash-screen").style.display = "none";
-                    document.getElementById("main-gate-screen").style.display = "flex";
+                    
+                    // Nomor 2: Triger Transisi Masuk Screen Awal
+                    const gateScreen = document.getElementById("main-gate-screen");
+                    gateScreen.style.display = "flex";
+                    gateScreen.classList.add("animate-fade-in");
                 }
             }, 20);
         });
+
+        // NOMOR 3: KONTROL SAKELAR DATA SAVER (HEMAT KUOTA)
+        function toggleDataSaverMode() {
+            isDataSaverOn = !isDataSaverOn;
+            const btn = document.getElementById("data-saver-toggle-btn");
+            const feedGrid = document.getElementById("video-feed-grid");
+
+            if (isDataSaverOn) {
+                btn.classList.add("active");
+                btn.innerHTML = `<i class="fas fa-leaf"></i> <span>Hemat Kuota: ON</span>`;
+                feedGrid.classList.add("hide-thumbnails");
+                Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: 'Mode Hemat Kuota Aktif (Thumbnail Tersembunyi)', showConfirmButton: false, timer: 2000 });
+            } else {
+                btn.classList.remove("active");
+                btn.innerHTML = `<i class="fas fa-bolt"></i> <span>Hemat Kuota: OFF</span>`;
+                feedGrid.classList.remove("hide-thumbnails");
+                Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: 'Mode Hemat Kuota Mati', showConfirmButton: false, timer: 1500 });
+            }
+        }
+
+        // NOMOR 4: ENGINE LOGIC BACKGROUND FLOATING MINI PLAYER
+        function handleFloatingMiniPlayerState() {
+            const miniPlayer = document.getElementById("floating-mini-player");
+            
+            if (activeMediaTrack.id && activeMediaTrack.isPlaying) {
+                document.getElementById("mini-title-text").innerText = activeMediaTrack.title;
+                document.getElementById("mini-channel-text").innerText = activeMediaTrack.channel;
+                
+                // Ganti Icon Mini Player Sesuai Service Mode Aktif
+                const badge = document.getElementById("mini-player-badge");
+                if (activeMediaTrack.mode === 'mp3') {
+                    badge.innerHTML = `<i class="fas fa-music"></i>`;
+                    badge.style.background = "#388e3c";
+                } else if (activeMediaTrack.mode === 'mp4') {
+                    badge.innerHTML = `<i class="fas fa-video"></i>`;
+                    badge.style.background = "#1976d2";
+                } else {
+                    badge.innerHTML = `<i class="fas fa-crown"></i>`;
+                    badge.style.background = "#d32f2f";
+                }
+
+                miniPlayer.style.display = "flex";
+            } else {
+                miniPlayer.style.display = "none";
+            }
+        }
+
+        function toggleMiniPlayerPlayback() {
+            const iframe = document.getElementById("main-youtube-iframe");
+            const btn = document.getElementById("mini-play-pause-btn");
+            
+            if (activeMediaTrack.isPlaying) {
+                // Trik Hentikan Putaran Sementara Lewat Iframe URL Source Target Injection
+                iframe.src = iframe.src.replace("autoplay=1", "autoplay=0");
+                activeMediaTrack.isPlaying = false;
+                btn.innerHTML = `<i class="fas fa-play"></i>`;
+            } else {
+                iframe.src = iframe.src.replace("autoplay=0", "autoplay=1");
+                activeMediaTrack.isPlaying = true;
+                btn.innerHTML = `<i class="fas fa-pause"></i>`;
+            }
+        }
+
+        function closeMiniPlayerEntirely() {
+            document.getElementById("main-youtube-iframe").src = "";
+            activeMediaTrack = { id: "", title: "", channel: "", isPlaying: false, mode: "" };
+            handleFloatingMiniPlayerState();
+        }
+
+        function restoreActivePlayerView() {
+            activateService(activeMediaTrack.mode);
+            document.getElementById("video-player-section").classList.remove("hidden");
+            document.getElementById("floating-mini-player").style.display = "none";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         function unlockGlobalAudio() {
             if (currentBroadcastVideoId) {
@@ -657,10 +857,7 @@
         }
 
         function triggerAdminMp3Direct() {
-            if (!database) {
-                Swal.fire('Error', 'Firebase belum siap, tunggu sebentar bro.', 'error');
-                return;
-            }
+            if (!database) { Swal.fire('Error', 'Firebase belum siap, tunggu sebentar bro.', 'error'); return; }
             Swal.fire({
                 title: '🎵 LIVE AUDIO BROADCAST SYSTEM',
                 text: 'Pilih Lagu Kebangsaan/Wajib Nasional untuk diputar secara live:',
@@ -687,16 +884,9 @@
                         if (data.items && data.items.length > 0) {
                             const videoId = data.items[0].id.videoId;
                             const title = data.items[0].snippet.title;
-                            database.ref('global_broadcast').set({
-                                status: "playing",
-                                videoId: videoId,
-                                title: title,
-                                timestamp: Date.now()
-                            });
+                            database.ref('global_broadcast').set({ status: "playing", videoId: videoId, title: title, timestamp: Date.now() });
                             Swal.fire({ icon: 'success', title: '🔴 GLOBAL LIVE BROADCAST AKTIF', text: 'Berhasil memancarkan lagu "' + title + '"', confirmButtonColor: '#ff1744' });
-                        } else {
-                            Swal.fire('Gagal', 'Lagu tidak ditemukan.', 'error');
-                        }
+                        } else { Swal.fire('Gagal', 'Lagu tidak ditemukan.', 'error'); }
                     } catch(e) { Swal.fire('Error', 'Gagal memproses transmisi audio.', 'error'); }
                 }
             });
@@ -712,9 +902,7 @@
             Swal.fire({
                 title: '🇮🇩 DIRGAHAYU REPUBLIK INDONESIA 🇮🇩',
                 html: `<div style="font-size: 15px; line-height: 1.6; text-align: center; color: #fff; padding: 5px;"><h2 style="color: #ff1744; font-weight:900; margin-bottom:5px;">KE-81 TAHUN</h2><p style="font-weight:bold; letter-spacing:1px; margin-bottom:15px;">"Nusantara Baru, Indonesia Maju"</p><div style="background: rgba(255,255,255,0.1); border-radius:8px; padding:12px; font-size:12px; border:1px solid rgba(255,255,255,0.2);">Sistem MiniTube mengucapkan selamat merayakan hari Kemerdekaan Tanah Air Republik Indonesia yang ke-81. Mari kibarkan bendera Merah Putih di dalam sanubari!</div></div>`,
-                background: '#121212',
-                confirmButtonText: 'MERDEKA! ✊',
-                confirmButtonColor: '#ff1744'
+                background: '#121212', confirmButtonText: 'MERDEKA! ✊', confirmButtonColor: '#ff1744'
             });
         }
 
@@ -722,45 +910,66 @@
             Swal.fire({
                 title: 'KARTU IDENTITAS RESMI PENGEMBANG',
                 html: `<div class="formal-profile-card"><div class="formal-card-header"><div class="formal-avatar" style="background:#ff1744;">H79</div><div class="formal-header-meta"><h3>HARUUKII79</h3><span>Chief Systems Architect & Developer</span></div></div><div class="formal-card-body"><table class="formal-table"><tr><td class="lbl"><i class="fas fa-crown text-red"></i> Pemilik Utama</td><td class="vlu">: Haruukii79</td></tr><tr><td class="lbl"><i class="fas fa-code text-red"></i> Rekayasa Kode</td><td class="vlu">: Haruukii79</td></tr><tr><td class="lbl"><i class="fas fa-shield-alt text-red"></i> Lisensi Sistem</td><td class="vlu">: Edisi Resmi Garuda v5.5.0</td></tr><tr><td class="lbl"><i class="fas fa-calendar-check text-red"></i> Sinkronisasi Th.</td><td class="vlu">: Agustus 2026 / Kemerdekaan 81</td></tr></table></div><div class="formal-card-footer"><i class="fas fa-certificate"></i> Verified Software Product Integrity</div></div>`,
-                background: '#1a1a1a',
-                confirmButtonText: 'Tutup Dokumen',
-                confirmButtonColor: '#ff1744'
+                background: '#1a1a1a', confirmButtonText: 'Tutup Dokumen', confirmButtonColor: '#ff1744'
             });
         }
 
         function backToGateMenu() {
             document.getElementById("main-app-interface").classList.add("hidden");
-            document.getElementById("main-gate-screen").style.display = "flex"; 
-            document.getElementById("main-youtube-iframe").src = "";
+            
+            // Nomor 2: Transisi Masuk Kembali ke Gate
+            const gate = document.getElementById("main-gate-screen");
+            gate.style.display = "flex";
+            gate.classList.add("animate-fade-in");
+            
+            // Nomor 4: Picu kemunculan mini player saat berpindah keluar halaman streaming
+            handleFloatingMiniPlayerState();
         }
 
         function backToDashboardHub() {
             document.getElementById("home-dashboard-view").classList.remove("hidden");
+            document.getElementById("home-dashboard-view").classList.add("animate-fade-in");
             document.getElementById("streaming-content-view").classList.add("hidden");
             document.getElementById("global-search-trigger").classList.add("hidden");
             document.getElementById("search-bar-container").classList.remove("active");
             document.getElementById("video-player-section").classList.add("hidden");
-            document.getElementById("main-youtube-iframe").src = "";
+            
+            // Nomor 4: Picu Mini Player saat kembali ke beranda dashboard utama
+            handleFloatingMiniPlayerState();
         }
 
         function activateService(mode) {
             currentMode = mode;
             document.getElementById("home-dashboard-view").classList.add("hidden");
-            document.getElementById("streaming-content-view").classList.remove("hidden");
+            
+            const streamView = document.getElementById("streaming-content-view");
+            streamView.classList.remove("hidden");
+            streamView.classList.add("animate-fade-in");
+            
             document.getElementById("global-search-trigger").classList.remove("hidden");
             document.getElementById("search-bar-container").classList.add("active");
 
+            // Nomor 3: Pengkondisian Tombol Hemat Kuota Khusus Mode MP3
+            const dataSaverWrapper = document.getElementById("data-saver-wrapper");
+            if (mode === 'mp3') {
+                dataSaverWrapper.style.display = "flex";
+            } else {
+                dataSaverWrapper.style.display = "none";
+                // Matikan paksa jika keluar dari mode mp3 agar tidak ngebug di video biasa
+                if(isDataSaverOn) toggleDataSaverMode(); 
+            }
+
             const modeBadge = document.getElementById("current-mode-text");
             if(mode === 'premium') {
-                modeBadge.innerText = "✨ Mode: YouTube Premium Free (Tanpa Iklan)";
+                modeBadge.innerText = "✨ Mode: YouTube Premium Free";
                 modeBadge.style.background = "#d32f2f";
                 fetchYouTubeData("Lagu Hari Merdeka Indonesia");
             } else if(mode === 'mp4') {
-                modeBadge.innerText = "🎬 Mode: YouTube Biasa MP4 (Video Player)";
+                modeBadge.innerText = "🎬 Mode: YouTube Biasa MP4";
                 modeBadge.style.background = "#1976d2";
                 fetchYouTubeData("Kemerdekaan RI Populer");
             } else if(mode === 'mp3') {
-                modeBadge.innerText = "🎵 Mode: YouTube MP3 / Musik (Audio Only)";
+                modeBadge.innerText = "🎵 Mode: YouTube MP3 / Musik";
                 modeBadge.style.background = "#388e3c";
                 fetchYouTubeData("Lagu Nasional Indonesia Remix");
             }
@@ -784,13 +993,31 @@
                     const channel = item.snippet.channelTitle;
                     const thumbnail = item.snippet.thumbnails.medium.url;
                     let badgeType = currentMode === 'mp3' ? 'MP3 Only' : 'HD Video';
-                    grid.innerHTML += `<div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')"><div class="thumbnail-container"><img class="thumbnail" src="${thumbnail}" alt="thumbnail"><span class="duration" style="background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}">${badgeType}</span></div><div class="video-text" style="padding:10px; text-align: left;"><span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px;">${title}</span><span class="channel-name" style="font-size:11px; color:#888;">${channel}</span></div></div>`;
+                    
+                    // Nomor 3: Inject structural div placeholders if data-saver mode is rendered active
+                    grid.innerHTML += `
+                        <div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')">
+                            <div class="thumbnail-container">
+                                <div class="thumbnail-placeholder"><i class="fas fa-headphones"></i></div>
+                                <img class="thumbnail" src="${thumbnail}" alt="thumbnail">
+                                <span class="duration" style="background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}">${badgeType}</span>
+                            </div>
+                            <div class="video-text" style="padding:10px; text-align: left;">
+                                <span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px;">${title}</span>
+                                <span class="channel-name" style="font-size:11px; color:#888;">${channel}</span>
+                            </div>
+                        </div>`;
                 });
             } catch (e) { grid.innerHTML = "<p style='text-align: center; color: #ff1744;'>Gagal request API data YouTube.</p>"; }
         }
 
         function playSelectedMedia(id, title, channel) {
             Swal.fire({ icon: 'success', title: 'Streaming Dimulai', text: title, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000 });
+            
+            // Nomor 4: Update internal active media state tracker
+            activeMediaTrack = { id: id, title: title, channel: channel, isPlaying: true, mode: currentMode };
+            document.getElementById("floating-mini-player").style.display = "none"; // Sembunyikan mini player kalau layar utamanya dibuka
+
             document.getElementById("video-player-section").classList.remove("hidden");
             document.getElementById("main-youtube-iframe").src = `https://www.youtube.com/embed/${id}?autoplay=1`;
             document.getElementById("player-video-title").innerText = title;
