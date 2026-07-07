@@ -4,30 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- MASTER GOOGLE VERIFICATION TAG -->
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
     
-    <!-- MASTER TAG SEO ON-PAGE REAL DOMAIN -->
     <title>MiniTube X YouTube Premium Free - Streaming Musik & Video Tanpa Iklan</title>
     <meta name="description" content="Nikmati MiniTube X YouTube Premium Free buatan Haruukii79. Platform Super App streaming video MP4 HD dan MP3 musik hemat kuota, cepat, aman, dan tanpa iklan.">
     <meta name="author" content="Haruukii79">
     <link rel="canonical" href="https://website-no-ads.vercel.app/">
 
-    <!-- EXTERNAL ASSETS & LIBRARIES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-dark">
 
-    <!-- TICKER TEXT BANNER ADMIN -->
     <div id="admin-announcement-banner" class="admin-ticker-hide">
         <div class="ticker-content-wrapper">
             <i class="fas fa-bullhorn"></i> <span id="ticker-text-target">Pengumuman Administrator Aktif!</span>
         </div>
     </div>
 
-    <!-- AUDIO PLAYER KHUSUS BACKSOUND ADMIN -->
     <div id="admin-audio-dock" class="audio-dock-hide">
         <div class="dock-info">
             <i class="fas fa-compact-disc fa-spin text-red"></i>
@@ -39,9 +34,6 @@
         <button onclick="stopAdminAudio()" class="btn-stop-dock"><i class="fas fa-stop"></i></button>
     </div>
 
-    <!-- ==========================================================================
-       1. PREMIUM SINEMATIK LOADING SCREEN
-       ========================================================================== -->
     <div id="splash-screen" class="splash-screen-premium">
         <div class="splash-blur-bg"></div>
         <div class="splash-content">
@@ -51,7 +43,6 @@
             <h1 class="splash-title-brand">MINITUBE X YOUTUBE</h1>
             <div class="splash-sub-text">PREMIUM FREE</div>
             
-            <!-- ENHANCED PROGRESS AREA -->
             <div class="progress-wrapper">
                 <div class="progress-bar-container-id">
                     <div id="progress-bar-fill" class="progress-bar-fill-id"></div>
@@ -65,9 +56,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       2. MAIN MENU GATEWAY (DENGAN ANIMASI SMOOTH TRANSITION)
-       ========================================================================== -->
     <div id="main-gate-screen" class="gate-container dynamic-smooth-entrance">
         <div class="gate-content">
             <div class="gate-brand">
@@ -76,7 +64,6 @@
                 <span class="sub-premium">PREMIUM FREE</span>
             </div>
 
-            <!-- BUTTON INTERACTION ZONE (Tersusun Rapi & Presisi) -->
             <div class="gate-buttons-group">
                 <button class="btn-gate btn-next" onclick="enterAppWithoutAccount()">
                     <div class="btn-gate-icon"><i class="fas fa-arrow-right"></i></div>
@@ -119,7 +106,6 @@
                 </button>
             </div>
 
-            <!-- LUXURY OWNER DATA DISPLAY -->
             <div class="owner-credits-box">
                 <div class="credit-row"><span>Owner</span> : <b>Haruukii79</b></div>
                 <div class="credit-row"><span>Programmer</span> : <b>Haruukii79</b></div>
@@ -131,9 +117,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       3. INTERNAL CORE APPLICATION VIEW
-       ========================================================================== -->
     <div id="main-app-interface" class="hidden">
         <header class="mobile-header header-indonesia">
             <div class="header-left">
@@ -207,9 +190,6 @@
 
     <iframe id="hidden-audio-engine" src="" style="display: none; width: 0; height: 0; border: none;"></iframe>
 
-    <!-- ==========================================================================
-       4. CORE SYSTEM LOGIC ENGINE (SMOOTH COUNTER INTERVAL)
-       ========================================================================== -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
         let currentMode = "premium";
@@ -223,26 +203,28 @@
 
             // Efek hitung loading yang sangat mulus & dinamis
             let timer = setInterval(() => {
-                // Menghasilkan kenaikan acak yang halus agar tidak patah-patah
                 pct += Math.floor(Math.random() * 3) + 2; 
                 if (pct > 100) pct = 100;
                 
-                fill.style.width = pct + "%";
-                counter.innerText = pct + "%";
+                if (fill) fill.style.width = pct + "%";
+                if (counter) counter.innerText = pct + "%";
                 
                 if(pct >= 100){
                     clearInterval(timer);
                     
-                    // Trigger transisi keluar loading screen secara perlahan
+                    // Efek transisi keluar splash screen
+                    if (splash) splash.classList.add("fade-out-premium");
+                    
+                    // PENGAMAN INSTAN: Paksa Main Gate muncul total tanpa delay macet
                     setTimeout(() => {
-                        splash.classList.add("fade-out-premium");
-                        
-                        // Aktifkan main gate dengan trigger class animasi masuk
-                        setTimeout(() => {
-                            splash.style.display = "none";
+                        if (splash) splash.style.display = "none";
+                        if (gate) {
+                            gate.style.opacity = "1";
+                            gate.style.filter = "none";
+                            gate.style.transform = "none";
                             gate.classList.add("gate-entrance-active");
-                        }, 600);
-                    }, 400);
+                        }
+                    }, 500);
                 }
             }, 45);
 
@@ -250,7 +232,9 @@
             let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
             visits += 1;
             localStorage.setItem("mt_visitors", visits);
-            document.getElementById("visitor-count-text").innerText = visits.toLocaleString();
+            if (document.getElementById("visitor-count-text")) {
+                document.getElementById("visitor-count-text").innerText = visits.toLocaleString();
+            }
         });
 
         function toggleThemeSetting() {
@@ -259,7 +243,7 @@
 
         function enterAppWithoutAccount() {
             Swal.fire({ title: 'Akses Tamu Berhasil', text: 'Selamat menikmati fitur MiniTube!', icon: 'success', timer: 1500, showConfirmButton: false });
-            document.getElementById("main-gate-screen").classList.remove("gate-entrance-active");
+            document.getElementById("main-gate-screen").className = "gate-container";
             document.getElementById("main-app-interface").classList.remove("hidden");
             backToDashboardHub();
         }
@@ -282,7 +266,7 @@
                 if (res.isConfirmed) {
                     if(res.value.username === "member" && res.value.password === "12345") {
                         Swal.fire('Login Sukses', 'Selamat Datang Member Berharga!', 'success');
-                        document.getElementById("main-gate-screen").classList.remove("gate-entrance-active");
+                        document.getElementById("main-gate-screen").className = "gate-container";
                         document.getElementById("main-app-interface").classList.remove("hidden");
                     } else {
                         Swal.fire('Gagal Login', 'Akun tidak valid.', 'error');
@@ -311,14 +295,21 @@
             });
         }
 
+        document.addEventListener('click', function(e) {
+            // Skrip pembantu interaksi tombol dinamis di dalam SweetAlert modal admin
+            if(e.target && e.target.id === 'btn-announcement-trigger') triggerAdminTickerText();
+            if(e.target && e.target.id === 'btn-audio-trigger') triggerAdminMp3Direct();
+            if(e.target && e.target.id === 'btn-merdeka-trigger') triggerMerdekaCelebration();
+        });
+
         function showAdminPanelDashboard() {
             Swal.fire({
                 title: '🛠️ CORE CONTROL ADMINISTRATOR',
                 html: `
                     <div class="admin-modal-layout">
-                        <button class="admin-action-btn" onclick="triggerAdminTickerText()"><i class="fas fa-comment-dots"></i> Kirim Teks Broadcast (15 Detik)</button>
-                        <button class="admin-action-btn" onclick="triggerAdminMp3Direct()"><i class="fas fa-play-circle"></i> Putar Lagu Utama (Direct MP3)</button>
-                        <button class="admin-action-btn btn-action-merdeka" onclick="triggerMerdekaCelebration()"><i class="fas fa-flag"></i> Peringatan Hari Kemerdekaan RI ke-81</button>
+                        <button class="admin-action-btn" id="btn-announcement-trigger"><i class="fas fa-comment-dots"></i> Kirim Teks Broadcast (15 Detik)</button>
+                        <button class="admin-action-btn" id="btn-audio-trigger"><i class="fas fa-play-circle"></i> Putar Lagu Utama (Direct MP3)</button>
+                        <button class="admin-action-btn btn-action-merdeka" id="btn-merdeka-trigger"><i class="fas fa-flag"></i> Peringatan Hari Kemerdekaan RI ke-81</button>
                     </div>
                 `,
                 showConfirmButton: false,
@@ -406,7 +397,10 @@
 
         function backToGateMenu() {
             document.getElementById("main-app-interface").classList.add("hidden");
-            document.getElementById("main-gate-screen").classList.add("gate-entrance-active");
+            const gate = document.getElementById("main-gate-screen");
+            gate.style.opacity = "1";
+            gate.style.display = "flex"; 
+            gate.classList.add("gate-entrance-active");
             document.getElementById("main-youtube-iframe").src = "";
         }
 
