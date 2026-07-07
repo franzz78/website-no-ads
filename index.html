@@ -25,7 +25,6 @@
 </head>
 <body class="theme-dark">
 
-    <!-- ==================== NOTIFIKASI & AUDIO DOCK SYSTEM ==================== -->
     <div id="admin-announcement-banner" class="admin-ticker-hide">
         <div class="ticker-content-wrapper">
             <i class="fas fa-flag"></i> <span id="ticker-text-target">Pengumuman Kemerdekaan Aktif!</span>
@@ -40,18 +39,17 @@
                 <span id="dock-song-title">Lagu Kebangsaan...</span>
             </div>
         </div>
-        <div class="dock-controls">
-            <button id="admin-stop-btn" onclick="stopAdminAudio()"><i class="fas fa-stop"></i> Stop</button>
-            <button id="unmute-audio-btn" class="btn-unmute-pulse" onclick="unlockGlobalAudio()"><i class="fas fa-volume-up"></i> Buka Suara</button>
-        </div>
+        
+        <button id="admin-stop-btn" onclick="stopAdminAudio()"><i class="fas fa-stop"></i> Stop</button>
+        
+        <button id="unmute-audio-btn" class="btn-unmute-pulse" onclick="unlockGlobalAudio()"><i class="fas fa-volume-up"></i> Buka Suara</button>
     </div>
 
-    <!-- ==================== SPLASH SCREEN ==================== -->
     <div id="splash-screen" class="splash-screen-indonesia" style="display: flex;">
         <div class="splash-content">
-            <div style="margin-bottom: 15px;">
-                <i class="fas fa-flag" style="color: #ffffff; font-size: 28px; margin-right: 8px;"></i>
-                <i class="fab fa-youtube splash-logo-red" style="font-size: 32px;"></i>
+            <div style="margin-bottom: 10px;">
+                <i class="fas fa-flag" style="color: #ffffff; font-size: 24px; margin-right: 8px;"></i>
+                <i class="fab fa-youtube splash-logo-red"></i>
             </div>
             <h1 class="splash-title-brand">MINITUBE X YOUTUBE</h1>
             <div class="splash-sub-text">DIRGAHAYU RI KE-81</div>
@@ -65,34 +63,24 @@
         </div>
     </div>
 
-    <!-- ==================== MAIN MENU GATEWAY SCREEN ==================== -->
     <div id="main-gate-screen" class="gate-forced-layout" style="display: none;">
-        
-        <div class="gate-content-box">
-            <!-- Posisikan Lencana RI 81 secara aman di dalam box atas -->
-            <div class="ri-badge-81-wrapper">
-                <span class="ri-badge-81">RI 81</span>
-            </div>
+        <div class="ri-badge-81">RI 81</div>
 
-            <!-- Bagian Brand Header -->
+        <div class="gate-content-box">
             <div class="gate-brand">
-                <div class="brand-logo-row">
-                    <i class="fab fa-youtube gate-logo-icon"></i>
-                    <h2>MINITUBE X YOUTUBE</h2>
-                </div>
+                <i class="fab fa-youtube gate-logo-icon"></i>
+                <h2>MINITUBE X YOUTUBE</h2>
                 <div class="hut-badge-banner">🇮🇩 EDISI KEMERDEKAAN KE-81 🇮🇩</div>
             </div>
 
-            <!-- Running Text / Marquee -->
             <div class="neon-marquee-container">
                 <div class="neon-marquee-inner">
-                    <marquee behavior="scroll" direction="left" scrollamount="5">
-                         🔥 NUSANTARA BARU, INDONESIA MAJU - MINITUBE X YOUTUBE PREMIUM FREE! 🇮🇩 🔥
+                    <marquee behavior="scroll" direction="left" scrollamount="6">
+                         🔥 NUSANTARA BARU , INDONESIA MAJU - MINITUBE X YOUTUBE PREMIUM FREE! 🇮🇩 🔥
                     </marquee>
                 </div>
             </div>
 
-            <!-- Group Tombol Utama Menu (Diperbaiki flex layoutnya) -->
             <div class="gate-buttons-group">
                 <button class="btn-gate btn-gate-custom-next" onclick="enterAppWithoutAccount()">
                     <div class="btn-gate-icon" style="color: #ff1744;"><i class="fas fa-arrow-right"></i></div>
@@ -135,18 +123,9 @@
                 </button>
             </div>
 
-            <!-- Kotak Kredit Owner yang Diperbaiki agar Rapih & Sejajar -->
             <div class="owner-credits-box">
-                <div class="credit-row">
-                    <span class="credit-label">Owner</span>
-                    <span class="credit-separator">:</span>
-                    <span class="credit-value"><b class="text-merdeka">Haruukii79</b></span>
-                </div>
-                <div class="credit-row">
-                    <span class="credit-label">Sistem</span>
-                    <span class="credit-separator">:</span>
-                    <span class="credit-value"><b>Garuda v5.5.0 (Spesial Agustus)</b></span>
-                </div>
+                <div class="credit-row"><span>Owner</span> : <b class="text-merdeka">Haruukii79</b></div>
+                <div class="credit-row"><span>Sistem</span> : <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
             </div>
 
             <footer class="gate-footer">
@@ -155,7 +134,6 @@
         </div>
     </div>
 
-    <!-- ==================== MAIN APPLICATION INTERFACE ==================== -->
     <div id="main-app-interface" class="hidden">
         
         <header class="mobile-header header-indonesia">
@@ -238,7 +216,6 @@
 
     <iframe id="hidden-audio-engine" src="" allow="autoplay" style="display: none; width: 0; height: 0; border: none;"></iframe>
 
-    <!-- ==================== LOGIKA JAVASCRIPT SYSTEM ==================== -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
         let currentMode = "premium";
@@ -263,6 +240,7 @@
             firebase.initializeApp(firebaseConfig);
             database = firebase.database();
             
+            // Dengar Perintah Cloud Real-Time
             database.ref('global_broadcast').on('value', (snapshot) => {
                 const data = snapshot.val();
                 
@@ -275,6 +253,7 @@
                     document.getElementById("dock-song-title").innerText = data.title;
                     document.getElementById("admin-audio-dock").className = "audio-dock-show";
                     
+                    // Filter Tampilan Tombol Sesuai Hak Akses
                     if (isAdmin) {
                         document.getElementById("admin-stop-btn").style.display = "block";
                         document.getElementById("unmute-audio-btn").style.display = "none";
