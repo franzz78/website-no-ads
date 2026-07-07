@@ -19,9 +19,268 @@
     <meta property="og:image" content="https://website-no-ads.vercel.app/assets/logo-app.png">
     <meta property="og:url" content="https://website-no-ads.vercel.app/">
 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ==========================================================================
+           UPGRADE STYLE KHUSUS MAIN MENU GATEWAY (EDISI PREMIUM MERDEKA 81)
+           ========================================================================== */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #09090b;
+        }
+
+        /* Lencana Melayang RI 81 Premium di Kanan Atas */
+        .ri-badge-81 {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff1744 0%, #d50000 100%);
+            color: #ffffff;
+            font-weight: 800;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            z-index: 10;
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 23, 68, 0.4); transform: scale(1); }
+            100% { box-shadow: 0 0 25px rgba(255, 23, 68, 0.8); transform: scale(1.03); }
+        }
+
+        /* Container Box Utama dengan Efek Glassmorphism Mewah */
+        .gate-forced-layout {
+            background: radial-gradient(circle at top, rgba(255, 23, 68, 0.15) 0%, rgba(0, 0, 0, 0) 70%), #09090b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            box-sizing: border-box;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .gate-content-box {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(20, 20, 25, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Animasi Glow & Logo YouTube */
+        .gate-brand {
+            margin-bottom: 24px;
+        }
+
+        .gate-logo-icon {
+            font-size: 54px;
+            color: #ff1744;
+            filter: drop-shadow(0 0 15px rgba(255, 23, 68, 0.6));
+            margin-bottom: 12px;
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .gate-brand h2 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin: 0 0 8px 0;
+        }
+
+        /* Banner Badge Kemerdekaan Baru */
+        .hut-badge-banner {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,23,68,0.15) 50%, rgba(255,255,255,0.05) 100%);
+            border-top: 1px solid rgba(255, 23, 68, 0.3);
+            border-bottom: 1px solid rgba(255, 23, 68, 0.3);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 0;
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 8px rgba(255, 23, 68, 0.5);
+        }
+
+        /* Marquee Neon Bar */
+        .neon-marquee-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50px;
+            padding: 6px 16px;
+            margin-bottom: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .neon-marquee-inner marquee {
+            color: #e4e4e7;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        /* Group Tombol Menu Super Bulat (Sesuai Layout Asli tapi Lebih HD) */
+        .gate-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .btn-gate {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 40px; /* Lengkungan besar super mulus seperti foto kedua */
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Aksen Efek Highlight Menyala Merah di Sisi Kiri Tombol Pertama (Next Menu) */
+        .btn-gate-custom-next {
+            background: linear-gradient(90deg, rgba(255, 23, 68, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border-left: 3.5px solid #ff1744 !important;
+            box-shadow: 0 4px 20px rgba(255, 23, 68, 0.1);
+        }
+
+        .btn-gate:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-gate-custom-next:hover {
+            background: linear-gradient(90deg, rgba(255, 23, 68, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+            box-shadow: 0 6px 24px rgba(255, 23, 68, 0.2);
+        }
+
+        .btn-gate-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #e4e4e7;
+            margin-right: 16px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-gate-text {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .btn-gate-text b {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .btn-gate-text small {
+            color: #a1a1aa;
+            font-size: 11px;
+        }
+
+        /* Badge Terkunci */
+        .lock-badge {
+            background: rgba(255, 23, 68, 0.15);
+            color: #ff1744;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            margin-left: 6px;
+            border: 1px solid rgba(255, 23, 68, 0.2);
+            text-transform: uppercase;
+        }
+
+        /* Kotak Informasi Owner (Renggang Melebar Sempurna / Justified Layout) */
+        .owner-credits-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 23, 68, 0.15);
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .credit-row {
+            display: flex;
+            justify-content: space-between; /* Membuat tulisan renggang otomatis seperti aslinya */
+            align-items: center;
+            color: #a1a1aa;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .credit-row span {
+            font-weight: 500;
+        }
+
+        .text-merdeka {
+            color: #ff1744;
+            text-shadow: 0 0 10px rgba(255, 23, 68, 0.3);
+        }
+
+        /* Footer Halaman */
+        .gate-footer {
+            font-size: 10px;
+            color: #ff1744;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* Tambahan Sosmed Mini biar tambah estetik */
+        .gate-social-dev {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+        .gate-social-dev a {
+            color: rgba(255,255,255,0.3);
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .gate-social-dev a:hover {
+            color: #ff1744;
+        }
+    </style>
 </head>
 <body class="theme-dark">
 
@@ -39,9 +298,7 @@
                 <span id="dock-song-title">Lagu Kebangsaan...</span>
             </div>
         </div>
-        
         <button id="admin-stop-btn" onclick="stopAdminAudio()"><i class="fas fa-stop"></i> Stop</button>
-        
         <button id="unmute-audio-btn" class="btn-unmute-pulse" onclick="unlockGlobalAudio()"><i class="fas fa-volume-up"></i> Buka Suara</button>
     </div>
 
@@ -64,6 +321,7 @@
     </div>
 
     <div id="main-gate-screen" class="gate-forced-layout" style="display: none;">
+        
         <div class="ri-badge-81">RI 81</div>
 
         <div class="gate-content-box">
@@ -123,9 +381,15 @@
                 </button>
             </div>
 
+            <div class="gate-social-dev">
+                <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+
             <div class="owner-credits-box">
-                <div class="credit-row"><span>Owner</span> : <b class="text-merdeka">Haruukii79</b></div>
-                <div class="credit-row"><span>Sistem</span> : <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
+                <div class="credit-row"><span>Owner :</span> <b class="text-merdeka">Haruukii79</b></div>
+                <div class="credit-row"><span>Sistem :</span> <b>Garuda v5.5.0 (Spesial Agustus)</b></div>
             </div>
 
             <footer class="gate-footer">
@@ -223,7 +487,6 @@
         let currentBroadcastVideoId = "";
         let database;
 
-        // Load Script Firebase secara dinamis
         const fbAppScript = document.createElement('script');
         fbAppScript.src = "https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js";
         document.head.appendChild(fbAppScript);
@@ -236,24 +499,17 @@
             const firebaseConfig = {
                 databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app"
             };
-            
             firebase.initializeApp(firebaseConfig);
             database = firebase.database();
             
-            // Dengar Perintah Cloud Real-Time
             database.ref('global_broadcast').on('value', (snapshot) => {
                 const data = snapshot.val();
-                
                 if (data && data.status === "playing") {
                     currentBroadcastVideoId = data.videoId;
-                    
                     const audioEngine = document.getElementById("hidden-audio-engine");
                     audioEngine.src = `https://www.youtube.com/embed/${data.videoId}?autoplay=1&mute=0&controls=0&loop=1`;
-                    
                     document.getElementById("dock-song-title").innerText = data.title;
                     document.getElementById("admin-audio-dock").className = "audio-dock-show";
-                    
-                    // Filter Tampilan Tombol Sesuai Hak Akses
                     if (isAdmin) {
                         document.getElementById("admin-stop-btn").style.display = "block";
                         document.getElementById("unmute-audio-btn").style.display = "none";
@@ -283,7 +539,6 @@
                 if (pct > 100) pct = 100;
                 fill.style.width = pct + "%";
                 counter.innerText = pct + "%";
-                
                 if(pct >= 100){
                     clearInterval(timer);
                     document.getElementById("splash-screen").style.display = "none";
@@ -406,7 +661,6 @@
                 Swal.fire('Error', 'Firebase belum siap, tunggu sebentar bro.', 'error');
                 return;
             }
-
             Swal.fire({
                 title: '🎵 LIVE AUDIO BROADCAST SYSTEM',
                 text: 'Pilih Lagu Kebangsaan/Wajib Nasional untuk diputar secara live:',
@@ -426,23 +680,19 @@
                 if(res.isConfirmed && res.value !== "") {
                     const query = res.value;
                     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
-                    
                     Swal.fire({ title: 'Mengirim Komando...', didOpen: () => { Swal.showLoading() } });
-                    
                     try {
                         let response = await fetch(url);
                         let data = await response.json();
                         if (data.items && data.items.length > 0) {
                             const videoId = data.items[0].id.videoId;
                             const title = data.items[0].snippet.title;
-                            
                             database.ref('global_broadcast').set({
                                 status: "playing",
                                 videoId: videoId,
                                 title: title,
                                 timestamp: Date.now()
                             });
-                            
                             Swal.fire({ icon: 'success', title: '🔴 GLOBAL LIVE BROADCAST AKTIF', text: 'Berhasil memancarkan lagu "' + title + '"', confirmButtonColor: '#ff1744' });
                         } else {
                             Swal.fire('Gagal', 'Lagu tidak ditemukan.', 'error');
@@ -534,7 +784,6 @@
                     const channel = item.snippet.channelTitle;
                     const thumbnail = item.snippet.thumbnails.medium.url;
                     let badgeType = currentMode === 'mp3' ? 'MP3 Only' : 'HD Video';
-
                     grid.innerHTML += `<div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')"><div class="thumbnail-container"><img class="thumbnail" src="${thumbnail}" alt="thumbnail"><span class="duration" style="background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}">${badgeType}</span></div><div class="video-text" style="padding:10px; text-align: left;"><span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px;">${title}</span><span class="channel-name" style="font-size:11px; color:#888;">${channel}</span></div></div>`;
                 });
             } catch (e) { grid.innerHTML = "<p style='text-align: center; color: #ff1744;'>Gagal request API data YouTube.</p>"; }
