@@ -1990,3 +1990,77 @@ body.theme-dark .bottom-nav { background: #0f0f0f; border-color: #1e1e1e; }
     50% { transform: scale(1.04); opacity: 1; text-shadow: 0 0 40px rgba(255, 23, 68, 0.9); }
     100% { transform: scale(1); opacity: 0.9; }
 }
+
+/* ==========================================================================
+   TAMBAHAN INTERFACE SPECIAL EDITION: MENYAMBUT HARI KEMERDEKAAN RI 🇮🇩
+   ========================================================================== */
+
+/* EFEK MERAH PUTIH PREMIUM GLOW UNTUK BANNER UTAMA */
+.welcome-banner-id {
+    background: linear-gradient(135px, rgba(183, 28, 28, 0.95) 0%, rgba(255, 23, 68, 0.85) 50%, rgba(255, 255, 255, 0.95) 100%) !important;
+    border: 2px solid #ff1744 !important;
+    box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+/* MENAMBAHKAN TEKS EFEK KEMERDEKAAN */
+.welcome-banner-id h3 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.welcome-banner-id p {
+    color: #121212 !important;
+    font-weight: 800 !important;
+    background: rgba(255, 255, 255, 0.8);
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+/* ANIMASI GARUDA MERAH PUTIH PULSE */
+.splash-logo-red {
+    color: #ff1744 !important;
+    text-shadow: 0 0 35px #ff1744, 0 0 60px #ffffff !important;
+}
+
+/* TOMBOL MENU DASHBOARD EDISI KEMERDEKAAN */
+body.theme-dark .menu-item-id {
+    background: linear-gradient(145px, #1a1a1a, #121212);
+    border: 1px solid rgba(255, 23, 68, 0.15);
+}
+
+body.theme-dark .menu-item-id:hover {
+    border-color: #ff1744 !important;
+    box-shadow: 0 0 15px rgba(255, 23, 68, 0.3);
+    background: linear-gradient(145px, #251013, #121212);
+}
+
+/* BADGE EDISI SPESIAL MERAH PUTIH */
+.sub-premium {
+    background: linear-gradient(90deg, #ff1744 50%, #ffffff 50%) !important;
+    color: #121212 !important;
+    text-shadow: 0 0 1px #fff;
+    border: 1px solid #ff1744;
+    padding: 4px 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 1px;
+}
+
+/* FOOTER INDONESIA MERDEKA STYLE */
+.gate-footer, .splash-footer-id {
+    color: #ff1744 !important;
+    text-shadow: 0 0 8px rgba(255, 23, 68, 0.2);
+    font-weight: 900 !important;
+    letter-spacing: 1.5px !important;
+}
+
+/* ORNAMEN ANIMASI EMBUN/WET EFFECT MERAH PUTIH PADA TOMBOL GATE */
+.btn-gate:hover {
+    background: linear-gradient(90deg, rgba(255,23,68,0.1) 0%, rgba(255,255,255,0.05) 100%) !important;
+    transform: scale(1.02) translateX(5px) !important;
+}
