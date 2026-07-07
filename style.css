@@ -2258,3 +2258,150 @@ body.theme-dark .menu-item-id:hover {
     letter-spacing: 0.5px;
     border: 1px solid rgba(255, 23, 68, 0.15);
 }
+
+/* ==========================================================================
+   MASTER DESIGN SYSTEM: INTERACTION & TRANSITION UPDATE (JULI 2026)
+   ========================================================================== */
+
+/* REKAYASA ULANG LOADING SCREEN PREMIUM */
+.splash-screen-premium {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #0d0d0d;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.splash-blur-bg {
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(255,23,68,0.15) 0%, rgba(0,0,0,0) 70%);
+    filter: blur(40px);
+    animation: pulseGlowBg 3s infinite ease-in-out;
+}
+
+.logo-wrapper-glow {
+    position: relative;
+    display: inline-block;
+    animation: floatLogo 2.5s infinite ease-in-out;
+    margin-bottom: 20px;
+}
+
+.splash-logo-red {
+    font-size: 75px;
+    color: #ff1744;
+    text-shadow: 0 0 30px rgba(255, 23, 68, 0.6);
+}
+
+/* PROGRESS WRAPPER & GLOW EFFECT */
+.progress-wrapper {
+    width: 240px;
+    margin: 25px auto;
+    position: relative;
+}
+
+.progress-bar-container-id {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.progress-bar-fill-id {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #b71c1c, #ff1744, #ffffff);
+    background-size: 200% 100%;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(255, 23, 68, 0.8);
+    transition: width 0.08s linear; /* Membuat pergerakan persen menjadi sangat halus */
+    animation: shimmerEffect 1.5s infinite linear;
+}
+
+.splash-counter-id {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* ENGINE TRANSISI KELUAR SPLASH SCREEN (FADE OUT & SCALE) */
+.fade-out-premium {
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(10px);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   SMOOTH ENTRANCE SYSTEM (ANIMASI MASUK MAIN GATE)
+   ========================================================================== */
+.dynamic-smooth-entrance {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+    filter: blur(5px);
+    transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efek bouncy lembut */
+}
+
+.gate-entrance-active {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    filter: blur(0) !important;
+}
+
+/* GRID & BUTTON ALIGNMENT ADJUSTMENT (Makin Rapi & Presisi) */
+.gate-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px; /* Jarak antar menu lebih luas dan konsisten */
+    width: 100%;
+    max-width: 340px;
+    margin: 25px auto;
+}
+
+.btn-gate {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.btn-gate:hover {
+    transform: translateY(-3px) !important; /* Efek terangkat sedikit */
+    box-shadow: 0 6px 20px rgba(255, 23, 68, 0.15) !important;
+}
+
+/* CORE ANIMATIONS */
+@keyframes pulseGlowBg {
+    0%, 100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.2); opacity: 0.25; }
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmerEffect {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.animate-smooth-view {
+    animation: fadeInView 0.5s ease-out forwards;
+}
+
+@keyframes fadeInView {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
