@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- ==========================================================================
-       CSS PENGAMAN INSTAN (MEMAKSA TAMPILAN JIKA STYLE.CSS ERROR/GABUNG)
+       CSS PENGAMAN CORE DATA & LAYOUT MENU (ANTI-BLANK & PAKSA TOMBOL MUNCUL)
        ========================================================================== -->
     <style>
         /* Memastikan body tidak blank hitam tanpa arah */
@@ -117,7 +117,7 @@
 
         /* Memastikan Main Gate tidak tersembunyi permanen */
         .gate-container {
-            display: none; /* Dikontrol penuh oleh JS agar tidak bentrok */
+            display: none; 
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -127,8 +127,133 @@
             box-sizing: border-box;
             background: #0d0d0d;
         }
+
+        /* ==========================================================================
+           PENGAMAN STRUKTUR INTERNAL INTERFACE & TOMBOL AKSES MENU UTAMA
+           ========================================================================== -->
+        #main-app-interface {
+            width: 100%;
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding-bottom: 80px; /* Jarak aman agar menu tidak tertutup nav bawah */
+            background-color: #0a0a0a;
+            position: relative;
+        }
+
+        /* Memaksa Header Muncul dan Jelas */
+        .mobile-header {
+            display: flex !important;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #141414;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Memaksa Dashboard Pilihan Layanan Muncul */
+        .dashboard-grid {
+            display: grid !important;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 600px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+
+        /* Memastikan Tombol Menu Pilihan (Premium, MP4, MP3) Terlihat Jelas */
+        .menu-item-id {
+            background: #1a1a1a !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 12px !important;
+            padding: 20px !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            transition: transform 0.2s, background 0.2s;
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-item-id:active {
+            transform: scale(0.98);
+            background: #242424 !important;
+        }
+
+        .icon-box-id {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .bg-premium { background: #d32f2f !important; box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4); }
+        .bg-mp4 { background: #1976d2 !important; box-shadow: 0 4px 15px rgba(25, 118, 210, 0.4); }
+        .bg-mp3 { background: #388e3c !important; box-shadow: 0 4px 15px rgba(56, 142, 60, 0.4); }
+
+        .menu-item-id span {
+            font-weight: bold !important;
+            font-size: 15px !important;
+            color: #ffffff !important;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .menu-item-id small {
+            color: #aaaaaa !important;
+            font-size: 11px !important;
+        }
+
+        /* Memaksa Bottom Navigation Bar Selalu Muncul di Paling Bawah HP */
+        .bottom-nav {
+            position: fixed !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 60px !important;
+            background: #141414 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
+            z-index: 99999 !important;
+            box-sizing: border-box;
+        }
+
+        .nav-item {
+            color: #888888 !important;
+            font-size: 12px !important;
+            text-align: center;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: #ff1744 !important;
+        }
         
-        /* Utility class untuk menyembunyikan interface bawaan */
         .hidden {
             display: none !important;
         }
@@ -248,76 +373,64 @@
     </div>
 
     <!-- ==========================================================================
-       3. INTERNAL CORE APPLICATION VIEW
+       3. INTERNAL CORE APPLICATION VIEW (DASHBOARD MENU STREAMING)
        ========================================================================== -->
     <div id="main-app-interface" class="hidden">
         <header class="mobile-header header-indonesia">
             <div class="header-left">
-                <i class="fab fa-youtube youtube-logo-icon" onclick="backToGateMenu()"></i>
-                <span class="logo-text" onclick="backToGateMenu()">MiniTube <span class="badge-id">ID</span></span>
+                <i class="fab fa-youtube youtube-logo-icon" style="color:#ff1744; font-size:20px; cursor:pointer;" onclick="backToGateMenu()"></i>
+                <span class="logo-text" style="font-weight:bold; margin-left:8px; cursor:pointer;" onclick="backToGateMenu()">MiniTube <span class="badge-id" style="background:#ff1744; font-size:10px; padding:2px 5px; border-radius:4px;">ID</span></span>
             </div>
-            <div class="header-right">
-                <a href="https://saweria.co" target="_blank" class="donation-btn-id" rel="noopener"><i class="fas fa-heart"></i> Saweria</a>
-                <i class="fas fa-search header-icon hidden" id="global-search-trigger" onclick="toggleSearchBar()"></i>
-                <i class="fas fa-power-off header-icon" style="color: #ffffff; font-size: 14px;" onclick="backToGateMenu()"></i>
+            <div class="header-right" style="display:flex; align-items:center; gap:15px;">
+                <a href="https://saweria.co" target="_blank" class="donation-btn-id" rel="noopener" style="color:#fff; text-decoration:none; font-size:12px; background:rgba(255,255,255,0.1); padding:5px 10px; border-radius:20px;"><i class="fas fa-heart" style="color:#ff1744;"></i> Saweria</a>
+                <i class="fas fa-search header-icon" id="global-search-trigger" style="cursor:pointer;" onclick="toggleSearchBar()"></i>
+                <i class="fas fa-power-off header-icon" style="color: #ff1744; font-size: 14px; cursor:pointer;" onclick="backToGateMenu()"></i>
             </div>
         </header>
 
-        <div id="search-bar-container" class="mobile-search-bar-container">
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Cari video atau lagu..." onkeypress="handleSearchKeyPress(event)">
-                <button class="search-btn" onclick="executeSearch()"><i class="fas fa-search"></i></button>
+        <div id="search-bar-container" class="mobile-search-bar-container" style="display:none; padding:10px; background:#141414;">
+            <div class="search-box" style="display:flex; width:100%;">
+                <input type="text" id="search-input" placeholder="Cari video atau lagu..." style="flex:1; padding:8px; background:#222; border:none; color:#fff; border-radius:4px 0 0 4px;" onkeypress="handleSearchKeyPress(event)">
+                <button class="search-btn" style="padding:8px 15px; background:#ff1744; border:none; color:#fff; border-radius:0 4px 4px 0; cursor:pointer;" onclick="executeSearch()"><i class="fas fa-search"></i></button>
             </div>
         </div>
 
-        <main class="mobile-content animate-smooth-view" id="home-dashboard-view">
-            <div class="welcome-banner-id">
-                <h3>Selamat Datang di MiniTube</h3>
-                <p>Silakan pilih format sistem streaming yang Anda sukai:</p>
+        <!-- MENU PILIHAN (DASHBOARD HUB UTAMA) -->
+        <main class="mobile-content" id="home-dashboard-view">
+            <div class="welcome-banner-id" style="padding:20px; text-align:center; background:linear-gradient(180deg, #141414, #0a0a0a);">
+                <h3 style="margin:0 0 8px 0; font-size:18px;">Selamat Datang di MiniTube</h3>
+                <p style="margin:0; font-size:13px; color:#aaa;">Silakan pilih format sistem streaming yang Anda sukai:</p>
             </div>
 
+            <!-- DUA TOMBOL AKSES / AKSES FORMAT UTAMA -->
             <div class="dashboard-grid">
-                <div class="menu-item-id prem-card" onclick="activateService('premium')">
+                <div class="menu-item-id" onclick="activateService('premium')">
                     <div class="icon-box-id bg-premium"><i class="fas fa-crown"></i></div>
                     <span>YouTube Premium Free</span>
                     <small>Tanpa Iklan / Ringan</small>
                 </div>
-                <div class="menu-item-id mp4-card" onclick="activateService('mp4')">
+                <div class="menu-item-id" onclick="activateService('mp4')">
                     <div class="icon-box-id bg-mp4"><i class="fas fa-video"></i></div>
                     <span>YouTube Biasa MP4</span>
                     <small>Streaming Format Video HD</small>
                 </div>
-                <div class="menu-item-id mp3-card" onclick="activateService('mp3')">
+                <div class="menu-item-id" onclick="activateService('mp3')">
                     <div class="icon-box-id bg-mp3"><i class="fas fa-music"></i></div>
                     <span>YouTube MP3 / Lagu</span>
                     <small>Format Suara Hemat Kuota</small>
                 </div>
             </div>
 
-            <div class="visitor-counter-badge" style="margin: 20px; text-align: center;">
+            <div class="visitor-counter-badge" style="margin: 30px 20px; text-align: center; font-size: 13px; color:#888;">
                 <i class="fas fa-eye"></i> Total Kunjungan: <b id="visitor-count-text" style="color:#ff1744;">1,420</b>
             </div>
         </main>
 
-        <main class="mobile-content hidden animate-smooth-view" id="streaming-content-view">
-            <button class="btn-back-menu" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Menu Pilihan</button>
-            <div class="current-mode-badge" id="current-mode-text">Mode: YouTube Premium</div>
-
-            <div id="video-player-section" class="player-container hidden">
-                <div class="video-wrapper">
-                    <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <h3 id="player-video-title" class="player-title">Judul Video</h3>
-                <p id="player-video-channel" class="player-channel">Nama Channel</p>
-            </div>
-
-            <div id="video-feed-grid" class="video-grid"></div>
-        </main>
-
+        <!-- BOTTOM NAV BAR MENU UTAMA -->
         <nav class="bottom-nav">
-            <div class="nav-item active" onclick="backToDashboardHub()"><i class="fas fa-home"></i> Home</div>
-            <div class="nav-item" onclick="Swal.fire('Info', 'Fitur Hub Shorts menyusul!', 'info')"><i class="fab fa-youtube-square"></i> Shorts</div>
-            <div class="nav-item" onclick="backToGateMenu()"><i class="fas fa-door-open"></i> Gate Menu</div>
+            <div class="nav-item active" id="nav-home-btn" onclick="backToDashboardHub()"><i class="fas fa-home"></i>Home</div>
+            <div class="nav-item" onclick="Swal.fire('Info', 'Fitur Hub Shorts menyusul!', 'info')"><i class="fab fa-youtube-square"></i>Shorts</div>
+            <div class="nav-item" onclick="backToGateMenu()"><i class="fas fa-door-open"></i>Gate Menu</div>
         </nav>
     </div>
 
@@ -337,7 +450,6 @@
             let gate = document.getElementById("main-gate-screen");
             let pct = 0;
 
-            // Pastikan splash screen dari awal dipaksa terlihat lewat inline style script
             if (splash) {
                 splash.style.display = "flex";
                 splash.style.opacity = "1";
@@ -345,7 +457,7 @@
 
             // Efek hitung loading dinamis
             let timer = setInterval(() => {
-                pct += Math.floor(Math.random() * 4) + 3; // Sedikit dipercepat agar tidak kelamaan menunggu
+                pct += Math.floor(Math.random() * 4) + 3;
                 if (pct > 100) pct = 100;
                 
                 if (fill) fill.style.width = pct + "%";
@@ -353,22 +465,18 @@
                 
                 if(pct >= 100){
                     clearInterval(timer);
-                    
-                    // Hilangkan splash screen
                     if (splash) splash.classList.add("fade-out-premium");
                     
-                    // Buka total Main Gate Menu secara aman dan paksa agar tidak stuck hitam
                     setTimeout(() => {
                         if (splash) splash.style.display = "none";
                         if (gate) {
-                            gate.style.display = "flex"; // Paksa ubah ke flex layout
+                            gate.style.display = "flex"; 
                             gate.style.opacity = "1";
                         }
                     }, 550);
                 }
             }, 40);
 
-            // Visitor counter logic
             let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
             visits += 1;
             localStorage.setItem("mt_visitors", visits);
@@ -408,6 +516,7 @@
                         Swal.fire('Login Sukses', 'Selamat Datang Member Berharga!', 'success');
                         document.getElementById("main-gate-screen").style.display = "none";
                         document.getElementById("main-app-interface").classList.remove("hidden");
+                        backToDashboardHub();
                     } else {
                         Swal.fire('Gagal Login', 'Akun tidak valid.', 'error');
                     }
@@ -545,20 +654,31 @@
         }
 
         function backToDashboardHub() {
+            // Memaksa Dashboard Pilihan Utama Muncul Kembali
             document.getElementById("home-dashboard-view").classList.remove("hidden");
+            document.getElementById("home-dashboard-view").style.display = "block";
+            
+            // Sembunyikan bagian streaming & pencarian
             document.getElementById("streaming-content-view").classList.add("hidden");
-            document.getElementById("global-search-trigger").classList.add("hidden");
-            document.getElementById("search-bar-container").classList.remove("active");
+            document.getElementById("search-bar-container").style.display = "none";
             document.getElementById("video-player-section").classList.add("hidden");
             document.getElementById("main-youtube-iframe").src = "";
+            
+            // Set nav item home jadi merah aktif
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('nav-home-btn').classList.add('active');
         }
 
         function activateService(mode) {
             currentMode = mode;
+            // Sembunyikan dashboard hub
             document.getElementById("home-dashboard-view").classList.add("hidden");
+            document.getElementById("home-dashboard-view").style.display = "none";
+            
+            // Munculkan menu streaming & kotak pencarian
             document.getElementById("streaming-content-view").classList.remove("hidden");
-            document.getElementById("global-search-trigger").classList.remove("hidden");
-            document.getElementById("search-bar-container").classList.add("active");
+            document.getElementById("search-bar-container").style.display = "block";
+            
             const modeBadge = document.getElementById("current-mode-text");
             if(mode === 'premium') {
                 modeBadge.innerText = "✨ Mode: YouTube Premium Free (Tanpa Iklan)";
@@ -593,7 +713,7 @@
                     const channel = item.snippet.channelTitle;
                     const thumbnail = item.snippet.thumbnails.medium.url;
                     let badgeType = currentMode === 'mp3' ? 'MP3 Only' : 'HD Video';
-                    grid.innerHTML += `<div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')"><div class="thumbnail-container"><img class="thumbnail" src="${thumbnail}" alt="thumbnail"><span class="duration" style="background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}">${badgeType}</span></div><div class="video-text" style="padding:10px; text-align: left;"><span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px;">${title}</span><span class="channel-name" style="font-size:11px; color:#888;">${channel}</span></div></div>`;
+                    grid.innerHTML += `<div class="video-card" style="background:#141414; border-radius:8px; overflow:hidden; cursor:pointer;" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')"><div class="thumbnail-container" style="position:relative;"><img class="thumbnail" src="${thumbnail}" alt="thumbnail" style="width:100%; display:block;"><span class="duration" style="position:absolute; bottom:8px; right:8px; background:${currentMode === 'mp3' ? '#388e3c' : '#d32f2f'}; color:#fff; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:bold;">${badgeType}</span></div><div class="video-text" style="padding:10px; text-align: left;"><span class="video-title" style="display:block; font-size:13px; font-weight:bold; line-height:1.4; margin-bottom:4px; color:#fff;">${title}</span><span class="channel-name" style="font-size:11px; color:#888;">${channel}</span></div></div>`;
                 });
             } catch (e) { grid.innerHTML = "<p style='text-align: center; color: #ff1744;'>Gagal request API data YouTube.</p>"; }
         }
@@ -609,7 +729,14 @@
 
         function executeSearch() { const query = document.getElementById("search-input").value.trim(); if(query) fetchYouTubeData(query); }
         function handleSearchKeyPress(e) { if(e.key === "Enter") executeSearch(); }
-        function toggleSearchBar() { document.getElementById("search-bar-container").classList.toggle("active"); }
+        function toggleSearchBar() { 
+            const bar = document.getElementById("search-bar-container");
+            if(bar.style.display === "none") {
+                bar.style.display = "block";
+            } else {
+                bar.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
