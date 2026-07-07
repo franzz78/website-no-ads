@@ -4,25 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- MASTER GOOGLE VERIFICATION TAG -->
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
     
-    <!-- MASTER TAG SEO ON-PAGE REAL DOMAIN -->
     <title>MiniTube X YouTube Premium Free - Streaming Musik & Video Tanpa Iklan</title>
     <meta name="description" content="Nikmati MiniTube X YouTube Premium Free buatan Haruukii79. Platform Super App streaming video MP4 HD dan MP3 musik hemat kuota, cepat, aman, dan tanpa iklan.">
     <meta name="author" content="Haruukii79">
     <link rel="canonical" href="https://website-no-ads.vercel.app/">
 
-    <!-- EXTERNAL ASSETS & LIBRARIES -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 
-    <!-- ==========================================================================
-       CSS PENGAMAN CORE DATA & LAYOUT MENU (ANTI-BLANK & PAKSA TOMBOL MUNCUL)
-       ========================================================================== -->
     <style>
-        /* Memastikan body tidak blank hitam tanpa arah */
         body {
             background-color: #0d0d0d !important;
             color: #ffffff !important;
@@ -32,7 +25,7 @@
             overflow-x: hidden;
         }
 
-        /* Gaya Pengaman Splash Screen Utama */
+        /* Splash Screen Utama */
         .splash-screen-premium {
             position: fixed !important;
             top: 0;
@@ -45,7 +38,6 @@
             justify-content: center;
             z-index: 999999 !important;
             opacity: 1;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         .splash-content {
@@ -78,7 +70,7 @@
             margin-bottom: 30px !important;
         }
 
-        /* Progress Bar Pengaman */
+        /* Progress Bar */
         .progress-wrapper {
             width: 100% !important;
             margin: 20px auto !important;
@@ -98,7 +90,6 @@
             width: 0%;
             background: linear-gradient(90deg, #ff1744, #ff5252) !important;
             box-shadow: 0 0 10px #ff1744 !important;
-            transition: width 0.1s linear;
         }
 
         .splash-counter-id {
@@ -108,14 +99,7 @@
             margin-top: 8px !important;
         }
 
-        /* Class khusus untuk menghilangkan splash */
-        .fade-out-premium {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-        }
-
-        /* Memastikan Main Gate tidak tersembunyi permanen */
+        /* Gate Container */
         .gate-container {
             display: none; 
             flex-direction: column;
@@ -128,19 +112,15 @@
             background: #0d0d0d;
         }
 
-        /* ==========================================================================
-           PENGAMAN STRUKTUR INTERNAL INTERFACE & TOMBOL AKSES MENU UTAMA
-           ========================================================================== -->
         #main-app-interface {
             width: 100%;
             min-height: 100vh;
             box-sizing: border-box;
-            padding-bottom: 80px; /* Jarak aman agar menu tidak tertutup nav bawah */
+            padding-bottom: 80px;
             background-color: #0a0a0a;
             position: relative;
         }
 
-        /* Memaksa Header Muncul dan Jelas */
         .mobile-header {
             display: flex !important;
             justify-content: space-between;
@@ -153,7 +133,6 @@
             z-index: 100;
         }
 
-        /* Memaksa Dashboard Pilihan Layanan Muncul */
         .dashboard-grid {
             display: grid !important;
             grid-template-columns: 1fr;
@@ -168,7 +147,6 @@
             }
         }
 
-        /* Memastikan Tombol Menu Pilihan (Premium, MP4, MP3) Terlihat Jelas */
         .menu-item-id {
             background: #1a1a1a !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -176,7 +154,6 @@
             padding: 20px !important;
             text-align: center !important;
             cursor: pointer !important;
-            transition: transform 0.2s, background 0.2s;
             display: flex !important;
             flex-direction: column;
             align-items: center;
@@ -184,7 +161,6 @@
         }
 
         .menu-item-id:active {
-            transform: scale(0.98);
             background: #242424 !important;
         }
 
@@ -217,7 +193,6 @@
             font-size: 11px !important;
         }
 
-        /* Memaksa Bottom Navigation Bar Selalu Muncul di Paling Bawah HP */
         .bottom-nav {
             position: fixed !important;
             bottom: 0 !important;
@@ -261,14 +236,12 @@
 </head>
 <body class="theme-dark">
 
-    <!-- TICKER TEXT BANNER ADMIN -->
     <div id="admin-announcement-banner" class="admin-ticker-hide">
         <div class="ticker-content-wrapper">
             <i class="fas fa-bullhorn"></i> <span id="ticker-text-target">Pengumuman Administrator Aktif!</span>
         </div>
     </div>
 
-    <!-- AUDIO PLAYER KHUSUS BACKSOUND ADMIN -->
     <div id="admin-audio-dock" class="audio-dock-hide">
         <div class="dock-info">
             <i class="fas fa-compact-disc fa-spin text-red"></i>
@@ -280,9 +253,6 @@
         <button onclick="stopAdminAudio()" class="btn-stop-dock"><i class="fas fa-stop"></i></button>
     </div>
 
-    <!-- ==========================================================================
-       1. PREMIUM SINEMATIK LOADING SCREEN
-       ========================================================================== -->
     <div id="splash-screen" class="splash-screen-premium">
         <div class="splash-blur-bg"></div>
         <div class="splash-content">
@@ -292,7 +262,6 @@
             <h1 class="splash-title-brand">MINITUBE X YOUTUBE</h1>
             <div class="splash-sub-text">PREMIUM FREE</div>
             
-            <!-- ENHANCED PROGRESS AREA -->
             <div class="progress-wrapper">
                 <div class="progress-bar-container-id">
                     <div id="progress-bar-fill" class="progress-bar-fill-id"></div>
@@ -306,9 +275,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       2. MAIN MENU GATEWAY (DENGAN ANIMASI SMOOTH TRANSITION)
-       ========================================================================== -->
     <div id="main-gate-screen" class="gate-container">
         <div class="gate-content">
             <div class="gate-brand">
@@ -317,7 +283,6 @@
                 <span class="sub-premium">PREMIUM FREE</span>
             </div>
 
-            <!-- BUTTON INTERACTION ZONE -->
             <div class="gate-buttons-group">
                 <button class="btn-gate btn-next" onclick="enterAppWithoutAccount()">
                     <div class="btn-gate-icon"><i class="fas fa-arrow-right"></i></div>
@@ -360,7 +325,6 @@
                 </button>
             </div>
 
-            <!-- LUXURY OWNER DATA DISPLAY -->
             <div class="owner-credits-box">
                 <div class="credit-row"><span>Owner</span> : <b>Haruukii79</b></div>
                 <div class="credit-row"><span>Programmer</span> : <b>Haruukii79</b></div>
@@ -372,9 +336,6 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       3. INTERNAL CORE APPLICATION VIEW (DASHBOARD MENU STREAMING)
-       ========================================================================== -->
     <div id="main-app-interface" class="hidden">
         <header class="mobile-header header-indonesia">
             <div class="header-left">
@@ -395,14 +356,12 @@
             </div>
         </div>
 
-        <!-- MENU PILIHAN (DASHBOARD HUB UTAMA) -->
         <main class="mobile-content" id="home-dashboard-view">
             <div class="welcome-banner-id" style="padding:20px; text-align:center; background:linear-gradient(180deg, #141414, #0a0a0a);">
                 <h3 style="margin:0 0 8px 0; font-size:18px;">Selamat Datang di MiniTube</h3>
                 <p style="margin:0; font-size:13px; color:#aaa;">Silakan pilih format sistem streaming yang Anda sukai:</p>
             </div>
 
-            <!-- DUA TOMBOL AKSES / AKSES FORMAT UTAMA -->
             <div class="dashboard-grid">
                 <div class="menu-item-id" onclick="activateService('premium')">
                     <div class="icon-box-id bg-premium"><i class="fas fa-crown"></i></div>
@@ -426,7 +385,21 @@
             </div>
         </main>
 
-        <!-- BOTTOM NAV BAR MENU UTAMA -->
+        <main class="mobile-content hidden" id="streaming-content-view" style="padding:15px;">
+            <button class="btn-back-menu" style="background:#222; color:#fff; border:1px solid #444; padding:8px 12px; border-radius:6px; cursor:pointer; font-size:12px; margin-bottom:15px; width:100%; text-align:left;" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Menu Pilihan</button>
+            <div class="current-mode-badge" id="current-mode-text" style="padding:8px; border-radius:6px; font-size:12px; font-weight:bold; text-align:center; margin-bottom:15px;">Mode: YouTube Premium</div>
+
+            <div id="video-player-section" class="player-container hidden" style="margin-bottom:20px;">
+                <div class="video-wrapper" style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:8px; background:#000;">
+                    <iframe id="main-youtube-iframe" src="" style="position:absolute; top:0; left:0; width:100%; height:100%;" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <h3 id="player-video-title" class="player-title" style="font-size:14px; margin:10px 0 4px 0; line-height:1.4;">Judul Video</h3>
+                <p id="player-video-channel" class="player-channel" style="font-size:12px; color:#888; margin:0;">Nama Channel</p>
+            </div>
+
+            <div id="video-feed-grid" class="video-grid" style="display:grid; grid-template-columns:1fr; gap:15px;"></div>
+        </main>
+
         <nav class="bottom-nav">
             <div class="nav-item active" id="nav-home-btn" onclick="backToDashboardHub()"><i class="fas fa-home"></i>Home</div>
             <div class="nav-item" onclick="Swal.fire('Info', 'Fitur Hub Shorts menyusul!', 'info')"><i class="fab fa-youtube-square"></i>Shorts</div>
@@ -436,9 +409,6 @@
 
     <iframe id="hidden-audio-engine" src="" style="display: none; width: 0; height: 0; border: none;"></iframe>
 
-    <!-- ==========================================================================
-       4. CORE SYSTEM LOGIC ENGINE (ANTI-BLANK SCREEN UPDATE)
-       ========================================================================== -->
     <script>
         const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
         let currentMode = "premium";
@@ -452,12 +422,11 @@
 
             if (splash) {
                 splash.style.display = "flex";
-                splash.style.opacity = "1";
             }
 
-            // Efek hitung loading dinamis
+            // Hitung loading dipercepat langsung selesai
             let timer = setInterval(() => {
-                pct += Math.floor(Math.random() * 4) + 3;
+                pct += Math.floor(Math.random() * 8) + 10; 
                 if (pct > 100) pct = 100;
                 
                 if (fill) fill.style.width = pct + "%";
@@ -465,17 +434,14 @@
                 
                 if(pct >= 100){
                     clearInterval(timer);
-                    if (splash) splash.classList.add("fade-out-premium");
-                    
-                    setTimeout(() => {
-                        if (splash) splash.style.display = "none";
-                        if (gate) {
-                            gate.style.display = "flex"; 
-                            gate.style.opacity = "1";
-                        }
-                    }, 550);
+                    // Langsung hilangkan tanpa efek fade-out lambat
+                    if (splash) splash.style.display = "none";
+                    if (gate) {
+                        gate.style.style = "";
+                        gate.style.display = "flex"; 
+                    }
                 }
-            }, 40);
+            }, 20);
 
             let visits = parseInt(localStorage.getItem("mt_visitors") || "1420");
             visits += 1;
@@ -490,7 +456,7 @@
         }
 
         function enterAppWithoutAccount() {
-            Swal.fire({ title: 'Akses Tamu Berhasil', text: 'Selamat menikmati fitur MiniTube!', icon: 'success', timer: 1500, showConfirmButton: false });
+            Swal.fire({ title: 'Akses Tamu Berhasil', text: 'Selamat menikmati fitur MiniTube!', icon: 'success', timer: 1000, showConfirmButton: false });
             document.getElementById("main-gate-screen").style.display = "none";
             document.getElementById("main-app-interface").classList.remove("hidden");
             backToDashboardHub();
@@ -647,35 +613,29 @@
             document.getElementById("main-app-interface").classList.add("hidden");
             const gate = document.getElementById("main-gate-screen");
             if (gate) {
-                gate.style.opacity = "1";
                 gate.style.display = "flex"; 
             }
             document.getElementById("main-youtube-iframe").src = "";
         }
 
         function backToDashboardHub() {
-            // Memaksa Dashboard Pilihan Utama Muncul Kembali
             document.getElementById("home-dashboard-view").classList.remove("hidden");
             document.getElementById("home-dashboard-view").style.display = "block";
             
-            // Sembunyikan bagian streaming & pencarian
             document.getElementById("streaming-content-view").classList.add("hidden");
             document.getElementById("search-bar-container").style.display = "none";
             document.getElementById("video-player-section").classList.add("hidden");
             document.getElementById("main-youtube-iframe").src = "";
             
-            // Set nav item home jadi merah aktif
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('nav-home-btn').classList.add('active');
         }
 
         function activateService(mode) {
             currentMode = mode;
-            // Sembunyikan dashboard hub
             document.getElementById("home-dashboard-view").classList.add("hidden");
             document.getElementById("home-dashboard-view").style.display = "none";
             
-            // Munculkan menu streaming & kotak pencarian
             document.getElementById("streaming-content-view").classList.remove("hidden");
             document.getElementById("search-bar-container").style.display = "block";
             
@@ -719,23 +679,19 @@
         }
 
         function playSelectedMedia(id, title, channel) {
-            Swal.fire({ icon: 'success', title: 'Streaming Dimulai', text: title, toast: true, position: 'top-end', showConfirmButton: false, timer: 2000 });
+            Swal.fire({ icon: 'success', title: 'Streaming Dimulai', text: title, toast: true, position: 'top-end', showConfirmButton: false, timer: 1000 });
             document.getElementById("video-player-section").classList.remove("hidden");
             document.getElementById("main-youtube-iframe").src = `https://www.youtube.com/embed/${id}?autoplay=1`;
             document.getElementById("player-video-title").innerText = title;
             document.getElementById("player-video-channel").innerText = channel;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0 });
         }
 
         function executeSearch() { const query = document.getElementById("search-input").value.trim(); if(query) fetchYouTubeData(query); }
         function handleSearchKeyPress(e) { if(e.key === "Enter") executeSearch(); }
         function toggleSearchBar() { 
             const bar = document.getElementById("search-bar-container");
-            if(bar.style.display === "none") {
-                bar.style.display = "block";
-            } else {
-                bar.style.display = "none";
-            }
+            bar.style.display = (bar.style.display === "none") ? "block" : "none";
         }
     </script>
 </body>
