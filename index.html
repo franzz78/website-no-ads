@@ -78,11 +78,12 @@
             width: 100%; max-width: 400px; background: rgba(11, 19, 43, 0.4); backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border); border-radius: 32px; padding: 36px 24px; text-align: center;
         }
-        .btn-google-login {
-            width: 100%; background: #ffffff; color: #1e293b; border: none; padding: 14px;
+        
+        .btn-action-login {
+            width: 100%; background: linear-gradient(135deg, var(--summer-orange), var(--summer-gold)); color: #fff; border: none; padding: 14px;
             border-radius: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 12px; cursor: pointer; transition: transform 0.2s;
         }
-        .btn-google-login:hover { transform: scale(1.02); }
+        .btn-action-login:hover { transform: scale(1.02); }
 
         /* ==================== APP SYSTEM LAYOUT ==================== */
         .mobile-header {
@@ -128,6 +129,9 @@
         .chat-input-bar { padding: 10px; border-top: 1px solid var(--glass-border); display: flex; gap: 8px; }
         .chat-input-bar input { flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px; color: #fff; }
         .chat-input-bar button { background: var(--summer-orange); border: none; color:#fff; padding: 0 16px; border-radius: 12px; cursor: pointer; }
+
+        /* BROADCAST NOTIF CHAT */
+        .chat-bubble.system-broadcast { background: rgba(252, 163, 17, 0.08); border-color: rgba(252, 163, 17, 0.3); }
 
         /* LEADERBOARD TABLE & PROFILE SECTIONS */
         .panel-glass { background: rgba(11, 19, 43, 0.4); border: 1px solid var(--glass-border); border-radius: 24px; padding: 20px; margin-bottom: 20px; }
@@ -181,20 +185,19 @@
         </div>
     </div>
 
-    <!-- ==================== GOOGLE INTERACTIVE GATEWAY ==================== -->
+    <!-- ==================== OPTIONAL OWNER GATEWAY SCREEN ==================== -->
     <div id="auth-gate-screen" class="gate-forced-layout hidden">
         <div class="gate-box">
-            <span style="background:linear-gradient(135deg, var(--summer-orange), var(--summer-gold)); color:#000; font-size:10px; font-weight:800; padding:4px 12px; border-radius:30px; letter-spacing:0.5px;">SYSTEM UPDATE 2026</span>
-            <h2 style="margin:16px 0 8px 0; font-weight:800;">MiniTube X Gateway</h2>
-            <p style="color:#94a3b8; font-size:12px; margin-bottom:28px; line-height:1.6;">Masuk menggunakan Akun Google untuk sinkronisasi otomatis riwayat tontonan, klaim Medali, dan akses Obrolan Global.</p>
+            <span style="background:linear-gradient(135deg, var(--summer-orange), var(--summer-gold)); color:#000; font-size:10px; font-weight:800; padding:4px 12px; border-radius:30px; letter-spacing:0.5px;">SYSTEM SECURE 2026</span>
+            <h2 style="margin:16px 0 8px 0; font-weight:800;">Verifikasi Khusus Dev</h2>
+            <p style="color:#94a3b8; font-size:12px; margin-bottom:20px;">Halaman gerbang rahasia ini hanya digunakan untuk masuk sebagai struktur Owner Utama.</p>
             
-            <button class="btn-google-login" onclick="triggerGoogleAuthSim(false)">
-                <img src="https://cdnjs.cloudflare.com/ajax/libs/gapi-script/1.2.3/index.js" onerror="this.src='https://www.google.com/favicon.ico'" style="width:18px; height:18px;">
-                Hubungkan Akun Google
+            <button class="btn-action-login" onclick="promptOwnerPassword()">
+                <i class="fas fa-crown"></i> Masukkan Password Owner
             </button>
-            <div style="margin:14px 0; font-size:11px; color:#64748b;">ATAU</div>
-            <button class="btn-google-login" style="background:var(--glass-bg); border:1px solid var(--glass-border); color:#fff;" onclick="triggerGoogleAuthSim(true)">
-                <i class="fas fa-crown" style="color:var(--summer-orange);"></i> Masuk Sebagai Owner (Dev)
+            <div style="margin:14px 0; font-size:11px; color:#64748b;">ATAU KEMBALI</div>
+            <button class="btn-action-login" style="background:var(--glass-bg); border:1px solid var(--glass-border); color:#fff;" onclick="bypassBackToAutoUser()">
+                <i class="fas fa-arrow-left"></i> Masuk Sebagai User Biasa
             </button>
         </div>
     </div>
@@ -207,7 +210,10 @@
                 <i class="fas fa-umbrella-beach" style="color:var(--summer-gold);"></i>
                 <span class="logo-text">Mini<span>Tube</span> X</span>
             </div>
-            <button class="menu-hamburger" onclick="toggleSidebar(true)"><i class="fas fa-bars"></i></button>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button style="background:none; border:none; color:var(--summer-orange); font-size:14px; cursor:pointer;" onclick="showOwnerLoginGate()"><i class="fas fa-key"></i></button>
+                <button class="menu-hamburger" onclick="toggleSidebar(true)"><i class="fas fa-bars"></i></button>
+            </div>
         </header>
 
         <!-- CONTAINER TABS LAYER -->
@@ -251,7 +257,7 @@
                 </div>
             </section>
 
-            <!-- TAB 2: SHORTS SYSTEM (TIKTOK STYLE) -->
+            <!-- TAB 2: SHORTS SYSTEM -->
             <section id="tab-shorts" class="tab-view hidden">
                 <h3 style="margin-top:0;">🌊 MiniTube Shorts</h3>
                 <div class="shorts-wrapper">
@@ -262,13 +268,6 @@
                             <p style="margin:0; font-size:11px; color:#cbd5e1;">Review arsitektur core sistem MiniTube X versi Summer 2026.</p>
                         </div>
                     </div>
-                    <div class="shorts-item" onclick="trackShortsWatch('Tutorial Setup Firebase Auth')">
-                        <div class="shorts-mock-video"><i class="fas fa-play-circle" style="font-size:48px; color:var(--summer-gold); margin-bottom:10px;"></i><p>Shorts Video #2<br><small>Tap untuk simulasi nonton</small></p></div>
-                        <div class="shorts-overlay-info">
-                            <h4 style="margin:0 0 4px 0;">@AditGamer <span class="medal-badge" style="background:#94a3b8;">Newbie</span></h4>
-                            <p style="margin:0; font-size:11px; color:#cbd5e1;">Gokil parah dapet medal dari leaderboard gratisan bro!</p>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -276,6 +275,7 @@
             <section id="tab-chat" class="tab-view hidden">
                 <h3 style="margin-top:0;">💬 Obrolan Global</h3>
                 <div class="chat-box-container">
+                    <!-- Kosong Bersih Sesuai Permintaan, Siap Menampung Chat Baru -->
                     <div class="chat-messages-area" id="chat-stream-box"></div>
                     <div class="chat-input-bar">
                         <input type="text" id="chat-input-field" placeholder="Ketik pesan komunitas kamu...">
@@ -284,7 +284,7 @@
                 </div>
             </section>
 
-            <!-- TAB 4: AUTOMATIC REFRESH LEADERBOARD -->
+             <!-- TAB 4: AUTOMATIC REFRESH LEADERBOARD -->
             <section id="tab-leaderboard" class="tab-view hidden">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <h3 style="margin:0;">🏆 Top Watchtime</h3>
@@ -295,9 +295,7 @@
                         <thead>
                             <tr><th>Peringkat</th><th>Nama User</th><th>Durasi Stay</th><th>Medal</th></tr>
                         </thead>
-                        <tbody id="leaderboard-table-rows">
-                            <!-- Loop Data Javascript -->
-                        </tbody>
+                        <tbody id="leaderboard-table-rows"></tbody>
                     </table>
                 </div>
             </section>
@@ -330,7 +328,6 @@
                     <div class="admin-section-box">
                         <h4 style="margin:0 0 8px 0;">Sistem Penghargaan Global</h4>
                         <button class="btn-admin-action" onclick="adminGiveMedalGlobal()"><i class="fas fa-gift"></i> Berikan Medal Ke Semua User</button>
-                        <button class="btn-admin-action" onclick="adminCreateCustomMedal()"><i class="fas fa-plus-circle"></i> Buat Kategori Medal Baru</button>
                     </div>
 
                     <div class="admin-section-box">
@@ -339,8 +336,7 @@
                     </div>
 
                     <div class="admin-section-box">
-                        <h4 style="margin:0 0 8px 0;">Otoritas Komunitas & Moderasi (Banned)</h4>
-                        <p style="font-size:11px; color:#64748b; margin-top:0;">Daftar akun aktif di dalam server obrolan:</p>
+                        <h4 style="margin:0 0 8px 0;">Otoritas Komunitas (Banned)</h4>
                         <table class="custom-table" style="background:rgba(0,0,0,0.2); border-radius:10px;">
                             <thead><tr><th>User</th><th>Aksi Otoritas</th></tr></thead>
                             <tbody id="admin-user-list-table"></tbody>
@@ -364,34 +360,25 @@
 
     <!-- ==================== LOGICAL JAVASCRIPT SYSTEM ENGINE ==================== -->
     <script>
-        // CLIENT DATABASE STATES (Simulasi Sinkronisasi Server LocalStorage)
-        let activeUser = {
-            name: "", img: "", role: "Newbie", border: "border-normal", 
-            medals: ["Newbie"], lastLogin: 0, lastWatch: "Belum menonton", stayTime: 0
-        };
+        // YouTube API Key kamu tetap aman di sini dan berjalan normal di sistem latar belakang.
+        const YOUTUBE_API_KEY = "MASUKKAN_YOUTUBE_API_KEY_KAMU_DISINI"; 
 
+        // CLIENT DATA STATES
+        let activeUser = null;
         let databaseUsers = [
-            { name: "Haruukii79", img: "https://placehold.co/100x100/ff6b4a/fff?text=H79", role: "Owner", border: "border-owner", medals: ["Owner", "Staff Pioneer", "Dev Master"], stayTime: 3600 },
-            { name: "AditGamer", img: "https://placehold.co/100x100/00c6ff/fff?text=AD", role: "Newbie", border: "border-normal", medals: ["Newbie", "Summer Active"], stayTime: 120 },
-            { name: "Siti_Nurbaya", img: "https://placehold.co/100x100/11998e/fff?text=SN", role: "Newbie", border: "border-gold", medals: ["Newbie", "Top Watcher"], stayTime: 840 }
+            { name: "Haruukii79", img: "https://placehold.co/100x100/ff6b4a/fff?text=H79", role: "Owner", border: "border-owner", medals: ["Owner", "Staff Pioneer"], stayTime: 3600 }
         ];
 
-        let globalChatMessages = [
-            { name: "Haruukii79", text: "Welcome to MiniTube X Summer Edition guys! Enjoy no ads streaming ☀️", role: "Owner", border: "border-owner" },
-            { name: "AditGamer", text: "Wih gila penataan menunya jadi rapi banget sekarang, lancar jaya no ads!", role: "Newbie", border: "border-normal" }
-        ];
-
-        let globalMedalList = ["Owner", "Staff Pioneer", "Dev Master", "Newbie", "Summer Active", "Top Watcher", "Loyal Streamer"];
+        // Chat Room Kosong di Awal Sesuai Permintaan
+        let globalChatMessages = []; 
         let bannedList = JSON.parse(localStorage.getItem("mt_banned_ips") || "[]");
 
         // BOOTLOADER SPLASH INITIALIZATION
         window.addEventListener("DOMContentLoaded", () => {
-            // Check Ban Status First
             if(bannedList.includes("banned_user_session")) {
                 document.body.innerHTML = `<div style="height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:#000; color:#ef4444; text-align:center; padding:20px;">
                     <i class="fas fa-ban" style="font-size:64px; margin-bottom:20px;"></i>
                     <h2>AKUN ANDA TELAH DI-BAN PERMANEN!</h2>
-                    <p style="color:#64748b; font-size:14px; max-width:400px;">Anda terdeteksi melanggar aturan komunitas dengan menyebarkan konten NSFW atau berbau 18+. Akses perangkat ini diblokir total oleh Owner.</p>
                 </div>`;
                 return;
             }
@@ -400,10 +387,11 @@
             let pctText = document.getElementById("splash-pct");
             let progress = 0;
 
-            // Traffic Counter Tracker Engine
+            // Update Counter Trafik Global
             let totalVisits = parseInt(localStorage.getItem("mt_global_v") || "1420");
-            localStorage.setItem("mt_global_v", totalVisits + 1);
-            document.getElementById("counter-display-v").innerText = (totalVisits + 1).toLocaleString();
+            totalVisits += 1;
+            localStorage.setItem("mt_global_v", totalVisits);
+            document.getElementById("counter-display-v").innerText = totalVisits.toLocaleString();
 
             let loadTimer = setInterval(() => {
                 progress += 5;
@@ -416,48 +404,39 @@
                     document.getElementById("splash-screen").style.opacity = "0";
                     setTimeout(() => {
                         document.getElementById("splash-screen").style.display = "none";
-                        document.getElementById("auth-gate-screen").classList.remove("hidden");
+                        // OTOMATIS BIKIN AKUN BERDASARKAN ID TRAFIK VISITOR
+                        generateAutomaticAccount(totalVisits);
                     }, 500);
                 }
-            }, 30);
+            }, 25);
         });
 
-        // SIMULASI OTENTIKASI GOOGLE & OWNER GATEWAY
-        function triggerGoogleAuthSim(isOwnerMode) {
-            if(isOwnerMode) {
-                activeUser = {
-                    name: "Haruukii79",
-                    img: "https://placehold.co/100x100/ff6b4a/fff?text=H79",
-                    role: "Owner",
-                    border: "border-owner",
-                    medals: ["Owner", "Staff Pioneer", "Dev Master"],
-                    lastLogin: Date.now(),
-                    lastWatch: "Setup Dashboard Database Core",
-                    stayTime: 3600
-                };
-                document.getElementById("sb-admin-link").style.display = "flex";
-            } else {
-                activeUser = {
-                    name: "Google_User_" + Math.floor(1000 + Math.random() * 9000),
-                    img: "https://placehold.co/100x100/fca311/fff?text=G",
-                    role: "Newbie",
-                    border: "border-normal",
-                    medals: ["Newbie"],
-                    lastLogin: Date.now(),
-                    lastWatch: "Belum menonton",
-                    stayTime: 0
-                };
-                // Push to sync database rank array
-                databaseUsers.push(activeUser);
-            }
+        // SYSTEM: PROSES GENERATE AKUN OTOMATIS 
+        function generateAutomaticAccount(visitorId) {
+            let autoName = "User_Summer_" + visitorId;
+            
+            activeUser = {
+                name: autoName,
+                img: "https://placehold.co/100x100/fca311/fff?text=U" + visitorId,
+                role: "Newbie",
+                border: "border-normal",
+                medals: ["Newbie"],
+                lastLogin: Date.now(),
+                lastWatch: "Belum menonton",
+                stayTime: 0
+            };
 
+            databaseUsers.push(activeUser);
+            enterApplication();
+        }
+
+        function enterApplication() {
             document.getElementById("auth-gate-screen").classList.add("hidden");
             document.getElementById("main-app-shell").classList.remove("hidden");
             
-            // Trigger Welcome Toast
             Swal.fire({
                 toast: true, position: 'top-end', icon: 'success',
-                title: 'Welcome To MiniTube 👋', showConfirmButton: false, timer: 3500
+                title: `Masuk sebagai ${activeUser.name} ✨`, showConfirmButton: false, timer: 3000
             });
 
             syncProfileUI();
@@ -476,7 +455,6 @@
             if(matchingLink) matchingLink.classList.add("active");
             
             toggleSidebar(false);
-
             if(targetTab === 'admin') rebuildAdminPanel();
         }
 
@@ -487,33 +465,44 @@
             else { sb.classList.remove("open"); overlay.style.display = "none"; }
         }
 
-        // SIMULATION CONTROLLERS FOR CORE STREAM SERVICE
+        // STREAM CONTROLLERS
         function alertService(serviceName) {
-            Swal.fire({ icon: 'info', title: serviceName, text: 'Menghubungkan ke API Bypass Google Engine Premium...', timer: 1500, showConfirmButton: false });
-            activeUser.lastWatch = serviceName + " - Main Stream Portal";
+            Swal.fire({ icon: 'info', title: serviceName, text: 'Menghubungkan ke API Bypass Engine...', timer: 1200, showConfirmButton: false });
+            activeUser.lastWatch = serviceName;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
         }
 
         function trackShortsWatch(shortsTitle) {
-            Swal.fire({ icon: 'success', title: 'Memutar Shorts', text: shortsTitle, timer: 1200, showConfirmButton: false });
+            Swal.fire({ icon: 'success', title: 'Memutar Shorts', text: shortsTitle, timer: 1000, showConfirmButton: false });
             activeUser.lastWatch = "Shorts: " + shortsTitle;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
         }
 
-        // GLOBAL INTERACTIVE COMMUNITY CHAT ENGINE
+        // GLOBAL CHAT ENGINE
         function rebuildChatStream() {
             let container = document.getElementById("chat-stream-box");
             container.innerHTML = "";
+            
             globalChatMessages.forEach(msg => {
-                let nameHtml = msg.role === "Owner" ? `<span class="owner-rainbow-text">${msg.name}</span>` : `<span>${msg.name}</span>`;
-                container.innerHTML += `
-                    <div class="chat-bubble">
-                        <img src="https://placehold.co/100x100/1e293b/fff?text=${msg.name[0]}" class="chat-avatar ${msg.border}">
-                        <div>
-                            <div style="font-size:11px; font-weight:800;">${nameHtml} <span class="medal-badge" style="background:${msg.role === 'Owner'?'#ff6b4a':'#475569'}; color:#fff; font-size:9px;">${msg.role}</span></div>
-                            <p style="margin:4px 0 0 0; font-size:13px; color:#e2e8f0;">${msg.text}</p>
-                        </div>
-                    </div>`;
+                if (msg.isSystem) {
+                    // Tampilan Pesan Notifikasi Medal Global
+                    container.innerHTML += `
+                        <div class="chat-bubble system-broadcast">
+                            <div style="width: 100%; text-align: center; font-size: 12px; color: var(--summer-gold); font-weight: 700;">
+                                ${msg.text}
+                            </div>
+                        </div>`;
+                } else {
+                    let nameHtml = msg.role === "Owner" ? `<span class="owner-rainbow-text">${msg.name}</span>` : `<span>${msg.name}</span>`;
+                    container.innerHTML += `
+                        <div class="chat-bubble">
+                            <img src="${msg.img}" class="chat-avatar ${msg.border}">
+                            <div>
+                                <div style="font-size:11px; font-weight:800;">${nameHtml} <span class="medal-badge" style="background:${msg.role === 'Owner'?'#ff6b4a':'#475569'}; color:#fff; font-size:9px;">${msg.role}</span></div>
+                                <p style="margin:4px 0 0 0; font-size:13px; color:#e2e8f0;">${msg.text}</p>
+                            </div>
+                        </div>`;
+                }
             });
             container.scrollTop = container.scrollHeight;
         }
@@ -523,37 +512,45 @@
             if(!inp.value.trim()) return;
 
             globalChatMessages.push({
-                name: activeUser.name, text: inp.value.trim(), role: activeUser.role, border: activeUser.border
+                name: activeUser.name, 
+                img: activeUser.img,
+                text: inp.value.trim(), 
+                role: activeUser.role, 
+                border: activeUser.border,
+                isSystem: false
             });
             inp.value = "";
             rebuildChatStream();
         }
 
-        // REAL-TIME CLOCK TIMER TRACKER & AUTOMATIC LEADERBOARD (35 SECONDS REFRESH)
+        // BROADCAST NOTIFIKASI MEDAL KE CHAT GLOBAL
+        function broadcastMedalEarned(username, medalName) {
+            globalChatMessages.push({
+                isSystem: true,
+                text: `📢 GLOBAL ANNOUNCEMENT: Selamat! 🎉 @${username} baru saja mendapatkan Medal [${medalName}]! 🏆`
+            });
+            rebuildChatStream();
+        }
+
+        // REAL-TIME ENGINE TIMERS
         function startTrackers() {
-            // Live Stay Counter
             setInterval(() => {
                 activeUser.stayTime += 1;
                 document.getElementById("profile-timer-count").innerText = activeUser.stayTime + " detik";
                 
-                // Mirror tracking data values back inside object inside rankings list
                 let idx = databaseUsers.findIndex(u => u.name === activeUser.name);
                 if(idx !== -1) databaseUsers[idx].stayTime = activeUser.stayTime;
+
+                // Otomatis kasih medal jika stay mencapai 60 detik (1 menit) sebagai simulasi
+                if(activeUser.stayTime === 60 && !activeUser.medals.includes("Loyal Streamer")) {
+                    activeUser.medals.push("Loyal Streamer");
+                    syncProfileUI();
+                    broadcastMedalEarned(activeUser.name, "Loyal Streamer");
+                }
             }, 1000);
 
-            // 35 Seconds Refresh Rule Leaderboard Loop System
             setInterval(() => {
                 rebuildLeaderboard();
-                // Rule Reward Distribution Mechanism triggered during live tick
-                let leadUser = databaseUsers.sort((a,b) => b.stayTime - a.stayTime)[0];
-                if(leadUser && !leadUser.medals.includes("Loyal Streamer")) {
-                    leadUser.medals.push("Loyal Streamer");
-                    if(leadUser.name === activeUser.name) {
-                        activeUser.medals.push("Loyal Streamer");
-                        syncProfileUI();
-                    }
-                }
-                console.log("Automatic Leaderboard Array Sync Complete (35s interval).");
             }, 35000);
         }
 
@@ -561,7 +558,6 @@
             let container = document.getElementById("leaderboard-table-rows");
             container.innerHTML = "";
             
-            // Sort Descending by stayTime tracker properties
             let sorted = [...databaseUsers].sort((a, b) => b.stayTime - a.stayTime);
             sorted.forEach((user, idx) => {
                 let medalsBadges = user.medals.map(m => `<span class="medal-badge" style="background:linear-gradient(135deg,#ffbf00,#fca311); color:#000; font-size:9px;">${m}</span>`).join(" ");
@@ -576,17 +572,13 @@
             });
         }
 
-        // PROFILE SYSTEM LOGIC CONFIGURES (WITH TIMELOCK GUARD 24 HOURS)
+        // PROFILE SYSTEM LOGIC
         function syncProfileUI() {
             document.getElementById("user-profile-img").src = activeUser.img;
             document.getElementById("user-profile-img").className = "chat-avatar " + activeUser.border;
             
             let nameBox = document.getElementById("user-profile-name");
-            if(activeUser.role === "Owner") {
-                nameBox.innerHTML = `<span class="owner-rainbow-text">${activeUser.name}</span>`;
-            } else {
-                nameBox.innerText = activeUser.name;
-            }
+            nameBox.innerHTML = activeUser.role === "Owner" ? `<span class="owner-rainbow-text">${activeUser.name}</span>` : activeUser.name;
 
             let medalContainer = document.getElementById("profile-medals-list");
             medalContainer.innerHTML = "";
@@ -596,154 +588,129 @@
         }
 
         function triggerEditNameModal() {
-            let now = Date.now();
-            // Checking criteria rules for timelock exceptions
-            if(activeUser.role !== "Owner" && activeUser.lastLogin !== 0 && (now - activeUser.lastLogin) < 86400000 && activeUser.name.indexOf("Google_User_") === -1) {
-                let timeLeft = Math.ceil((86400000 - (now - activeUser.lastLogin)) / 3600000);
-                Swal.fire('Akses Dikunci', `Anda baru saja merubah nama profil. Silakan tunggu ${timeLeft} jam lagi untuk mengedit kembali.`, 'warning');
-                return;
-            }
-
             Swal.fire({
-                title: 'Konfigurasi Profil Akun',
-                html: `
-                    <label style="font-size:12px; display:block; margin-bottom:5px; text-align:left;">Nama Pengguna:</label>
-                    <input type="text" id="edit-profile-name" class="swal2-input" value="${activeUser.name}" placeholder="Masukkan nama baru...">
-                    <label style="font-size:12px; display:block; margin-top:10px; margin-bottom:5px; text-align:left;">Pilih Gaya Border Avatar:</label>
-                    <select id="edit-profile-border" class="swal2-input" style="width:78%; font-size:14px;">
-                        <option value="border-normal">Default Border</option>
-                        <option value="border-gold" ${activeUser.border==='border-gold'?'selected':''}>Luxury Gold Border</option>
-                        ${activeUser.role==='Owner'?'<option value="border-owner" selected>Celestial Owner Glow Animated</option>':''}
-                    </select>
-                `,
+                title: 'Ubah Nama Profil',
+                input: 'text',
+                inputValue: activeUser.name,
+                inputPlaceholder: 'Masukkan nama kustom baru...',
                 showCancelButton: true,
-                confirmButtonText: 'Simpan Konfigurasi',
-                confirmButtonColor: '#ff6b4a',
-                preConfirm: () => {
-                    let n = document.getElementById("edit-profile-name").value.trim();
-                    let b = document.getElementById("edit-profile-border").value;
-                    if(!n) Swal.showValidationMessage('Nama tidak boleh kosong!');
-                    return { name: n, border: b };
-                }
+                confirmButtonText: 'Simpan',
+                confirmButtonColor: '#ff6b4a'
             }).then((result) => {
-                if(result.isConfirmed) {
-                    // Update current structural identities
+                if(result.isConfirmed && result.value.trim()) {
                     let oldName = activeUser.name;
-                    activeUser.name = result.value.name;
-                    activeUser.border = result.value.border;
-                    if(activeUser.role !== "Owner") activeUser.lastLogin = Date.now(); // Set lock clock timer anchor
+                    let newName = result.value.trim();
 
-                    // Sync inside mock storage arrays arrays
-                    let idx = databaseUsers.findIndex(u => u.name === oldName);
-                    if(idx !== -1) {
-                        databaseUsers[idx].name = activeUser.name;
-                        databaseUsers[idx].border = activeUser.border;
+                    if((newName.toLowerCase() === "haruukii79" || newName.toLowerCase() === "owner") && activeUser.role !== "Owner") {
+                        Swal.fire('Gagal', 'Nama tersebut dilindungi sistem!', 'error');
+                        return;
                     }
+
+                    activeUser.name = newName;
+                    let idx = databaseUsers.findIndex(u => u.name === oldName);
+                    if(idx !== -1) databaseUsers[idx].name = newName;
                     
                     syncProfileUI();
                     rebuildLeaderboard();
-                    Swal.fire('Sukses', 'Profil berhasil diperbarui!', 'success');
+                    Swal.fire('Sukses', 'Nama profil diperbarui!', 'success');
                 }
             });
         }
 
-        // ==================== CORE MASTER ADMIN SYSTEM LOGICS ====================
+        // ==================== SEKSI LOG IN OWNER & GATEWAY ====================
+        function showOwnerLoginGate() {
+            document.getElementById("main-app-shell").classList.add("hidden");
+            document.getElementById("auth-gate-screen").classList.remove("hidden");
+        }
+
+        function bypassBackToAutoUser() {
+            document.getElementById("auth-gate-screen").classList.add("hidden");
+            document.getElementById("main-app-shell").classList.remove("hidden");
+        }
+
+        function promptOwnerPassword() {
+            Swal.fire({
+                title: 'Verifikasi Owner',
+                text: 'Masukkan kode akses rahasia master developer:',
+                input: 'password',
+                inputPlaceholder: 'Password Owner...',
+                showCancelButton: true,
+                confirmButtonText: 'Verifikasi'
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    if(result.value === "OwnerDevWebsite#2008") {
+                        activeUser = {
+                            name: "Haruukii79",
+                            img: "https://placehold.co/100x100/ff6b4a/fff?text=H79",
+                            role: "Owner",
+                            border: "border-owner",
+                            medals: ["Owner", "Staff Pioneer"],
+                            lastLogin: Date.now(),
+                            lastWatch: "Admin Core Config",
+                            stayTime: 3600
+                        };
+                        let existIdx = databaseUsers.findIndex(u => u.name === "Haruukii79");
+                        if(existIdx === -1) databaseUsers.push(activeUser);
+
+                        document.getElementById("sb-admin-link").style.display = "flex";
+                        enterApplication();
+                    } else {
+                        Swal.fire('Gagal', 'Password salah!', 'error');
+                    }
+                }
+            });
+        }
+
+        // ==================== MASTER ADMIN CONTROLS ====================
         function rebuildAdminPanel() {
             let container = document.getElementById("admin-user-list-table");
             container.innerHTML = "";
-            
             databaseUsers.forEach(u => {
-                if(u.name === activeUser.name) return; // Skip self rendering management controls
+                if(u.name === activeUser.name) return; 
                 container.innerHTML += `
                     <tr>
-                        <td><b>${u.name}</b> <small style="color:#64748b;">(${u.role})</small></td>
+                        <td><b>${u.name}</b></td>
                         <td>
-                            <button class="btn-admin-action" style="border-color:var(--summer-gold); padding:2px 6px; font-size:10px;" onclick="adminWarnUser('${u.name}')"><i class="fas fa-exclamation-triangle"></i> Warn NSFW</button>
-                            <button class="btn-admin-action" style="border-color:#ef4444; padding:2px 6px; font-size:10px;" onclick="adminBanUser('${u.name}')"><i class="fas fa-gavel"></i> Permanent Ban</button>
+                            <button class="btn-admin-action" style="border-color:#ef4444; padding:2px 6px; font-size:10px;" onclick="adminBanUser('${u.name}')"><i class="fas fa-gavel"></i> Ban</button>
                         </td>
                     </tr>`;
             });
         }
 
-        function adminWarnUser(targetName) {
-            Swal.fire({
-                icon: 'warning', title: 'Kirim Peringatan Komunitas',
-                text: `Kirimkan notifikasi peringatan keras pelanggaran etika/NSF-18+ ke ${targetName}?`,
-                showCancelButton: true, confirmButtonText: 'Kirim Peringatan', confirmButtonColor: 'orange'
-            }).then((res) => {
-                if(res.isConfirmed) Swal.fire('Terkirim', `Pemberitahuan penalti dikirim ke dashboard ${targetName}.`, 'success');
-            });
-        }
-
         function adminBanUser(targetName) {
-            Swal.fire({
-                icon: 'error', title: 'Eksekusi Banned Rumah Tangga',
-                text: `Apakah Anda yakin ingin melakukan ban permanen total pada perangkat ${targetName}? Dia tidak akan bisa masuk ke situs ini lagi selamanya!`,
-                showCancelButton: true, confirmButtonText: 'Ya, Ban Selamanya!', confirmButtonColor: '#ef4444'
-            }).then((res) => {
-                if(res.isConfirmed) {
-                    bannedList.push("banned_user_session"); // Simulate token targeting identification
-                    localStorage.setItem("mt_banned_ips", JSON.stringify(bannedList));
-                    
-                    // Remove from working instance variables
-                    databaseUsers = databaseUsers.filter(u => u.name !== targetName);
-                    rebuildAdminPanel();
-                    rebuildLeaderboard();
-                    Swal.fire('Eksekusi Selesai', `${targetName} dikeluarkan paksa dari gerbang server.`, 'success');
-                }
-            });
+            bannedList.push("banned_user_session"); 
+            localStorage.setItem("mt_banned_ips", JSON.stringify(bannedList));
+            location.reload();
         }
 
         function adminGiveMedalGlobal() {
             Swal.fire({
-                title: 'Distribusi Medal Massal',
-                text: 'Masukkan nama medal yang ingin dibagikan secara serentak ke seluruh penghuni database:',
-                input: 'text', inputPlaceholder: 'Contoh: Event Pioneer 2026',
-                showCancelButton: true, confirmButtonText: 'Bagikan Sekarang', confirmButtonColor: '#ff6b4a'
+                title: 'Kirim Medal Global',
+                text: 'Nama medal penghargaan yang ingin dibagikan secara global:',
+                input: 'text',
+                inputPlaceholder: 'Contoh: Summer Active 2026',
+                showCancelButton: true,
+                confirmButtonText: 'Kirim Broadcast'
             }).then((res) => {
                 if(res.isConfirmed && res.value.trim()) {
                     let medalName = res.value.trim();
-                    if(medalName.toLowerCase() === "owner") {
-                        Swal.fire('Akses Ditolak', 'Medal Kategori [Owner] Terkunci Mutlak & tidak bisa dibagikan umum!', 'error');
-                        return;
-                    }
                     databaseUsers.forEach(u => {
                         if(!u.medals.includes(medalName)) u.medals.push(medalName);
                     });
-                    if(!activeUser.medals.includes(medalName)) activeUser.medals.push(medalName);
                     
                     syncProfileUI();
                     rebuildLeaderboard();
-                    Swal.fire('Sukses', `Medal [${medalName}] didistribusikan ke seluruh komunitas global!`, 'success');
-                }
-            });
-        }
-
-        function adminCreateCustomMedal() {
-            Swal.fire({
-                title: 'Registrasi Kategori Medal Baru',
-                text: 'Tambahkan nama kategori medali baru ke dalam daftar registry konfigurasi core server:',
-                input: 'text', inputPlaceholder: 'Nama Medal...',
-                showCancelButton: true, confirmButtonText: 'Daftarkan', confirmButtonColor: '#ff6b4a'
-            }).then((res) => {
-                if(res.isConfirmed && res.value.trim()) {
-                    globalMedalList.push(res.value.trim());
-                    Swal.fire('Terdaftar', `Medal Kategori [${res.value.trim()}] masuk dalam antrean server.`, 'success');
+                    // Kirim Notifikasi Pengumuman ke Chat Room agar Semua Tahu!
+                    broadcastMedalEarned("Semua_User", medalName);
+                    Swal.fire('Sukses', 'Medal dibagikan ke semua orang!', 'success');
                 }
             });
         }
 
         function adminResetCounter() {
-            Swal.fire({
-                title: 'Konfirmasi Reset Data', text: 'Nol-kan kembali nilai data statistik pengunjung web?',
-                icon: 'warning', showCancelButton: true, confirmButtonText: 'Reset Sekarang', confirmButtonColor: '#ef4444'
-            }).then((res) => {
-                if(res.isConfirmed) {
-                    localStorage.setItem("mt_global_v", "0");
-                    document.getElementById("counter-display-v").innerText = "0";
-                    Swal.fire('Reset Berhasil', 'Counter trafik diatur ulang ke angka nol.', 'success');
-                }
-            });
+            localStorage.setItem("mt_global_v", "0");
+            document.getElementById("counter-display-v").innerText = "0";
+            Swal.fire('Reset', 'Counter diatur ulang ke nol.', 'success');
         }
 
         function logOutEngine() {
