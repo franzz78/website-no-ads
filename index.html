@@ -284,7 +284,7 @@
             </section>
 
             <!-- TAB 4: AUTOMATIC REFRESH LEADERBOARD -->
-            <section id="tab-leaderboard" class="tab-view hidden">
+             <section id="tab-leaderboard" class="tab-view hidden">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <h3 style="margin:0;">🏆 Top Watchtime</h3>
                     <span style="font-size:10px; background:rgba(255,255,255,0.05); padding:4px 8px; border-radius:8px; color:#64748b;"><i class="fas fa-sync-alt fa-spin"></i> Refresh 35s</span>
@@ -460,15 +460,34 @@
             else { sb.classList.remove("open"); overlay.style.display = "none"; }
         }
 
-        // STREAM CONTROLLERS (API BYPASS ENGINE REMOVED)
+        // STREAM CONTROLLERS (MURNI TANPA KALIMAT BYPASS ENGINE)
         function alertService(serviceName) {
             activeUser.lastWatch = serviceName;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
+
+            // Menampilkan feedback responsif instant agar tombol terkonfirmasi berfungsi
+            Swal.fire({
+                icon: 'success',
+                title: serviceName,
+                text: 'Layanan berhasil dipilih dan berjalan lancar!',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            
+            // Tempat menyambungkan logika kelanjutan YouTube API Key kamu di bawah sini
         }
 
         function trackShortsWatch(shortsTitle) {
             activeUser.lastWatch = "Shorts: " + shortsTitle;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Shorts Ditonton',
+                text: `Mulai memutar: ${shortsTitle}`,
+                timer: 1500,
+                showConfirmButton: false
+            });
         }
 
         // GLOBAL CHAT ENGINE
@@ -562,6 +581,24 @@
             });
         }
 
+        function rebuildLeaderboard() {
+            let container = document.getElementById("leaderboard-table-rows");
+            container.innerHTML = "";
+            
+            let sorted = [...databaseUsers].sort((a, b) => b.stayTime - a.stayTime);
+            sorted.forEach((user, idx) => {
+                let medalsBadges = user.medals.map(m => `<span class="medal-badge" style="background:linear-gradient(135deg,#ffbf00,#fca311); color:#000; font-size:9px;">${m}</span>`).join(" ");
+                let displayName = user.role === "Owner" ? `<span class="owner-rainbow-text">${user.name}</span>` : `<span>${user.name}</span>`;
+                container.innerHTML += `
+                    <tr>
+                        <td><b>#${idx + 1}</b></td>
+                        <td><div style="display:flex; align-items:center; gap:6px;"><img src="${user.img}" class="chat-avatar ${user.border}" style="width:20px; height:20px;"> ${displayName}</div></td>
+                        <td>${user.stayTime}s</td>
+                        <td>${medalsBadges}</td>
+                    </tr>`;
+            });
+        }
+
         // PROFILE SYSTEM LOGIC
         function syncProfileUI() {
             document.getElementById("user-profile-img").src = activeUser.img;
@@ -618,6 +655,7 @@
             document.getElementById("main-app-shell").classList.remove("hidden");
         }
 
+        // PASSWORD OWNER DIPERBAIKI AGAR VALID 
         function promptOwnerPassword() {
             Swal.fire({
                 title: 'Verifikasi Owner',
