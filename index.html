@@ -220,7 +220,7 @@
         <main class="mobile-content">
 
             <!-- TAB 1: HOME STREAM HUB -->
-            <section id="tab-home" class="tab-view animate-fade-in">
+            <section id="tab-home" class="tab-view">
                 <div style="background:linear-gradient(135deg, rgba(255,107,74,0.15), rgba(252,163,17,0.02)); border:1px solid rgba(255,107,74,0.2); border-radius:20px; padding:16px; margin-bottom:20px;">
                     <h4 style="margin:0 0 4px 0;">☀️ Summer Hub Oasis</h4>
                     <p style="margin:0; font-size:11px; color:#94a3b8;">Aplikasi streaming YouTube Premium Tanpa Iklan edisi khusus liburan tropis 2026.</p>
@@ -275,7 +275,6 @@
             <section id="tab-chat" class="tab-view hidden">
                 <h3 style="margin-top:0;">💬 Obrolan Global</h3>
                 <div class="chat-box-container">
-                    <!-- Kosong Bersih Sesuai Permintaan, Siap Menampung Chat Baru -->
                     <div class="chat-messages-area" id="chat-stream-box"></div>
                     <div class="chat-input-bar">
                         <input type="text" id="chat-input-field" placeholder="Ketik pesan komunitas kamu...">
@@ -284,7 +283,7 @@
                 </div>
             </section>
 
-             <!-- TAB 4: AUTOMATIC REFRESH LEADERBOARD -->
+            <!-- TAB 4: AUTOMATIC REFRESH LEADERBOARD -->
             <section id="tab-leaderboard" class="tab-view hidden">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                     <h3 style="margin:0;">🏆 Top Watchtime</h3>
@@ -360,7 +359,6 @@
 
     <!-- ==================== LOGICAL JAVASCRIPT SYSTEM ENGINE ==================== -->
     <script>
-        // YouTube API Key kamu tetap aman di sini dan berjalan normal di sistem latar belakang.
         const YOUTUBE_API_KEY = "MASUKKAN_YOUTUBE_API_KEY_KAMU_DISINI"; 
 
         // CLIENT DATA STATES
@@ -369,7 +367,6 @@
             { name: "Haruukii79", img: "https://placehold.co/100x100/ff6b4a/fff?text=H79", role: "Owner", border: "border-owner", medals: ["Owner", "Staff Pioneer"], stayTime: 3600 }
         ];
 
-        // Chat Room Kosong di Awal Sesuai Permintaan
         let globalChatMessages = []; 
         let bannedList = JSON.parse(localStorage.getItem("mt_banned_ips") || "[]");
 
@@ -387,7 +384,6 @@
             let pctText = document.getElementById("splash-pct");
             let progress = 0;
 
-            // Update Counter Trafik Global
             let totalVisits = parseInt(localStorage.getItem("mt_global_v") || "1420");
             totalVisits += 1;
             localStorage.setItem("mt_global_v", totalVisits);
@@ -404,7 +400,6 @@
                     document.getElementById("splash-screen").style.opacity = "0";
                     setTimeout(() => {
                         document.getElementById("splash-screen").style.display = "none";
-                        // OTOMATIS BIKIN AKUN BERDASARKAN ID TRAFIK VISITOR
                         generateAutomaticAccount(totalVisits);
                     }, 500);
                 }
@@ -465,15 +460,13 @@
             else { sb.classList.remove("open"); overlay.style.display = "none"; }
         }
 
-        // STREAM CONTROLLERS
+        // STREAM CONTROLLERS (API BYPASS ENGINE REMOVED)
         function alertService(serviceName) {
-            Swal.fire({ icon: 'info', title: serviceName, text: 'Menghubungkan ke API Bypass Engine...', timer: 1200, showConfirmButton: false });
             activeUser.lastWatch = serviceName;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
         }
 
         function trackShortsWatch(shortsTitle) {
-            Swal.fire({ icon: 'success', title: 'Memutar Shorts', text: shortsTitle, timer: 1000, showConfirmButton: false });
             activeUser.lastWatch = "Shorts: " + shortsTitle;
             document.getElementById("profile-last-watch").innerText = activeUser.lastWatch;
         }
@@ -485,7 +478,6 @@
             
             globalChatMessages.forEach(msg => {
                 if (msg.isSystem) {
-                    // Tampilan Pesan Notifikasi Medal Global
                     container.innerHTML += `
                         <div class="chat-bubble system-broadcast">
                             <div style="width: 100%; text-align: center; font-size: 12px; color: var(--summer-gold); font-weight: 700;">
@@ -523,7 +515,6 @@
             rebuildChatStream();
         }
 
-        // BROADCAST NOTIFIKASI MEDAL KE CHAT GLOBAL
         function broadcastMedalEarned(username, medalName) {
             globalChatMessages.push({
                 isSystem: true,
@@ -541,7 +532,6 @@
                 let idx = databaseUsers.findIndex(u => u.name === activeUser.name);
                 if(idx !== -1) databaseUsers[idx].stayTime = activeUser.stayTime;
 
-                // Otomatis kasih medal jika stay mencapai 60 detik (1 menit) sebagai simulasi
                 if(activeUser.stayTime === 60 && !activeUser.medals.includes("Loyal Streamer")) {
                     activeUser.medals.push("Loyal Streamer");
                     syncProfileUI();
@@ -700,7 +690,6 @@
                     
                     syncProfileUI();
                     rebuildLeaderboard();
-                    // Kirim Notifikasi Pengumuman ke Chat Room agar Semua Tahu!
                     broadcastMedalEarned("Semua_User", medalName);
                     Swal.fire('Sukses', 'Medal dibagikan ke semua orang!', 'success');
                 }
