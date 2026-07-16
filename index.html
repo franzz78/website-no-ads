@@ -16,7 +16,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="style.css">
 
     <style>
         :root {
@@ -38,6 +37,9 @@
             overflow-x: hidden;
         }
 
+        /* Helper Classes */
+        .hidden { display: none !important; }
+
         /* Animation Base */
         .animate-fade-in {
             animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -48,9 +50,7 @@
             to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        /* ==========================================================================
-           PROPER LOADING / SPLASH SCREEN (SUMMER STYLE)
-           ========================================================================== */
+        /* SPLASH SCREEN */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -89,9 +89,7 @@
         }
         .loader-pct { font-size: 14px; font-weight: 700; color: #fff; }
 
-        /* ==========================================================================
-           MODERN & ELEGAN MAIN MENU GATEWAY
-           ========================================================================== */
+        /* MAIN MENU GATEWAY */
         .gate-forced-layout {
             background: radial-gradient(circle at top right, rgba(255, 107, 74, 0.1) 0%, rgba(5, 8, 20, 0) 60%),
                         radial-gradient(circle at bottom left, rgba(252, 163, 17, 0.05) 0%, rgba(5, 8, 20, 0) 60%), var(--ocean-deep);
@@ -113,7 +111,7 @@
         .gate-buttons-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
         .btn-gate {
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; padding: 14px 20px;
-            display: flex; align-items: center; cursor: pointer; transition: all 0.3s ease; text-align: left;
+            display: flex; align-items: center; cursor: pointer; transition: all 0.3s ease; text-align: left; width: 100%; box-sizing: border-box;
         }
         .btn-gate:hover {
             background: rgba(255,255,255,0.06); border-color: rgba(252, 163, 17, 0.3); transform: translateY(-2px);
@@ -127,24 +125,36 @@
         .btn-gate-text b { color: #ffffff; font-size: 14px; font-weight: 600; display: block; margin-bottom: 2px; }
         .btn-gate-text small { color: #94a3b8; font-size: 11px; }
 
-        /* ==========================================================================
-           MAIN APP VIEW & NEW NAVBAR SYSTEM + SIDEBAR
-           ========================================================================== */
+        /* APP VIEW & NAVBAR */
         .mobile-header {
             background: rgba(5, 8, 20, 0.8); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--glass-border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 999;
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .header-left i { color: var(--summer-gold); font-size: 18px; }
-        .logo-text { font-weight: 800; font-size: 18px; letter-spacing: 0.5px; color: #fff; }
+        .logo-text { font-weight: 800; font-size: 18px; letter-spacing: 0.5px; color: #fff; cursor: pointer; }
         .logo-text span { color: var(--summer-orange); }
         .header-right { display: flex; align-items: center; gap: 16px; }
         
-        /* HAMBURGER BUTTON (Garis Tiga Kanan Atas) */
         .menu-hamburger-btn {
             background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: color 0.2s;
         }
         .menu-hamburger-btn:hover { color: var(--summer-gold); }
+
+        /* SEARCH BAR STYLING */
+        .mobile-search-bar-container {
+            display: none; padding: 12px 20px; background: rgba(11, 19, 43, 0.5); border-bottom: 1px solid var(--glass-border);
+        }
+        .search-box {
+            display: flex; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden;
+        }
+        .search-box input {
+            flex: 1; background: none; border: none; padding: 12px; color: #fff; font-family: inherit; font-size: 14px; outline: none;
+        }
+        .search-btn {
+            background: var(--summer-orange); border: none; color: #fff; padding: 0 16px; cursor: pointer; transition: background 0.2s;
+        }
+        .search-btn:hover { background: #e55a39; }
 
         /* SIDEBAR / NAVBAR DRAWER SYSTEM */
         .sidebar-drawer {
@@ -165,9 +175,7 @@
         }
         .sidebar-item:hover { background: rgba(255,255,255,0.05); color: var(--summer-gold); padding-left: 20px; }
 
-        /* ==========================================================================
-           ELEGANT DASHBOARD PENATAAN MENU BARU
-           ========================================================================== */
+        /* CONTENT & CARDS LAYOUT */
         .mobile-content { padding: 24px 20px; max-width: 480px; margin: 0 auto; box-sizing: border-box; padding-bottom: 100px; }
         .welcome-banner-id {
             background: linear-gradient(135deg, rgba(255, 107, 74, 0.12), rgba(252, 163, 17, 0.03)); border: 1px solid rgba(255, 107, 74, 0.15); border-radius: 24px; padding: 20px; margin-bottom: 28px; text-align: left;
@@ -175,10 +183,7 @@
         .welcome-banner-id h3 { margin: 0 0 6px 0; font-size: 16px; font-weight: 800; color: #fff; }
         .welcome-banner-id p { margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5; }
 
-        /* Penataan Grid Menu Utama Baru */
-        .dashboard-layout-stack {
-            display: flex; flex-direction: column; gap: 14px;
-        }
+        .dashboard-layout-stack { display: flex; flex-direction: column; gap: 14px; }
         .premium-menu-card {
             background: linear-gradient(135deg, rgba(20, 30, 60, 0.6), rgba(10, 15, 35, 0.8)); border: 1px solid var(--glass-border); border-radius: 24px; padding: 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
         }
@@ -206,15 +211,62 @@
             background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50px; padding: 10px 20px; font-size: 12px; font-weight: 600; text-align: center; margin-top: 24px; color: #94a3b8;
         }
 
-        /* Bottom Nav Standard UI */
+        /* VIDEO STREAMING & IFRAME PLAYER */
+        .btn-back-menu {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-back-menu:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+        .current-mode-badge {
+            padding: 6px 12px; border-radius: 8px; font-weight: 700; color: #fff; display: inline-block;
+        }
+        .data-saver-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; padding: 6px 12px; font-size: 11px; font-weight: 600; cursor: pointer;
+        }
+        
+        /* DIRECT URL INPUT STYLING */
+        .direct-link-box {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border); border-radius: 16px; padding: 14px; margin-top: 14px; display: flex; gap: 8px;
+        }
+        .direct-link-box input {
+            flex: 1; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 10px; padding: 10px; color: #fff; font-size: 13px; outline: none;
+        }
+        .direct-link-box button {
+            background: var(--summer-gold); border: none; color: #000; font-weight: 700; padding: 0 14px; border-radius: 10px; cursor: pointer; font-size: 12px;
+        }
+
+        .player-container { margin-top: 20px; background: rgba(11, 19, 43, 0.3); border: 1px solid var(--glass-border); border-radius: 20px; padding: 16px; overflow: hidden; }
+        
+        .video-wrapper {
+            position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background: #000;
+        }
+        .video-wrapper iframe, .video-wrapper video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+        }
+        .player-title { font-size: 16px; font-weight: 700; margin: 14px 0 4px 0; color: #fff; }
+        .player-channel { font-size: 12px; color: #94a3b8; margin: 0; }
+        
+        /* ACTION ROW FOR PIP NATIVE */
+        .player-action-row {
+            display: flex; gap: 10px; margin-top: 12px; border-top: 1px solid var(--glass-border); padding-top: 12px;
+        }
+        .btn-action-pip {
+            background: linear-gradient(135deg, var(--summer-orange), var(--summer-gold)); border: none; border-radius: 10px; color: #000; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: transform 0.2s;
+        }
+        .btn-action-pip:hover { transform: scale(1.03); }
+
+        .video-grid { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+        .video-card-thumb-wrapper { position: relative; width: 100%; padding-top: 56.25%; }
+        .video-card-thumb-wrapper img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; }
+
+        /* BOTTOM NAV BAR */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: rgba(5, 8, 20, 0.9); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; padding: 12px 0; z-index: 998;
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: rgba(5, 8, 20, 0.9); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); display: flex; justify-content: space-around; padding: 12px 0; z-index: 998; box-sizing: border-box;
         }
         .nav-item { font-size: 11px; font-weight: 600; color: #94a3b8; text-align: center; cursor: pointer; display: flex; flex-direction: column; gap: 4px; transition: color 0.2s; }
         .nav-item i { font-size: 18px; }
         .nav-item.active { color: var(--summer-gold); }
 
-        /* Additional Fix Profile Setup */
+        /* DEV PROFILE ALERT MODAL UI */
         .formal-profile-card { padding: 10px; text-align: left; }
         .formal-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .formal-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color:#fff; }
@@ -299,7 +351,7 @@
                 <span class="logo-text" onclick="backToDashboardHub()">Mini<span>Tube</span></span>
             </div>
             <div class="header-right">
-                <i class="fas fa-search" style="color: #fff; font-size: 16px; cursor: pointer;" id="global-search-trigger" onclick="toggleSearchBar()"></i>
+                <i class="fas fa-search" style="color: #fff; font-size: 16px; cursor: pointer; opacity: 0; transition: opacity 0.3s;" id="global-search-trigger" onclick="toggleSearchBar()"></i>
                 <button class="menu-hamburger-btn" onclick="openSidebarMenu()"><i class="fas fa-bars"></i></button>
             </div>
         </header>
@@ -311,14 +363,13 @@
             </div>
         </div>
 
-        <!-- DASHBOARD HUB (RESTRUCTURED AND BEAUTIFIED) -->
+        <!-- DASHBOARD HUB -->
         <main class="mobile-content animate-fade-in" id="home-dashboard-view">
             <div class="welcome-banner-id">
                 <h3>☀️ Summer Oasis Stream 2026</h3>
                 <p>Selamat datang di platform streaming modern bebas iklan. Pilih tipe pemutar media di bawah untuk memulai:</p>
             </div>
 
-            <!-- PENATAAN BARU: ELEGAN STACKED LIST MENUS -->
             <div class="dashboard-layout-stack">
                 
                 <!-- Menu Card 1 -->
@@ -368,21 +419,36 @@
         <main class="mobile-content hidden animate-fade-in" id="streaming-content-view">
             <button class="btn-back-menu" onclick="backToDashboardHub()"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</button>
             
+            <!-- INPUT DIRECT LINK KHUSUS UNTUK MEMICU PIP NATIVE -->
+            <div class="direct-link-box" id="direct-stream-input-box">
+                <input type="text" id="direct-video-url" placeholder="Punya link video MP4 langsung? Paste disini...">
+                <button onclick="playDirectVideoLink()">Putar MP4</button>
+            </div>
+
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
                 <div class="current-mode-badge" id="current-mode-text" style="margin: 0; font-size:11px;">Mode: Active</div>
-                <div class="data-saver-container" id="data-saver-wrapper">
+                <div class="data-saver-container" id="data-saver-wrapper" style="display: none;">
                     <button class="data-saver-btn" id="data-saver-toggle-btn" onclick="toggleDataSaverMode()">
                         <i class="fas fa-bolt"></i> <span>Hemat Kuota: OFF</span>
                     </button>
                 </div>
             </div>
 
+            <!-- CONTAINER UTAMA VIEWPORT MEDIA PLAYER -->
             <div id="video-player-section" class="player-container hidden">
-                <div class="video-wrapper">
+                <div class="video-wrapper" id="player-media-viewport">
+                    <!-- Dinamis terisi via JS: Iframe YouTube ATAU Elemen Video HTML5 Native -->
                     <iframe id="main-youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <h3 id="player-video-title" class="player-title">Judul Video</h3>
                 <p id="player-video-channel" class="player-channel">Nama Channel</p>
+                
+                <!-- ROW TOMBOL PIP NATIVE KHUSUS ELEMEN HTML5 VIDEO -->
+                <div class="player-action-row hidden" id="pip-action-row">
+                    <button class="btn-action-pip" onclick="triggerNativePiPMode()">
+                        <i class="fas fa-clone"></i> Aktifkan Melayang (PiP Native)
+                    </button>
+                </div>
             </div>
 
             <div id="video-feed-grid" class="video-grid" style="margin-top: 15px;"></div>
@@ -529,7 +595,6 @@
             document.getElementById("home-dashboard-view").classList.add("hidden");
             document.getElementById("streaming-content-view").classList.remove("hidden");
             document.getElementById("global-search-trigger").style.opacity = "1";
-            document.getElementById("search-bar-container").style.display = "block";
 
             const dataSaverWrapper = document.getElementById("data-saver-wrapper");
             dataSaverWrapper.style.display = (mode === 'mp3') ? "flex" : "none";
@@ -552,7 +617,7 @@
             try {
                 let response = await fetch(url);
                 let data = await response.json();
-                if (!data.items || data.items.length === 0) { grid.innerHTML = "<p style='text-align: center; color: #64748b; padding: 20px;'>Limit API tercapai.</p>"; return; }
+                if (!data.items || data.items.length === 0) { grid.innerHTML = "<p style='text-align: center; color: #64748b; padding: 20px;'>Limit API tercapai atau tidak ada hasil.</p>"; return; }
                 grid.innerHTML = "";
                 data.items.forEach(item => {
                     const videoId = item.id.videoId;
@@ -562,9 +627,9 @@
                     let typeBadge = currentMode === 'mp3' ? 'AUDIO' : 'HD VIDEO';
 
                     grid.innerHTML += `
-                        <div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')" style="background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:16px; margin-bottom:12px; overflow:hidden; cursor:pointer;">
-                            <div style="position:relative; width:100%; pt:56.25%;">
-                                <img src="${thumbnail}" style="width:100%; display:block;">
+                        <div class="video-card" onclick="playSelectedMedia('${videoId}', '${title.replace(/'/g, "\\'")}', '${channel.replace(/'/g, "\\'")}')" style="background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:16px; overflow:hidden; cursor:pointer;">
+                            <div class="video-card-thumb-wrapper">
+                                <img src="${thumbnail}">
                                 <span style="position:absolute; bottom:8px; right:8px; background:#000; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:700;">${typeBadge}</span>
                             </div>
                             <div style="padding:12px;">
@@ -580,11 +645,64 @@
             activeMediaTrack = { id: id, title: title, channel: channel, isPlaying: true, mode: currentMode };
             document.getElementById("floating-mini-player").style.display = "none";
             document.getElementById("video-player-section").classList.remove("hidden");
-            document.getElementById("main-youtube-iframe").src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+            
+            // Render standar menggunakan Iframe YouTube
+            const viewport = document.getElementById("player-media-viewport");
+            viewport.innerHTML = `<iframe id="main-youtube-iframe" src="https://www.youtube.com/embed/${id}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            
+            // Sembunyikan tombol PiP Native (karena iframe tidak mendukung requestPictureInPicture langsung)
+            document.getElementById("pip-action-row").classList.add("hidden");
+
             document.getElementById("player-video-title").innerText = title;
             document.getElementById("player-video-channel").innerText = channel;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // ==========================================
+        // FITUR BARU: PLAY DIRECT VIDEO LINK & NATIVE PIP
+        // ==========================================
+        function playDirectVideoLink() {
+            const url = document.getElementById("direct-video-url").value.trim();
+            if (!url) {
+                Swal.fire('Input Kosong', 'Tempel tautan file video MP4 kamu dulu, bro!', 'warning');
+                return;
+            }
+
+            activeMediaTrack = { id: "direct-url", title: "Direct Stream Media", channel: "External Source", isPlaying: true, mode: currentMode };
+            document.getElementById("video-player-section").classList.remove("hidden");
+            
+            // Injeksi elemen HTML5 video native agar browser bisa memicu fungsi Picture-in-Picture
+            const viewport = document.getElementById("player-media-viewport");
+            viewport.innerHTML = `<video id="native-html5-video" src="${url}" controls autoplay style="width:100%; height:100%;"></video>`;
+            
+            // Munculkan baris opsi PiP Native
+            document.getElementById("pip-action-row").classList.remove("hidden");
+
+            document.getElementById("player-video-title").innerText = "Direct Stream Link Video";
+            document.getElementById("player-video-channel").innerText = "URL: " + url.substring(0, 30) + "...";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function triggerNativePiPMode() {
+            const videoElement = document.getElementById("native-html5-video");
+            if (!videoElement) return;
+
+            try {
+                if (document.pictureInPictureElement) {
+                    await document.exitPictureInPicture();
+                } else {
+                    if (document.pictureInPictureEnabled) {
+                        await videoElement.requestPictureInPicture();
+                    } else {
+                        Swal.fire('Tidak Didukung', 'Browser kamu tidak mendukung fitur Picture-in-Picture Native.', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error("Gagal mengaktifkan PiP: ", error);
+                Swal.fire('Gagal Melayang', 'Pastikan video sudah ter-load sempurna dan sedang diputar.', 'error');
+            }
+        }
+        // ==========================================
 
         function toggleDataSaverMode() {
             isDataSaverOn = !isDataSaverOn;
@@ -607,25 +725,38 @@
         }
 
         function toggleMiniPlayerPlayback() {
+            const videoElement = document.getElementById("native-html5-video");
             const iframe = document.getElementById("main-youtube-iframe");
-            if (activeMediaTrack.isPlaying) {
-                iframe.src = iframe.src.replace("autoplay=1", "autoplay=0"); activeMediaTrack.isPlaying = false;
-                document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-play"></i>`;
-            } else {
-                iframe.src = iframe.src.replace("autoplay=0", "autoplay=1"); activeMediaTrack.isPlaying = true;
-                document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-pause"></i>`;
+            
+            if (videoElement) {
+                if (activeMediaTrack.isPlaying) {
+                    videoElement.pause(); activeMediaTrack.isPlaying = false;
+                    document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-play"></i>`;
+                } else {
+                    videoElement.play(); activeMediaTrack.isPlaying = true;
+                    document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-pause"></i>`;
+                }
+            } else if (iframe) {
+                if (activeMediaTrack.isPlaying) {
+                    iframe.src = iframe.src.replace("autoplay=1", "autoplay=0"); activeMediaTrack.isPlaying = false;
+                    document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-play"></i>`;
+                } else {
+                    iframe.src = iframe.src.replace("autoplay=0", "autoplay=1"); activeMediaTrack.isPlaying = true;
+                    document.getElementById("mini-play-pause-btn").innerHTML = `<i class="fas fa-pause"></i>`;
+                }
             }
         }
 
         function closeMiniPlayerEntirely() {
-            document.getElementById("main-youtube-iframe").src = "";
+            const viewport = document.getElementById("player-media-viewport");
+            viewport.innerHTML = "";
             activeMediaTrack = { id: "", title: "", channel: "", isPlaying: false, mode: "" };
             handleFloatingMiniPlayerState();
         }
 
         function restoreActivePlayerView() {
             activateService(activeMediaTrack.mode);
-            document.getElementById("video-player-section").classList.remove("hidden");
+            document.getElementById("video-player-section").className = "player-container";
             document.getElementById("floating-mini-player").style.display = "none";
         }
 
