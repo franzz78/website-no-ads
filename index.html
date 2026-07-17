@@ -633,14 +633,168 @@
             });
         }
 
-        function showOwnerProfileAlert() {
+                function showOwnerProfileAlert() {
             Swal.fire({
-                title: 'PROFIL DEVELOPER & OWNER',
-                html: `<div class="formal-profile-card"><div class="formal-card-header"><div class="formal-avatar" style="background:var(--primary-theme);">H79</div><div class="formal-header-meta"><h3>HARUUKII79</h3><span>Lead Software Engineer</span></div></div><div class="formal-card-body"><table class="formal-table"><tr><td class="lbl"><i class="fas fa-crown text-summer"></i> Pemilik</td><td class="vlu">: Haruukii79</td></tr><tr><td class="lbl"><i class="fas fa-code text-summer"></i> Arsitektur</td><td class="vlu">: Core Vanilla JS</td></tr><tr><td class="lbl"><i class="fas fa-sun text-summer"></i> Versi UI</td><td class="vlu">: Multi-Theme Engine 2026</td></tr></table></div></div>`,
-                background: '#0b132b', confirmButtonText: 'Tutup', confirmButtonColor: '#ff6b4a'
+                title: '✨ CORE DEVELOPER PROFILE ✨',
+                html: `
+                    <style>
+                        /* Kontainer Utama Berkilau */
+                        .glowing-profile-card {
+                            padding: 15px 5px;
+                            text-align: center;
+                            position: relative;
+                            overflow: hidden;
+                        }
+                        
+                        /* Avatar dengan Efek Aura Sun / Glowing Gold-Orange */
+                        .avatar-glow-wrapper {
+                            position: relative;
+                            width: 90px;
+                            height: 90px;
+                            margin: 0 auto 16px auto;
+                        }
+                        .avatar-glow-wrapper::before {
+                            content: '';
+                            position: absolute;
+                            top: -4px; left: -4px; right: -4px; bottom: -4px;
+                            background: linear-gradient(135deg, var(--primary-theme), var(--secondary-theme), #ff007f);
+                            border-radius: 50%;
+                            z-index: 1;
+                            animation: spinAura 4s linear infinite;
+                            filter: blur(6px) drop-shadow(0 0 12px var(--primary-theme));
+                        }
+                        .glowing-avatar {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            background: #050814;
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 28px;
+                            font-weight: 800;
+                            color: #fff;
+                            z-index: 2;
+                            border: 2px solid rgba(255,255,255,0.1);
+                            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+                        }
+                        
+                        /* Animasi Rotasi Aura Bingkai */
+                        @keyframes spinAura {
+                            100% { transform: rotate(360deg); }
+                        }
+
+                        /* Detail Teks Modern */
+                        .profile-name {
+                            font-size: 20px;
+                            font-weight: 800;
+                            color: #ffffff;
+                            margin: 0 0 4px 0;
+                            letter-spacing: 1px;
+                            background: linear-gradient(90deg, #ffffff, var(--secondary-theme), #ffffff);
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                            background-size: 200% auto;
+                            animation: shineText 3s linear infinite;
+                        }
+                        .profile-role {
+                            font-size: 11px;
+                            font-weight: 700;
+                            color: var(--primary-theme);
+                            text-transform: uppercase;
+                            letter-spacing: 2px;
+                            margin-bottom: 24px;
+                            display: block;
+                        }
+
+                        @keyframes shineText {
+                            to { background-position: 200% center; }
+                        }
+
+                        /* Tabel List Data Modern Transparan */
+                        .modern-spec-table {
+                            width: 100%;
+                            border-collapse: separate;
+                            border-spacing: 0 10px;
+                            margin-top: 5px;
+                        }
+                        .modern-spec-table tr {
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.05);
+                            transition: all 0.3s ease;
+                        }
+                        .modern-spec-table tr:hover {
+                            background: rgba(255, 255, 255, 0.05);
+                            transform: scale(1.02);
+                        }
+                        .modern-spec-table td {
+                            padding: 12px 14px;
+                            font-size: 13px;
+                            color: #e2e8f0;
+                        }
+                        .modern-spec-table td.label-cell {
+                            text-align: left;
+                            font-weight: 600;
+                            color: #94a3b8;
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                            border-top-left-radius: 12px;
+                            border-bottom-left-radius: 12px;
+                        }
+                        .modern-spec-table td.value-cell {
+                            text-align: right;
+                            font-weight: 700;
+                            color: #ffffff;
+                            border-top-right-radius: 12px;
+                            border-bottom-right-radius: 12px;
+                        }
+                        .icon-glow {
+                            color: var(--secondary-theme);
+                            filter: drop-shadow(0 0 4px var(--secondary-theme));
+                        }
+                    </style>
+
+                    <div class="glowing-profile-card">
+                        <div class="avatar-glow-wrapper">
+                            <div class="glowing-avatar">H79</div>
+                        </div>
+                        <h3 class="profile-name">HARUUKII79</h3>
+                        <span class="profile-role">Lead Software Architect</span>
+                        
+                        <table class="modern-spec-table">
+                            <tr>
+                                <td class="label-cell"><i class="fas fa-crown icon-glow"></i> Owner</td>
+                                <td class="value-cell">Haruukii79</td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell"><i class="fas fa-code icon-glow"></i> Core Engine</td>
+                                <td class="value-cell" style="color: var(--secondary-theme);">Vanilla JS V5.6</td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell"><i class="fas fa-palette icon-glow"></i> UI System</td>
+                                <td class="value-cell">Glassmorphism Cyber</td>
+                            </tr>
+                            <tr>
+                                <td class="label-cell"><i class="fas fa-bolt icon-glow"></i> Environment</td>
+                                <td class="value-cell">Production 2026</td>
+                            </tr>
+                        </table>
+                    </div>
+                `,
+                background: '#050814',
+                htmlContainerCss: {
+                    overflow: 'hidden'
+                },
+                confirmButtonText: '⚡ CLOSE HUB ⚡',
+                confirmButtonColor: 'var(--primary-theme)',
+                customClass: {
+                    popup: 'animate-fade-in'
+                }
             });
         }
-
+        
         function backToGateMenu() {
             document.getElementById("main-app-interface").classList.add("hidden");
             document.getElementById("main-gate-screen").style.display = "flex";
