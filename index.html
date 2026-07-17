@@ -327,9 +327,9 @@
         </div>
     </div>
 
-    <!-- MAIN MENU GATEWAY SCREEN -->
-     <div id="main-gate-screen" class="gate-forced-layout animate-fade-in" style="display: none;">
-        <div class="gate-content-box">
+        <!-- MAIN MENU GATEWAY SCREEN (UPDATED WITH COOL MATRIX STATS) -->
+    <div id="main-gate-screen" class="gate-forced-layout animate-fade-in" style="display: none;">
+        <div class="gate-content-box" style="max-width: 460px;">
             <div class="summer-badge">CORE RELEASE 2026</div>
             <div class="gate-brand">
                 <div class="gate-logo-area"><i class="fab fa-youtube" style="color: var(--primary-theme);"></i></div>
@@ -354,10 +354,73 @@
                 </button>
             </div>
 
+            <!-- ==================== LIVE STATS GRID MATRIX BOX ==================== -->
+            <style>
+                .stats-container-box {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10px;
+                    margin: 24px 0 20px 0;
+                    text-align: left;
+                }
+                .stat-mini-card {
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border-radius: 16px;
+                    padding: 12px 14px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                }
+                .stat-mini-card:hover {
+                    background: rgba(255, 255, 255, 0.04);
+                    border-color: var(--secondary-theme);
+                    transform: translateY(-2px);
+                }
+                .stat-number {
+                    font-size: 18px;
+                    font-weight: 800;
+                    color: #ffffff;
+                    margin-bottom: 2px;
+                    font-family: monospace;
+                    background: linear-gradient(90deg, #fff, var(--secondary-theme));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                .stat-label {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: #94a3b8;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+            </style>
+
+            <div class="stats-container-box">
+                <div class="stat-mini-card">
+                    <span class="stat-number">100K+</span>
+                    <span class="stat-label">Pengunjung</span>
+                </div>
+                <div class="stat-mini-card">
+                    <span class="stat-number">1+</span>
+                    <span class="stat-label">Developer Website</span>
+                </div>
+                <div class="stat-mini-card">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Engineering Website</span>
+                </div>
+                <div class="stat-mini-card" onclick="showOwnerProfileAlert()" style="cursor: pointer;">
+                    <span class="stat-number" style="font-size: 14px; font-family: inherit; background: linear-gradient(90deg, #fff, var(--primary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Haruukii79</span>
+                    <span class="stat-label" style="color: var(--primary-theme);">Owner Website ✨</span>
+                </div>
+            </div>
+            <!-- ==================================================================== -->
+
             <footer style="font-size: 11px; color: #64748b;">Powered by Garuda Engine v5.6 &copy; 2026</footer>
         </div>
     </div>
-
+    
     <!-- MAIN APPLICATION INTERFACE -->
     <div id="main-app-interface" class="hidden">
         
