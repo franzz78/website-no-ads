@@ -124,3 +124,15 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
+const equalizer = document.getElementById('miniEqualizer');
+
+// Panggil ini saat musik MULAI diputar (Play)
+function startEqualizer() {
+    equalizer.classList.add('playing');
+}
+
+// Panggil ini saat musik DIHENTIKAN (Pause / Stop / Selesai)
+function stopEqualizer() {
+    equalizer.classList.remove('playing');
+}
