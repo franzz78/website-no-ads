@@ -325,6 +325,64 @@
             <div class="sidebar-item" onclick="showOwnerProfileAlert(); closeSidebarMenu();"><i class="fas fa-id-card"></i> Profil Dev/Owner</div>
             <div class="sidebar-item" onclick="backToGateMenu(); closeSidebarMenu();" style="color: var(--primary-theme); margin-top: 20px;"><i class="fas fa-power-off"></i> Keluar Ke Gerbang</div>
         </div>
+
+        <!-- ==================== MODERN GLOWING RUNNING TEXT ==================== -->
+<div class="running-text-container">
+    <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+        <span class="text-id">
+            🇮🇩 Website MiniTube sudah terintegrasi dengan YouTube tanpa iklan dan juga Gratis, Selamat Menikmati.
+        </span>
+        <span class="text-divider">⚡⚡⚡</span>
+        <span class="text-en">
+            🇬🇧 The MiniTube website is integrated with YouTube without ads and is also free, Enjoy.
+        </span>
+    </marquee>
+</div>
+
+<style>
+    /* Kontainer Utama Transparan & Berkilau */
+    .running-text-container {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Pengaturan Utama Marquee */
+    .running-text-container marquee {
+        font-family: 'Poppins', sans-serif;
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* Gaya Teks Bahasa Indonesia (Terang & Glowing Cyan) */
+    .text-id {
+        color: #00f2fe;
+        text-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+        margin-right: 20px;
+    }
+
+    /* Pembatas Antar Bahasa */
+    .text-divider {
+        color: var(--secondary-theme, #ff007f);
+        text-shadow: 0 0 8px var(--secondary-theme, #ff007f);
+        margin-right: 20px;
+    }
+
+    /* Gaya Teks Bahasa Inggris (Terang & Glowing Putih/Emas) */
+    .text-en {
+        color: #ffffff;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        margin-right: 50px; /* Jarak ekstra sebelum mengulang kembali ke teks Indonesia */
+    }
+</style>
+<!-- ====================================================================== -->
+
     </div>
 
         <!-- MAIN MENU GATEWAY SCREEN (UPDATED WITH COOL MATRIX STATS) -->
