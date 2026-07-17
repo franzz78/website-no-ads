@@ -2509,3 +2509,45 @@ body.theme-dark .menu-item-id:hover {
         box-shadow: 0 0 0 0 rgba(56, 142, 60, 0); 
     }
 }
+
+/* Kontainer Utama Equalizer */
+.mini-equalizer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    width: 30px;
+    height: 20px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+/* Batang/Bar Gelombang */
+.mini-equalizer .bar {
+    width: 3px;
+    height: 100%;
+    /* Gradasi warna modern mengikuti tema atau aksen neon */
+    background: linear-gradient(to top, var(--primary-theme, #00f2fe), var(--secondary-theme, #4facfe));
+    border-radius: 3px;
+    transform: scaleY(0.1);
+    transform-origin: bottom;
+    box-shadow: 0 0 8px var(--primary-theme, #00f2fe);
+}
+
+/* Kelas Aktif saat Musik Berputar (Dipicu lewat JS) */
+.mini-equalizer.playing .bar {
+    animation: bounceEqualizer 0.8s ease-in-out infinite alternate;
+}
+
+/* Variasi durasi animasi tiap bar agar gerakannya acak/natural */
+.mini-equalizer.playing .bar:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.6s; }
+Keyframe .mini-equalizer.playing .bar:nth-child(2) { animation-delay: 0.3s; animation-duration: 0.8s; }
+.mini-equalizer.playing .bar:nth-child(3) { animation-delay: 0.0s; animation-duration: 0.7s; }
+.mini-equalizer.playing .bar:nth-child(4) { animation-delay: 0.4s; animation-duration: 0.5s; }
+.mini-equalizer.playing .bar:nth-child(5) { animation-delay: 0.2s; animation-duration: 0.9s; }
+
+/* Struktur Animasi Naik Turun */
+@keyframes bounceEqualizer {
+    0% { transform: scaleY(0.1); }
+    100% { transform: scaleY(1); }
+}
