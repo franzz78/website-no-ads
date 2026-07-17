@@ -109,3 +109,18 @@ function displayVideos(videos) {
         videoGrid.appendChild(videoCard);
     });
 }
+
+// ==========================================
+// REGISTRASI AUTOMATIC PWA ENGINE FOR ANDROID
+// ==========================================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('MiniTube PWA Engine aktif! Scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.error('Gagal mengaktifkan PWA Engine:', error);
+            });
+    });
+}
