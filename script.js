@@ -1,5 +1,5 @@
 // ==========================================
-// 1. KONFIGURASI FIREBASE (TETAP DIPERTAHANKAN)
+// 1. KONFIGURASI FIREBASE REALTIME DATABASE
 // ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyD9BmV4XKXuMWa4PZHpb7Bbt-rHs61m3lE",
@@ -10,184 +10,291 @@ const firebaseConfig = {
   appId: "1:19006760644:web:b980f54aea123e92ed4b91"
 };
 
-// Catatan: Jika kamu menggunakan Firebase SDK, pastikan inisialisasi di bawah ini tetap aktif
-// firebase.initializeApp(firebaseConfig);
-
+// Inisialisasi Firebase jika SDK Firebase dipasang di HTML
+if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 // ==========================================
 // 2. KONFIGURASI YOUTUBE DATA API V3
 // ==========================================
 const YOUTUBE_API_KEY = "AIzaSyBLSvFaEKv0TGmsslfknoHhlBCrSJzmtC4";
 
+// ==========================================
+// 3. GLOBAL CONFIGURATION & APP STATE
+// ==========================================
+const ADMIN_PASS = "ADMINWEBSITE2026##";
+let isMusicActiveGlobal = true;
+
+// REGISTER SERVICE WORKER (PWA READY)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('PWA Service Worker Online!'))
+            .catch(err => console.log('SW Registration Error:', err));
+    });
+}
+
+// ==========================================
+// 4. INITIALIZATION & SPLASH ENGINE
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     // Jalankan pencarian video terpopuler secara default saat pertama dibuka
     fetchYouTubeVideos("musik indonesia terbaru");
 
-    // Tangani klik tombol Cari
-    const searchBtn = document.querySelector(".search-btn");
-    const searchInput = document.getElementById("search-input");
+    // Connect Realtime Visitor Engine
+    initRealtimeDatabase();
 
-    if (searchBtn && searchInput) {
-        searchBtn.addEventListener("click", () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                fetchYouTubeVideos(query);
+    // Splash Loader Engine
+    let fill = document.getElementById("progress-bar-fill");
+    let counter = document.getElementById("splash-counter");
+    let statusLog = document.getElementById("render-status-log");
+    let pct = 0;
+
+    const renderLogs = [
+        { limit: 20, text: "🤖 Loading Kernel Core..." },
+        { limit: 40, text: "📡 Connecting Realtime DB..." },
+        { limit: 65, text: "⚙️ Syncing YouTube API v3..." },
+        { limit: 85, text: "💎 Injecting Glassmorphism UI..." },
+        { limit: 100, text: "✨ System Ready!" }
+    ];
+
+    let timer = setInterval(() => {
+        pct += Math.floor(Math.random() * 3) + 1;
+        if (pct > 100) pct = 100;
+        
+        if (fill) fill.style.width = pct + "%";
+        if (counter) counter.innerText = pct + "%";
+
+        for (let log of renderLogs) {
+            if (pct <= log.limit) {
+                if (statusLog) statusLog.innerText = log.text;
+                break;
             }
-        });
+        }
 
-        // Tangani tombol enter saat mengetik di pencarian
-        searchInput.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                const query = searchInput.value.trim();
-                if (query) {
-                    fetchYouTubeVideos(query);
-                }
+        if (pct >= 100) {
+            clearInterval(timer);
+            let loader = document.getElementById("splash-screen");
+            if (loader) {
+                loader.style.opacity = "0";
+                loader.style.transform = "scale(1.05)";
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    document.getElementById("main-gate-screen").style.display = "flex";
+                }, 600);
             }
-        });
-    }
+        }
+    }, 40);
 
-    // Tangani klik pada Tag Kategori cepat
-    const tags = document.querySelectorAll(".tag");
-    tags.forEach(tag => {
-        tag.addEventListener("click", () => {
-            const activeTag = document.querySelector(".tag.active");
-            if (activeTag) activeTag.classList.remove("active");
-            tag.classList.add("active");
-            fetchYouTubeVideos(tag.innerText);
-        });
-    });
+    // Audio Controller Setup
+    initAudioController();
 });
 
-// Fungsi Fetch mengambil data dari server YouTube API v3
+// ==========================================
+// 5. REAL-TIME DB VISITOR ENGINE
+// ==========================================
+function initRealtimeDatabase() {
+    if (typeof firebase !== 'undefined' && firebase.database) {
+        const dbRef = firebase.database().ref('site_stats/visitors');
+        dbRef.on('value', (snapshot) => {
+            const count = snapshot.val() || 100000;
+            updateVisitorUI(count);
+        });
+        dbRef.transaction((current) => (current || 100000) + 1);
+    } else {
+        // Fallback Simulasi jika SDK Offline
+        let currentVisitors = 100245; 
+        setInterval(() => {
+            currentVisitors += Math.floor(Math.random() * 2);
+            updateVisitorUI(currentVisitors);
+        }, 5000);
+    }
+}
+
+function updateVisitorUI(total) {
+    const visitorElement = document.getElementById("visitor-count-num");
+    if (visitorElement) {
+        let formatted = total >= 1000 ? (total / 1000).toFixed(1) + "K+" : total;
+        visitorElement.innerText = formatted;
+    }
+}
+
+// ==========================================
+// 6. YOUTUBE API V3 FETCH ENGINE & SKELETON
+// ==========================================
 async function fetchYouTubeVideos(query) {
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=16&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
+    const grid = document.getElementById("video-feed-grid");
+    if (!grid) return;
+
+    // Render Skeleton Loader saat fetching
+    grid.innerHTML = `
+        <div class="skeleton-loader-container">
+            ${Array(3).fill().map(() => `
+                <div class="skeleton-card">
+                    <div class="skeleton-thumb"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-text-title"></div>
+                        <div class="skeleton-text-channel"></div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
 
     try {
         const response = await fetch(url);
         const data = await response.json();
-        
-        if (data.items) {
-            displayVideos(data.items);
+
+        if (data.items && data.items.length > 0) {
+            grid.innerHTML = data.items.map(item => `
+                <div onclick="playVideoDemo('${item.id.videoId}', '${item.snippet.title.replace(/'/g, "\\'")}')" 
+                     class="p-3 bg-white/5 border border-white/10 rounded-2xl flex items-center gap-3 cursor-pointer hover:border-cyan-400 transition">
+                    <img src="${item.snippet.thumbnails.default.url}" class="w-20 h-12 object-cover rounded-lg" alt="Thumb">
+                    <div class="overflow-hidden">
+                        <h4 class="font-bold text-xs text-white truncate">${item.snippet.title}</h4>
+                        <span class="text-[10px] text-slate-400">${item.snippet.channelTitle}</span>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            grid.innerHTML = `<p class="text-xs text-slate-400">Tidak ada video ditemukan.</p>`;
         }
     } catch (error) {
-        console.error("Gagal mengambil data dari YouTube API:", error);
-    }
-}
-
-// Menampilkan daftar video ke dalam layout grid
-function displayVideos(videos) {
-    const videoGrid = document.querySelector(".video-grid");
-    if (!videoGrid) return;
-    
-    videoGrid.innerHTML = ""; 
-
-    videos.forEach(item => {
-        const videoId = item.id.videoId;
-        const title = item.snippet.title;
-        const channelName = item.snippet.channelTitle;
-        const thumbnail = item.snippet.thumbnails.medium.url;
-
-        const videoCard = document.createElement("div");
-        videoCard.className = "video-card";
-        
-        // Memasang trigger klik dinamis agar video bisa langsung dimainkan di player atas
-        videoCard.setAttribute("onclick", `playVideo('${videoId}', \`${title.replace(/'/g, "\\'")}\`, '${channelName.replace(/'/g, "\\'")}')`);
-
-        videoCard.innerHTML = `
-            <div class="thumbnail-container">
-                <img class="thumbnail" src="${thumbnail}" alt="${title}">
-                <span class="duration">HD Stream</span>
-            </div>
-            <div class="video-details">
-                <div class="video-text">
-                    <h3 class="video-title">${title}</h3>
-                    <p class="channel-name">${channelName} <i class="fas fa-check-circle"></i></p>
-                    <p class="video-stats">Bebas Iklan Komersial</p>
+        console.error("Error YouTube API:", error);
+        // Fallback UI jika kuota/API mengalami kendala
+        grid.innerHTML = `
+            <div onclick="playVideoDemo('dQw4w9WgXcQ', 'Cyberpunk Music 2026')" class="p-3 bg-white/5 border border-white/10 rounded-2xl flex items-center gap-3 cursor-pointer hover:border-cyan-400 transition">
+                <div class="w-20 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center text-cyan-400"><i class="fas fa-play"></i></div>
+                <div>
+                    <h4 class="font-bold text-xs text-white">Cyberpunk Music Video 2026</h4>
+                    <span class="text-[10px] text-slate-400">Garuda Sound System • Live</span>
                 </div>
             </div>
         `;
-        videoGrid.appendChild(videoCard);
+    }
+}
+
+// ==========================================
+// 7. GATEWAY & AUTH LOGIC
+// ==========================================
+function enterAppWithoutAccount() {
+    document.getElementById("main-gate-screen").style.display = "none";
+    document.getElementById("main-app-dashboard").style.display = "block";
+}
+
+function openLoginModal() {
+    Swal.fire({
+        title: 'AUTHENTICATION',
+        input: 'password',
+        inputPlaceholder: 'Masukkan Kode Akses Admin',
+        background: '#090d22',
+        color: '#fff',
+        confirmButtonColor: '#00f2fe',
+        showCancelButton: true
+    }).then((result) => {
+        if (result.value === ADMIN_PASS) {
+            Swal.fire({ icon: 'success', title: 'Akses Diterima', background: '#090d22', color: '#fff', timer: 1200, showConfirmButton: false });
+            enterAppWithoutAccount();
+        } else if (result.value) {
+            Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: 'Password Salah!', background: '#090d22', color: '#fff' });
+        }
     });
 }
 
 // ==========================================
-// REGISTRASI AUTOMATIC PWA ENGINE FOR ANDROID
+// 8. AMBIENT GLOW PLAYER ENGINE
 // ==========================================
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('MiniTube PWA Engine aktif! Scope:', registration.scope);
-            })
-            .catch((error) => {
-                console.error('Gagal mengaktifkan PWA Engine:', error);
-            });
-    });
+function playVideoDemo(videoId, title) {
+    const playerContainer = document.getElementById("mainPlayerContainer");
+    const playerDisplay = document.getElementById("player-display");
+
+    playerDisplay.innerHTML = `
+        <iframe class="w-full h-full rounded-xl" 
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    `;
+
+    // Ambient Glow FX
+    const colors = ['rgba(0,242,254,0.4)', 'rgba(255,0,127,0.4)', 'rgba(168,85,247,0.4)'];
+    const selectedColor = colors[Math.floor(Math.random() * colors.length)];
+    playerContainer.style.setProperty('--ambient-color', selectedColor);
+    playerContainer.classList.add('media-playing');
 }
 
-const equalizer = document.getElementById('miniEqualizer');
-
-// Panggil ini saat musik MULAI diputar (Play)
-function startEqualizer() {
-    equalizer.classList.add('playing');
-}
-
-// Panggil ini saat musik DIHENTIKAN (Pause / Stop / Selesai)
-function stopEqualizer() {
-    equalizer.classList.remove('playing');
-}
-
-// ==================== BACKGROUND MUSIC & VINYL WIDGET CONTROLLER ====================
-document.addEventListener("DOMContentLoaded", () => {
+// ==========================================
+// 9. AUDIO & VINYL CONTROLLER
+// ==========================================
+function initAudioController() {
     const audio = document.getElementById('bg-music');
     const vinyl = document.getElementById('vinyl-disc');
     const musicWidget = document.getElementById('music-floating-widget');
-    const equalizer = document.getElementById('miniEqualizer'); // Integrasi dengan Equalizer
+    const equalizer = document.getElementById('miniEqualizer');
 
-    if (!audio || !vinyl || !musicWidget) return; // Guard clause agar tidak error jika elemen belum ada
-
-    // Set volume default agar tidak mengagetkan user
+    if (!audio) return;
     audio.volume = 0.3;
-    let isMusicActiveGlobal = true;
-    let userInteracted = false;
 
-    // Fungsi Mulai Memutar Musik & Animasi
-    window.startMusicPlayback = function() {
-        if (isMusicActiveGlobal) {
+    const handleFirstTouch = () => {
+        if (isMusicActiveGlobal && audio.paused) {
             audio.play().then(() => {
-                vinyl.classList.remove('paused');
-                if (equalizer) equalizer.classList.add('playing'); // Menyalakan Equalizer Wave
-            }).catch(e => {
-                console.log("Autoplay ditahan oleh browser sampai ada interaksi user.");
-            });
+                if (vinyl) vinyl.classList.remove('paused');
+                if (equalizer) equalizer.classList.add('playing');
+            }).catch(() => {});
         }
+        document.body.removeEventListener('click', handleFirstTouch);
+        document.body.removeEventListener('touchstart', handleFirstTouch);
     };
 
-    // Fungsi Menghentikan Musik & Animasi
-    window.stopMusicPlayback = function() {
+    document.body.addEventListener('click', handleFirstTouch);
+    document.body.addEventListener('touchstart', handleFirstTouch);
+
+    setInterval(() => {
+        if (musicWidget) musicWidget.classList.toggle('hide-widget');
+    }, 15000);
+}
+
+function toggleAudioPlayback() {
+    const audio = document.getElementById('bg-music');
+    const vinyl = document.getElementById('vinyl-disc');
+    const equalizer = document.getElementById('miniEqualizer');
+
+    if (audio.paused) {
+        audio.play();
+        vinyl.classList.remove('paused');
+        equalizer.classList.add('playing');
+    } else {
         audio.pause();
         vinyl.classList.add('paused');
-        if (equalizer) equalizer.classList.remove('playing'); // Mematikan Equalizer Wave
-    };
+        equalizer.classList.remove('playing');
+    }
+}
 
-    // Memicu musik menyala otomatis begitu user pertama kali klik di mana saja
-    const handleFirstInteraction = () => {
-        userInteracted = true;
-        if (isMusicActiveGlobal && audio.paused) {
-            startMusicPlayback();
-        }
-        // Hapus listener sekali pakai agar hemat memori HP
-        document.body.removeEventListener('click', handleFirstInteraction);
-        document.body.removeEventListener('touchstart', handleFirstInteraction);
-    };
-
-    document.body.addEventListener('click', handleFirstInteraction);
-    document.body.addEventListener('touchstart', handleFirstInteraction);
-
-    // Timer Auto Hide / Show Widget tiap 15 Detik
-    setInterval(() => {
-        if (musicWidget) {
-            musicWidget.classList.toggle('hide-widget');
-        }
-    }, 15000);
-});
+// ==========================================
+// 10. OWNER PROFILE MODAL
+// ==========================================
+function showOwnerProfileAlert() {
+    Swal.fire({
+        title: '✨ OWNER PROFILE ✨',
+        html: `
+            <div style="padding: 10px 0; text-align: center;">
+                <div style="width: 70px; height: 70px; margin: 0 auto 12px; background: #090d22; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; border: 2px solid var(--primary-theme); box-shadow: 0 0 15px var(--primary-theme);">H79</div>
+                <h3 style="font-size: 18px; font-weight: 800; color: #fff; margin: 0;">HARUUKII79</h3>
+                <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Developer & Owner</span>
+                <div style="margin-top: 15px;">
+                    <a href="https://instagram.com/USERNAME_KAMU_DISINI" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: #fff; font-size: 12px; font-weight: 700; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);">
+                        <i class="fab fa-instagram"></i> Follow Instagram
+                    </a>
+                </div>
+            </div>
+        `,
+        background: '#090d22',
+        width: '320px',
+        showConfirmButton: false,
+        showCloseButton: true
+    });
+}
