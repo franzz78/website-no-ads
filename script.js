@@ -136,3 +136,58 @@ function startEqualizer() {
 function stopEqualizer() {
     equalizer.classList.remove('playing');
 }
+
+// ==================== BACKGROUND MUSIC & VINYL WIDGET CONTROLLER ====================
+document.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById('bg-music');
+    const vinyl = document.getElementById('vinyl-disc');
+    const musicWidget = document.getElementById('music-floating-widget');
+    const equalizer = document.getElementById('miniEqualizer'); // Integrasi dengan Equalizer
+
+    if (!audio || !vinyl || !musicWidget) return; // Guard clause agar tidak error jika elemen belum ada
+
+    // Set volume default agar tidak mengagetkan user
+    audio.volume = 0.3;
+    let isMusicActiveGlobal = true;
+    let userInteracted = false;
+
+    // Fungsi Mulai Memutar Musik & Animasi
+    window.startMusicPlayback = function() {
+        if (isMusicActiveGlobal) {
+            audio.play().then(() => {
+                vinyl.classList.remove('paused');
+                if (equalizer) equalizer.classList.add('playing'); // Menyalakan Equalizer Wave
+            }).catch(e => {
+                console.log("Autoplay ditahan oleh browser sampai ada interaksi user.");
+            });
+        }
+    };
+
+    // Fungsi Menghentikan Musik & Animasi
+    window.stopMusicPlayback = function() {
+        audio.pause();
+        vinyl.classList.add('paused');
+        if (equalizer) equalizer.classList.remove('playing'); // Mematikan Equalizer Wave
+    };
+
+    // Memicu musik menyala otomatis begitu user pertama kali klik di mana saja
+    const handleFirstInteraction = () => {
+        userInteracted = true;
+        if (isMusicActiveGlobal && audio.paused) {
+            startMusicPlayback();
+        }
+        // Hapus listener sekali pakai agar hemat memori HP
+        document.body.removeEventListener('click', handleFirstInteraction);
+        document.body.removeEventListener('touchstart', handleFirstInteraction);
+    };
+
+    document.body.addEventListener('click', handleFirstInteraction);
+    document.body.addEventListener('touchstart', handleFirstInteraction);
+
+    // Timer Auto Hide / Show Widget tiap 15 Detik
+    setInterval(() => {
+        if (musicWidget) {
+            musicWidget.classList.toggle('hide-widget');
+        }
+    }, 15000);
+});
