@@ -121,7 +121,7 @@ function updateVisitorUI(total) {
 }
 
 // ==========================================
-// 6. YOUTUBE API V3 FETCH ENGINE & SKELETON
+// 6. YOUTUBE API V3 FETCH ENGINE & SEARCH
 // ==========================================
 async function fetchYouTubeVideos(query) {
     const grid = document.getElementById("video-feed-grid");
@@ -129,9 +129,9 @@ async function fetchYouTubeVideos(query) {
 
     // Render Skeleton Loader saat fetching
     grid.innerHTML = `
-        <div class="skeleton-loader-container">
+        <div class="skeleton-loader-container w-full col-span-full">
             ${Array(3).fill().map(() => `
-                <div class="skeleton-card">
+                <div class="skeleton-card mb-3">
                     <div class="skeleton-thumb"></div>
                     <div class="skeleton-info">
                         <div class="skeleton-text-title"></div>
@@ -142,7 +142,7 @@ async function fetchYouTubeVideos(query) {
         </div>
     `;
 
-    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=12&q=${encodeURIComponent(query)}&type=video&key=${YOUTUBE_API_KEY}`;
 
     try {
         const response = await fetch(url);
@@ -160,7 +160,7 @@ async function fetchYouTubeVideos(query) {
                 </div>
             `).join('');
         } else {
-            grid.innerHTML = `<p class="text-xs text-slate-400">Tidak ada video ditemukan.</p>`;
+            grid.innerHTML = `<p class="text-xs text-slate-400 col-span-full text-center py-4">Tidak ada video ditemukan.</p>`;
         }
     } catch (error) {
         console.error("Error YouTube API:", error);
@@ -175,6 +175,42 @@ async function fetchYouTubeVideos(query) {
             </div>
         `;
     }
+}
+
+// [FITUR TAMBAHAN] HANDLER PENCARIAN REAL-TIME UNTUK SEARCH BAR & CATEGORY CHIPS
+function executeVideoSearch() {
+    const input = document.getElementById("youtube-search-input");
+    if (!input) return;
+    
+    const query = input.value.trim();
+    if (query !== "") {
+        const titleLabel = document.getElementById("feed-title-label");
+        if (titleLabel) titleLabel.innerText = `Hasil Pencarian: "${query}"`;
+        fetchYouTubeVideos(query);
+    }
+}
+
+function handleSearchKeyPress(event) {
+    if (event.key === 'Enter') {
+        executeVideoSearch();
+    }
+}
+
+function filterByCategory(categoryName, element) {
+    if (element) {
+        document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
+        element.classList.add('active');
+    }
+    
+    const input = document.getElementById('youtube-search-input');
+    if (input) {
+        input.value = categoryName;
+    }
+    
+    const titleLabel = document.getElementById("feed-title-label");
+    if (titleLabel) titleLabel.innerText = `Kategori: ${categoryName}`;
+    
+    fetchYouTubeVideos(categoryName);
 }
 
 // ==========================================
@@ -225,6 +261,9 @@ function playVideoDemo(videoId, title) {
     const selectedColor = colors[Math.floor(Math.random() * colors.length)];
     playerContainer.style.setProperty('--ambient-color', selectedColor);
     playerContainer.classList.add('media-playing');
+    
+    // Auto scroll ke player saat video diputar
+    playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // ==========================================
@@ -297,4 +336,5 @@ function showOwnerProfileAlert() {
         showConfirmButton: false,
         showCloseButton: true
     });
-}
+    }
+
