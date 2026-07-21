@@ -277,6 +277,11 @@
             border: 1px solid var(--glass-border);
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
+        .player-wrapper-v4.media-playing {
+            box-shadow: 0 0 35px var(--ambient-color, rgba(0, 242, 254, 0.4));
+            border-color: var(--primary-theme);
         }
         .video-card-v4 {
             background: rgba(255, 255, 255, 0.02);
@@ -309,6 +314,14 @@
             z-index: 90;
             cursor: pointer;
             transition: all 0.4s ease;
+        }
+        #music-floating-widget.hide-widget {
+            opacity: 0.5;
+            transform: scale(0.92);
+        }
+        #music-floating-widget:hover {
+            opacity: 1;
+            transform: scale(1);
         }
         #vinyl-disc {
             width: 34px; height: 34px;
@@ -496,31 +509,39 @@
     <!-- MAIN SCRIPT LOGIC -->
     <script src="script.js"></script>
     <script>
-        // Fungsi Tambahan V4.1 untuk Search Trigger
+        // Pemicu Tombol Enter pada Search Input
         function handleSearchKeyPress(event) {
             if (event.key === 'Enter') {
                 executeVideoSearch();
             }
         }
 
+        // Fungsi Pencarian YouTube API v3
         function executeVideoSearch() {
             const query = document.getElementById('youtube-search-input').value.trim();
             if (query === '') return;
             
-            document.getElementById('feed-title-label').innerText = `Hasil Pencarian: "${query}"`;
+            const titleLabel = document.getElementById('feed-title-label');
+            if (titleLabel) {
+                titleLabel.innerText = `Hasil Pencarian: "${query}"`;
+            }
             
-            // Panggil fungsi search pada script.js jika ada
-            if (typeof searchYouTubeVideos === 'function') {
-                searchYouTubeVideos(query);
-            } else {
-                console.log('Searching for:', query);
+            // Panggil fungsi pencarian pada script.js
+            if (typeof fetchYouTubeVideos === 'function') {
+                fetchYouTubeVideos(query);
+            } else if (typeof executeVideoSearch === 'function') {
+                executeVideoSearch();
             }
         }
 
+        // Pemicu Filter Kategori Cepat
         function filterByCategory(categoryName, element) {
             document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('youtube-search-input').value = categoryName;
+            if (element) element.classList.add('active');
+            
+            const searchInput = document.getElementById('youtube-search-input');
+            if (searchInput) searchInput.value = categoryName;
+            
             executeVideoSearch();
         }
     </script>
