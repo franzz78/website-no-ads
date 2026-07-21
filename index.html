@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube X - Premium Web App</title>
+    <title>MiniTube X - V4.1 Next-Gen Web App</title>
 
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
 
     <!-- PWA Meta & Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#090d22">
+    <meta name="theme-color" content="#060919">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -29,9 +29,11 @@
     <style>
         :root {
             --primary-theme: #00f2fe;
-            --secondary-theme: #ff007f;
-            --glass-bg: rgba(9, 13, 34, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --secondary-theme: #9d4edd;
+            --accent-pink: #ff007f;
+            --bg-dark: #060919;
+            --glass-card: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -40,20 +42,26 @@
         }
 
         body {
-            background-color: #050814;
+            background-color: var(--bg-dark);
             color: #ffffff;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* ==================== SPLASH / LOADING SCREEN ==================== */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-theme); }
+
+        /* ==================== SPLASH SCREEN V4.1 ==================== */
         #splash-screen {
             position: fixed;
             inset: 0;
-            background: #050814;
+            background: radial-gradient(circle at center, #0e172a 0%, #060919 100%);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -61,218 +69,249 @@
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
         .splash-card {
-            background: var(--glass-bg);
+            background: var(--glass-card);
             border: 1px solid var(--glass-border);
-            padding: 30px;
-            border-radius: 24px;
+            padding: 32px;
+            border-radius: 28px;
             text-align: center;
             width: 90%;
-            max-width: 360px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
+            max-width: 380px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
         }
         .splash-sun-icon {
-            font-size: 38px;
+            font-size: 42px;
             color: var(--primary-theme);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             animation: pulseGlow 2s infinite alternate;
         }
         @keyframes pulseGlow {
-            from { transform: scale(1); filter: drop-shadow(0 0 5px var(--primary-theme)); }
-            to { transform: scale(1.1); filter: drop-shadow(0 0 18px var(--primary-theme)); }
+            from { transform: scale(1); filter: drop-shadow(0 0 8px var(--primary-theme)); }
+            to { transform: scale(1.12); filter: drop-shadow(0 0 22px var(--primary-theme)); }
         }
         .loader-track {
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
         }
         .loader-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, var(--primary-theme), var(--secondary-theme));
+            background: linear-gradient(90deg, var(--primary-theme), var(--secondary-theme), var(--accent-pink));
             transition: width 0.1s linear;
         }
 
-        /* ==================== MAIN GATEWAY SCREEN ==================== */
+        /* ==================== MAIN GATEWAY SCREEN V4.1 ==================== */
         #main-gate-screen {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: radial-gradient(circle at center, #0f172a 0%, #050814 100%);
+            background: radial-gradient(circle at top right, rgba(157, 78, 221, 0.15), transparent 50%),
+                        radial-gradient(circle at bottom left, rgba(0, 242, 254, 0.15), transparent 50%),
+                        #060919;
         }
         .gate-content-box {
-            background: var(--glass-bg);
+            background: var(--glass-card);
             border: 1px solid var(--glass-border);
-            padding: 28px;
-            border-radius: 28px;
+            padding: 32px;
+            border-radius: 32px;
             text-align: center;
             width: 100%;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
         }
-        .summer-badge {
+        .v4-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 5px 14px;
             border-radius: 20px;
-            background: rgba(0, 242, 254, 0.1);
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.15), rgba(157, 78, 221, 0.15));
             color: var(--primary-theme);
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            margin-bottom: 15px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            margin-bottom: 18px;
         }
         .btn-gate {
             width: 100%;
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: 20px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--glass-border);
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: left;
         }
         .btn-gate:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--primary-theme);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
         }
 
-        /* ==================== MATRIX STATS GRID ==================== */
+        /* ==================== MATRIX STATS GRID V4.1 ==================== */
         .stats-container-box {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 24px 0 20px 0;
+            gap: 12px;
+            margin: 24px 0;
             text-align: left;
         }
         .stat-mini-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 12px 14px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            border-radius: 18px;
+            padding: 14px 16px;
             transition: all 0.3s ease;
         }
         .stat-mini-card:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             border-color: var(--secondary-theme);
             transform: translateY(-2px);
         }
         .stat-number {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 800;
             font-family: monospace;
-            background: linear-gradient(90deg, #fff, var(--secondary-theme));
+            background: linear-gradient(90deg, #fff, var(--primary-theme));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* ==================== NAVBAR & RUNNING TEXT ==================== */
+        /* ==================== NAVBAR & SEARCH BAR V4.1 ==================== */
         .navbar-custom {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
+            background: rgba(6, 9, 25, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--glass-border);
             padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: sticky;
             top: 0;
             z-index: 100;
         }
-        .running-text-container {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 8px 0;
-            overflow: hidden;
+        
+        /* Modern Glow Search Input */
+        .search-box-v4 {
+            position: relative;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 4px 6px 4px 16px;
             display: flex;
             align-items: center;
+            transition: all 0.3s ease;
         }
-        .running-text-container marquee {
-            font-size: 12.5px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+        .search-box-v4:focus-within {
+            border-color: var(--primary-theme);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
         }
-        .text-id { color: #00f2fe; text-shadow: 0 0 8px rgba(0, 242, 254, 0.6); margin-right: 20px; }
-        .text-divider { color: var(--secondary-theme); text-shadow: 0 0 8px var(--secondary-theme); margin-right: 20px; }
-        .text-en { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.5); margin-right: 50px; }
+        .search-input-v4 {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            width: 100%;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+        .search-input-v4::placeholder {
+            color: #64748b;
+        }
+        .btn-search-trigger {
+            background: linear-gradient(135deg, var(--primary-theme), #00b4d8);
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            padding: 8px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-search-trigger:hover {
+            opacity: 0.9;
+            transform: scale(1.03);
+        }
 
-        /* ==================== SKELETON SHIMMER ==================== */
-        .skeleton-loader-container { display: flex; flex-direction: column; gap: 14px; width: 100%; }
-        .skeleton-card {
-            background: rgba(255, 255, 255, 0.02);
+        /* Category Chips Horizontal Scroll */
+        .category-chip {
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .category-chip.active, .category-chip:hover {
+            background: linear-gradient(90deg, rgba(0, 242, 254, 0.2), rgba(157, 78, 221, 0.2));
+            border-color: var(--primary-theme);
+            color: #fff;
+        }
+
+        /* Running Text Container */
+        .running-text-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 8px 0;
             overflow: hidden;
         }
-        .skeleton-thumb { width: 100%; padding-top: 56.25%; position: relative; overflow: hidden; background: rgba(255, 255, 255, 0.03); }
-        .skeleton-info { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-        .skeleton-text-title { width: 85%; height: 14px; background: rgba(255, 255, 255, 0.03); border-radius: 4px; position: relative; overflow: hidden; }
-        .skeleton-text-channel { width: 40%; height: 10px; background: rgba(255, 255, 255, 0.03); border-radius: 4px; position: relative; overflow: hidden; }
-        .skeleton-thumb::after, .skeleton-text-title::after, .skeleton-text-channel::after {
-            content: ""; position: absolute; inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            animation: loadingShimmer 1.5s infinite linear;
-        }
-        @keyframes loadingShimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .text-id { color: #00f2fe; text-shadow: 0 0 8px rgba(0, 242, 254, 0.5); margin-right: 20px; }
+        .text-divider { color: var(--accent-pink); text-shadow: 0 0 8px var(--accent-pink); margin-right: 20px; }
+        .text-en { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); margin-right: 50px; }
 
-        /* ==================== AMBIENT GLOW PLAYER ==================== */
-        .player-wrapper {
+        /* ==================== VIDEO PLAYER & CARDS V4.1 ==================== */
+        .player-wrapper-v4 {
             position: relative;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            background: rgba(15, 23, 42, 0.8);
             border: 1px solid var(--glass-border);
-            transition: all 0.5s ease;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-        .player-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 5%; left: 5%; width: 90%; height: 90%;
-            background: var(--ambient-color, rgba(0, 242, 254, 0.3));
+        .video-card-v4 {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
-            z-index: -1;
-            filter: blur(40px);
-            opacity: 0;
-            transition: opacity 0.8s ease, background 0.8s ease;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .player-wrapper.media-playing::before { opacity: 0.7; }
+        .video-card-v4:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-theme);
+            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+        }
 
-        /* ==================== FLOATING MUSIC & EQUALIZER ==================== */
+        /* ==================== FLOATING MUSIC WIDGET V4.1 ==================== */
         #music-floating-widget {
             position: fixed;
-            bottom: 20px; right: 20px;
-            background: var(--glass-bg);
+            bottom: 24px; right: 24px;
+            background: var(--glass-card);
             border: 1px solid var(--glass-border);
-            padding: 10px 16px;
-            border-radius: 30px;
+            padding: 10px 18px;
+            border-radius: 35px;
             display: flex;
             align-items: center;
             gap: 12px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             z-index: 90;
             cursor: pointer;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        #music-floating-widget.hide-widget {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
+            transition: all 0.4s ease;
         }
         #vinyl-disc {
-            width: 32px; height: 32px;
+            width: 34px; height: 34px;
             border-radius: 50%;
             border: 2px solid var(--primary-theme);
             animation: spinVinyl 4s linear infinite;
@@ -280,11 +319,10 @@
         #vinyl-disc.paused { animation-play-state: paused; }
         @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
 
-        /* Equalizer Wave Bars */
         .mini-equalizer { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
         .mini-equalizer .bar {
             width: 3px; height: 100%;
-            background: linear-gradient(to top, var(--primary-theme), var(--secondary-theme));
+            background: linear-gradient(to top, var(--primary-theme), var(--accent-pink));
             border-radius: 3px;
             transform: scaleY(0.1);
             transform-origin: bottom;
@@ -299,48 +337,49 @@
 </head>
 <body>
 
-    <!-- ==================== 1. SPLASH SCREEN ==================== -->
+    <!-- ==================== 1. SPLASH SCREEN V4.1 ==================== -->
     <div id="splash-screen">
         <div class="splash-card">
-            <i class="fas fa-sun splash-sun-icon"></i>
-            <div style="font-weight: 800; font-size: 20px; letter-spacing: 2px; background: linear-gradient(95deg, #fff, var(--secondary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MINITUBE X</div>
-            <div style="color: #64748b; font-size: 11px; margin-bottom: 15px;">GARUDA ENGINE v5.6</div>
+            <i class="fas fa-play-circle splash-sun-icon"></i>
+            <div style="font-weight: 800; font-size: 22px; letter-spacing: 2px; background: linear-gradient(95deg, #fff, var(--primary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MINITUBE X</div>
+            <div style="color: #64748b; font-size: 11px; margin-bottom: 18px; font-weight: 600;">GARUDA ENGINE v4.1 NEXT-GEN</div>
             
-            <div class="loader-track" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); height: 8px;">
+            <div class="loader-track" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); height: 8px;">
                 <div id="progress-bar-fill" class="loader-fill"></div>
             </div>
             
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <div id="render-status-log" style="font-size: 10px; color: var(--secondary-theme); font-weight: 600; text-transform: uppercase;">Initializing...</div>
-                <div id="splash-counter" style="font-size: 12px; font-family: monospace;">0%</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                <div id="render-status-log" style="font-size: 10px; color: var(--primary-theme); font-weight: 700; text-transform: uppercase;">Memuat Modul V4.1...</div>
+                <div id="splash-counter" style="font-size: 12px; font-family: monospace; font-weight: 700;">0%</div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 2. MAIN GATEWAY SCREEN ==================== -->
+    <!-- ==================== 2. MAIN GATEWAY SCREEN V4.1 ==================== -->
     <div id="main-gate-screen">
         <div class="gate-content-box" style="max-width: 440px;">
-            <div class="summer-badge">CORE RELEASE 2026</div>
+            <div class="v4-badge">RELEASE EDITION V4.1</div>
             
-            <div style="margin-bottom: 20px;">
-                <i class="fab fa-youtube" style="font-size: 36px; color: var(--primary-theme); margin-bottom: 6px;"></i>
-                <h2 style="font-weight: 800; font-size: 20px; letter-spacing: 0.5px; color: #fff;">MINITUBE APPLICATION</h2>
+            <div style="margin-bottom: 24px;">
+                <i class="fab fa-youtube" style="font-size: 42px; color: var(--primary-theme); margin-bottom: 8px; filter: drop-shadow(0 0 12px rgba(0,242,254,0.4));"></i>
+                <h2 style="font-weight: 800; font-size: 22px; letter-spacing: 0.5px; color: #fff;">MINITUBE APPLICATION</h2>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Platform Streaming Bebas Iklan & Ringan</p>
             </div>
 
             <div class="gate-buttons-group">
                 <button class="btn-gate" onclick="enterAppWithoutAccount()">
-                    <i class="fas fa-play" style="color: var(--primary-theme); font-size: 18px;"></i>
+                    <i class="fas fa-bolt" style="color: var(--primary-theme); font-size: 20px;"></i>
                     <div>
-                        <div style="font-weight: 700;">Jelajahi Sistem Premium</div>
-                        <div style="font-size: 11px; color: #94a3b8;">Masuk langsung tanpa akun / Instan</div>
+                        <div style="font-weight: 700; font-size: 14px;">Akses Mode Instan</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Masuk langsung tanpa perlu login</div>
                     </div>
                 </button>
 
                 <button class="btn-gate" onclick="openLoginModal()">
-                    <i class="fas fa-user-shield" style="color: var(--secondary-theme); font-size: 18px;"></i>
+                    <i class="fas fa-user-shield" style="color: var(--secondary-theme); font-size: 20px;"></i>
                     <div>
-                        <div style="font-weight: 700;">Otentikasi Member</div>
-                        <div style="font-size: 11px; color: #94a3b8;">Login akun database terdaftar</div>
+                        <div style="font-weight: 700; font-size: 14px;">Otentikasi Member</div>
+                        <div style="font-size: 11px; color: #94a3b8;">Login akun & simpan favorit</div>
                     </div>
                 </button>
             </div>
@@ -349,15 +388,15 @@
             <div class="stats-container-box">
                 <div class="stat-mini-card">
                     <span class="stat-number" id="visitor-count-num">100K+</span>
-                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Pengunjung</span>
+                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Pengunjung</span>
                 </div>
                 <div class="stat-mini-card">
                     <span class="stat-number">1+</span>
-                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Developer Website</span>
+                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Developer</span>
                 </div>
                 <div class="stat-mini-card">
                     <span class="stat-number">5+</span>
-                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase;">Engineering Website</span>
+                    <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Engineering</span>
                 </div>
                 <div class="stat-mini-card" onclick="showOwnerProfileAlert()" style="cursor: pointer;">
                     <span class="stat-number" style="font-size: 14px; background: linear-gradient(90deg, #fff, var(--primary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Haruukii79</span>
@@ -365,55 +404,84 @@
                 </div>
             </div>
 
-            <footer style="font-size: 11px; color: #64748b;">Powered by Garuda Engine v5.6 &copy; 2026</footer>
+            <footer style="font-size: 11px; color: #64748b; font-weight: 500;">Powered by Garuda Engine v4.1 &copy; 2026</footer>
         </div>
     </div>
 
-    <!-- ==================== 3. DASHBOARD UTAMA WEBSITE ==================== -->
+    <!-- ==================== 3. DASHBOARD UTAMA WEBSITE V4.1 ==================== -->
     <div id="main-app-dashboard" style="display: none;">
-        <!-- NAVBAR -->
-        <nav class="navbar-custom">
-            <div style="font-weight: 800; font-size: 18px; color: #fff; display: flex; align-items: center; gap: 8px;">
-                <i class="fab fa-youtube" style="color: var(--primary-theme);"></i> MINITUBE X
+        <!-- NAVBAR INTEGRATED WITH SEARCH V4.1 -->
+        <nav class="navbar-custom space-y-3">
+            <div class="flex items-center justify-between">
+                <div style="font-weight: 800; font-size: 20px; color: #fff; display: flex; align-items: center; gap: 10px;">
+                    <i class="fab fa-youtube" style="color: var(--primary-theme); font-size: 24px;"></i> 
+                    <span>MINITUBE <span style="color: var(--primary-theme); font-size: 12px; vertical-align: super;">V4.1</span></span>
+                </div>
+                <button onclick="showOwnerProfileAlert()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer;" class="hover:bg-white/10 transition">
+                    <i class="fas fa-user-circle text-cyan-400"></i> Owner
+                </button>
             </div>
-            <button onclick="showOwnerProfileAlert()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer;">
-                <i class="fas fa-user-circle"></i> Owner
-            </button>
+
+            <!-- SEARCH BAR V4.1 -->
+            <div class="search-box-v4">
+                <i class="fas fa-search text-slate-400 mr-2 text-sm"></i>
+                <input type="text" id="youtube-search-input" class="search-input-v4" placeholder="Cari video, musik, atau channel YouTube..." onkeypress="handleSearchKeyPress(event)">
+                <button class="btn-search-trigger" onclick="executeVideoSearch()">
+                    Cari
+                </button>
+            </div>
+
+            <!-- QUICK CATEGORY CHIPS -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
+                <div class="category-chip active" onclick="filterByCategory('Trending', this)">🔥 Trending</div>
+                <div class="category-chip" onclick="filterByCategory('Musik Indonesia', this)">🎵 Musik</div>
+                <div class="category-chip" onclick="filterByCategory('Gaming Live', this)">🎮 Gaming</div>
+                <div class="category-chip" onclick="filterByCategory('Teknologi Terbaru', this)">💻 Teknologi</div>
+                <div class="category-chip" onclick="filterByCategory('Edukasi Sains', this)">🧠 Edukasi</div>
+                <div class="category-chip" onclick="filterByCategory('Anime AMV', this)">✨ Anime</div>
+            </div>
         </nav>
 
         <!-- RUNNING TEXT MARQUEE -->
         <div class="running-text-container">
             <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
-                <span class="text-id">🇮🇩 Website MiniTube sudah terintegrasi dengan YouTube tanpa iklan dan juga Gratis, Selamat Menikmati.</span>
+                <span class="text-id">🇮🇩 MiniTube V4.1: Fitur Pencarian Lengkap, Tanpa Iklan, & Akses Gratis!</span>
                 <span class="text-divider">⚡⚡⚡</span>
-                <span class="text-en">🇬🇧 The MiniTube website is integrated with YouTube without ads and is also free, Enjoy.</span>
+                <span class="text-en">🇬🇧 MiniTube V4.1: Full Search Bar, No Ads & Free Stream Access!</span>
             </marquee>
         </div>
 
         <!-- DASHBOARD CONTENT BODY -->
-        <div class="p-4 max-w-4xl mx-auto space-y-6">
-            <!-- AMBIENT GLOW PLAYER CONTAINER -->
-            <div id="mainPlayerContainer" class="player-wrapper p-4 text-center">
-                <div id="player-display" class="aspect-video bg-black/40 rounded-xl flex items-center justify-center border border-white/5 overflow-hidden">
-                    <p class="text-slate-500 text-xs">Pilih konten di bawah untuk memutar video</p>
+        <div class="p-4 max-w-5xl mx-auto space-y-6">
+            <!-- PLAYER CONTAINER V4.1 -->
+            <div id="mainPlayerContainer" class="player-wrapper-v4 p-3 md:p-4">
+                <div id="player-display" class="aspect-video bg-black/60 rounded-xl flex items-center justify-center border border-white/5 overflow-hidden relative">
+                    <div class="text-center p-6">
+                        <i class="fas fa-play-circle text-5xl text-cyan-400 mb-3 animate-bounce"></i>
+                        <p class="text-slate-300 font-semibold text-sm">Gunakan Search Bar di atas atau pilih video untuk diputar</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- SEARCH FEED & VIDEO RECOMENDATION GRID -->
-            <div class="space-y-3">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-bold text-sm text-slate-300">Rekomendasi Feed Video</h3>
-                    <span class="text-[10px] text-cyan-400 font-semibold uppercase">API v3 Connected</span>
+            <!-- FEED & SEARCH RESULT HEADER -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                    <h3 class="font-bold text-base text-slate-200 flex items-center gap-2">
+                        <i class="fas fa-compass text-cyan-400"></i>
+                        <span id="feed-title-label">Rekomendasi Video Feed</span>
+                    </h3>
+                    <span class="text-[11px] text-cyan-400 font-mono font-bold bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-1 rounded-full">GARUDA ENGINE V4.1</span>
                 </div>
                 
-                <div id="video-feed-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <!-- Target Rendering Skeleton / Dynamic Video Cards -->
+                <!-- DYNAMIC VIDEO GRID -->
+                <div id="video-feed-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Skeleton / Card Video Render Target -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 4. FLOATING MUSIC & EQUALIZER WIDGET ==================== -->
+    <!-- ==================== 4. FLOATING MUSIC & EQUALIZER WIDGET V4.1 ==================== -->
     <div id="music-floating-widget" onclick="toggleAudioPlayback()">
         <img id="vinyl-disc" class="paused" src="https://cdn-icons-png.flaticon.com/512/1222/1222209.png" alt="Vinyl">
         <div class="mini-equalizer" id="miniEqualizer">
@@ -427,5 +495,34 @@
 
     <!-- MAIN SCRIPT LOGIC -->
     <script src="script.js"></script>
+    <script>
+        // Fungsi Tambahan V4.1 untuk Search Trigger
+        function handleSearchKeyPress(event) {
+            if (event.key === 'Enter') {
+                executeVideoSearch();
+            }
+        }
+
+        function executeVideoSearch() {
+            const query = document.getElementById('youtube-search-input').value.trim();
+            if (query === '') return;
+            
+            document.getElementById('feed-title-label').innerText = `Hasil Pencarian: "${query}"`;
+            
+            // Panggil fungsi search pada script.js jika ada
+            if (typeof searchYouTubeVideos === 'function') {
+                searchYouTubeVideos(query);
+            } else {
+                console.log('Searching for:', query);
+            }
+        }
+
+        function filterByCategory(categoryName, element) {
+            document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('youtube-search-input').value = categoryName;
+            executeVideoSearch();
+        }
+    </script>
 </body>
 </html>
