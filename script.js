@@ -338,3 +338,10 @@ function showOwnerProfileAlert() {
     });
     }
 
+  // Contoh fungsi di script.js yang menerima pencarian
+function handleSearch() {
+    const query = document.getElementById('searchInput').value;
+    // Jalankan fetch ke YouTube API v3 menggunakan API Key kamu
+    // render hasilnya ke element dengan id "video-feed-grid"
+}
+
