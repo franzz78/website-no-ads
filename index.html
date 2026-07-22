@@ -10,7 +10,6 @@
     <meta name="keywords" content="MiniTube X, Youtube Player, Ad-free Video, Web App Nusantara, Merah Putih UI">
     <meta name="author" content="MiniTube X Team">
     <meta name="theme-color" content="#ff003c">
-    <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
 
     <!-- Favicon & PWA App Icons -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/about-blank/assets/main/logo.png">
@@ -49,7 +48,7 @@
     </script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#0d0607] text-white min-h-screen font-sans antialiased selection:bg-[#ff003c] selection:text-white relative overflow-x-hidden pb-24 lg:pb-8">
+<body class="bg-[#0d0607] text-white min-h-screen font-sans antialiased selection:bg-[#ff003c] selection:text-white relative overflow-x-hidden pb-28 lg:pb-12">
 
     <!-- ==================== 1. LOADING SCREEN / SPLASH SCREEN ==================== -->
     <div id="app-loading-screen" class="fixed inset-0 z-[10000] bg-[#0d0607] flex flex-col items-center justify-center transition-opacity duration-500">
@@ -76,51 +75,31 @@
     <!-- Network Status Banner -->
     <div id="network-status-banner" class="hidden"></div>
 
-    <!-- ==================== TOP NAVIGATION BAR ==================== -->
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#0d0607]/90 border-b border-red-500/20 px-4 lg:px-8 py-3 transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+    <!-- ==================== TOP HEADER & BRAND BAR ==================== -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#0d0607]/95 border-b border-red-500/20 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
-            <div class="w-full md:w-auto flex items-center justify-between gap-4">
-                <!-- Brand Logo & Title -->
-                <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_18px_rgba(255,0,60,0.4)] border border-red-400/30 transform hover:scale-105 transition-transform">
-                        <i class="fas fa-play text-white text-sm"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-lg font-extrabold tracking-wider text-white flex items-center gap-1.5 leading-none">
-                            MINITUBE <span class="text-[#ff003c] drop-shadow-[0_0_10px_rgba(255,0,60,0.8)]">X</span>
-                        </h1>
-                        <span class="text-[9px] tracking-[0.2em] text-red-400/90 font-mono block mt-1 font-bold">EDISI NUSANTARA v4.1</span>
-                    </div>
+            <!-- Brand Logo & Title -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_18px_rgba(255,0,60,0.4)] border border-red-400/30 transform hover:scale-105 transition-transform">
+                    <i class="fas fa-play text-white text-sm"></i>
                 </div>
-
-                <!-- Status Indicator (Mobile) -->
-                <div class="flex md:hidden items-center gap-2 bg-gradient-to-r from-red-950/40 to-black/40 border border-red-500/30 rounded-full px-3 py-1">
-                    <div class="w-2 h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_6px_#ff003c]"></div>
-                    <span class="text-[10px] font-bold tracking-wider text-gray-200 font-mono">INDONESIA</span>
+                <div>
+                    <h1 class="text-lg font-extrabold tracking-wider text-white flex items-center gap-1.5 leading-none">
+                        MINITUBE <span class="text-[#ff003c] drop-shadow-[0_0_10px_rgba(255,0,60,0.8)]">X</span>
+                    </h1>
+                    <span class="text-[9px] tracking-[0.2em] text-red-400/90 font-mono block mt-1 font-bold">EDISI NUSANTARA v4.1</span>
                 </div>
             </div>
 
-            <!-- ==================== 2. YOUTUBE API SEARCH BAR (SELALU MUNCUL) ==================== -->
-            <div class="w-full md:max-w-xl my-1 md:my-0">
-                <form id="searchForm" onsubmit="event.preventDefault(); if(typeof handleSearch === 'function') handleSearch();" class="relative w-full">
-                    <input type="text" id="searchInput" placeholder="Cari video YouTube di sini..." 
-                        autocomplete="off"
-                        class="w-full bg-white/10 border border-red-500/30 focus:border-red-500 rounded-full py-2.5 pl-5 pr-12 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/30 backdrop-blur-md transition-all">
-                    <button type="submit" id="searchBtn" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center transition-all shadow-[0_0_10px_rgba(255,0,60,0.5)]">
-                        <i class="fas fa-search text-xs"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Desktop Header Right Menu -->
-            <div class="hidden md:flex items-center gap-2">
-                <button onclick="showSejarahIndonesiaModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
+            <!-- Desktop Menu Right -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="showSejarahIndonesiaModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
                     <i class="fas fa-landmark text-red-500"></i>
                     <span>Sejarah Indonesia</span>
                 </button>
 
-                <button onclick="showSejarahMiniTubeModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
+                <button onclick="showSejarahMiniTubeModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
                     <i class="fas fa-history text-red-500"></i>
                     <span>Sejarah MiniTube</span>
                 </button>
@@ -153,6 +132,33 @@
 
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 relative z-10">
+
+        <!-- ==================== 2. SEARCH BAR UTAMA TERINTEGRASI YOUTUBE SUGGESTIONS ==================== -->
+        <div class="max-w-2xl mx-auto mb-8 relative">
+            <form id="searchForm" onsubmit="event.preventDefault(); executeSearch();" class="relative z-20">
+                <div class="relative flex items-center">
+                    <input type="text" id="searchInput" 
+                        placeholder="Ketik judul video atau kata kunci..." 
+                        autocomplete="off"
+                        oninput="onSearchInputHandler(this.value)"
+                        onfocus="showSuggestionsMenu()"
+                        class="w-full bg-[#140b0d] border-2 border-red-500/40 focus:border-red-500 rounded-2xl py-3.5 pl-12 pr-14 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-red-500/20 shadow-[0_0_20px_rgba(255,0,60,0.15)] transition-all">
+                    
+                    <i class="fas fa-search absolute left-4 text-red-500 text-base pointer-events-none"></i>
+                    
+                    <button type="submit" id="searchBtn" class="absolute right-2 w-10 h-10 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white flex items-center justify-center shadow-[0_0_12px_rgba(255,0,60,0.5)] transition-all">
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Dropdown Auto-Suggest Realtime dari YouTube API -->
+            <div id="suggestionsDropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-[#12080a] border border-red-500/30 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.9)] overflow-hidden z-30 backdrop-blur-2xl">
+                <div id="suggestionsList" class="divide-y divide-white/5 max-h-60 overflow-y-auto font-sans text-xs">
+                    <!-- Dynamic suggestions dynamically rendered via JavaScript -->
+                </div>
+            </div>
+        </div>
 
         <!-- Main Video Embed Player Container -->
         <div id="mainPlayerContainer" class="hidden mb-8 transition-all duration-500">
@@ -224,7 +230,7 @@
     </main>
 
     <!-- ==================== 3. MAIN MENU BOTTOM NAVIGATION BAR ==================== -->
-    <nav class="fixed bottom-0 left-0 right-0 z-[999] bg-[#0d0607]/95 backdrop-blur-2xl border-t border-red-500/30 py-3 px-6 shadow-[0_-5px_20px_rgba(0,0,0,0.8)]">
+    <nav class="fixed bottom-0 left-0 right-0 z-[9999] bg-[#0d0607]/95 backdrop-blur-2xl border-t border-red-500/30 py-3 px-4 shadow-[0_-5px_25px_rgba(0,0,0,0.9)]">
         <div class="flex items-center justify-around max-w-lg mx-auto">
             
             <button onclick="location.reload()" class="flex flex-col items-center gap-1 text-red-500 font-bold transition-transform active:scale-95">
@@ -255,9 +261,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Scripts Kontrol Utilitas & Modal -->
+    <!-- Scripts Kontrol Utama, YouTube Auto-Suggest & Modal -->
     <script>
-        // Logika Menyembunyikan Loading Screen
+        // Logika Loading Screen
         window.addEventListener('load', () => {
             const loader = document.getElementById('app-loading-screen');
             if (loader) {
@@ -268,12 +274,78 @@
             }
         });
 
-        // Fungsi Scroll Ke Atas
+        // Scroll Top
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Modal Informasi Sejarah Indonesia
+        // Auto-Suggest Integrasi YouTube API JSONP
+        let debounceTimer;
+        function onSearchInputHandler(query) {
+            clearTimeout(debounceTimer);
+            if (!query.trim()) {
+                document.getElementById('suggestionsDropdown').classList.add('hidden');
+                return;
+            }
+            debounceTimer = setTimeout(() => {
+                const script = document.createElement('script');
+                script.src = `https://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q=${encodeURIComponent(query)}&jsonp=handleYouTubeSuggestions`;
+                document.body.appendChild(script);
+                document.body.removeChild(script);
+            }, 250);
+        }
+
+        function handleYouTubeSuggestions(data) {
+            const suggestions = data[1];
+            const listContainer = document.getElementById('suggestionsList');
+            const dropdown = document.getElementById('suggestionsDropdown');
+
+            if (suggestions && suggestions.length > 0) {
+                listContainer.innerHTML = suggestions.map(item => `
+                    <div onclick="selectSuggestion('${item[0]}')" class="px-4 py-2.5 hover:bg-red-600/20 text-gray-200 hover:text-white cursor-pointer flex items-center gap-3 transition-colors">
+                        <i class="fas fa-search text-red-500/70 text-xs"></i>
+                        <span>${item[0]}</span>
+                    </div>
+                `).join('');
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        function showSuggestionsMenu() {
+            const val = document.getElementById('searchInput').value;
+            if (val.trim()) {
+                onSearchInputHandler(val);
+            }
+        }
+
+        function selectSuggestion(text) {
+            document.getElementById('searchInput').value = text;
+            document.getElementById('suggestionsDropdown').classList.add('hidden');
+            executeSearch();
+        }
+
+        function executeSearch() {
+            document.getElementById('suggestionsDropdown').classList.add('hidden');
+            if (typeof handleSearch === 'function') {
+                handleSearch();
+            } else if (typeof fetchSearchResults === 'function') {
+                const q = document.getElementById('searchInput').value;
+                fetchSearchResults(q);
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const searchBox = document.getElementById('searchForm');
+            const dropdown = document.getElementById('suggestionsDropdown');
+            if (searchBox && !searchBox.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Modals Sejarah
         function showSejarahIndonesiaModal() {
             Swal.fire({
                 title: 'Sejarah Singkat Republik Indonesia',
@@ -292,7 +364,6 @@
             });
         }
 
-        // Modal Informasi Sejarah MiniTube
         function showSejarahMiniTubeModal() {
             Swal.fire({
                 title: 'Sejarah Pengembangan MiniTube X',
