@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MiniTube X V4.1 - Edisi Nusantara Fast</title>
+    <title>MiniTube X V4.1 - Ultra Fast Instant</title>
 
-    <!-- SEO & Web Verification Meta Tags -->
-    <meta name="description" content="MiniTube X V4.1 - Platform Streaming Video Modern, Bebas Iklan, dan PWA Ready.">
-    <meta name="keywords" content="MiniTube X, Youtube Player, Ad-free Video, Web App Nusantara">
-    <meta name="author" content="MiniTube X Team">
+    <!-- SEO & Meta Tags -->
+    <meta name="description" content="MiniTube X V4.1 - Platform Streaming Video Modern, Bebas Iklan, dan Super Cepat.">
     <meta name="theme-color" content="#ff003c">
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
 
-    <!-- Favicon & PWA App Icons -->
+    <!-- Favicon & PWA Icons -->
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/about-blank/assets/main/logo.png">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/about-blank/assets/main/logo.png">
     <link rel="manifest" href="manifest.json">
 
-    <!-- Fonts & Icons CDN -->
+    <!-- Fonts & FontAwesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -51,25 +48,24 @@
 </head>
 <body class="bg-[#0d0607] text-white min-h-screen font-sans antialiased selection:bg-[#ff003c] selection:text-white relative overflow-x-hidden pb-28 lg:pb-12">
 
-    <!-- ==================== 1. LOADING SCREEN / SPLASH SCREEN ==================== -->
-    <div id="app-loading-screen" class="fixed inset-0 z-[10000] bg-[#0d0607] flex flex-col items-center justify-center transition-opacity duration-300">
-        <div class="relative flex items-center justify-center mb-6">
-            <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_35px_rgba(255,0,60,0.8)] border border-red-400/40 animate-pulse">
-                <i class="fas fa-play text-white text-2xl"></i>
+    <!-- ==================== 1. LOADING SCREEN INSTAN ==================== -->
+    <div id="app-loading-screen" class="fixed inset-0 z-[10000] bg-[#0d0607] flex flex-col items-center justify-center transition-opacity duration-200">
+        <div class="relative flex items-center justify-center mb-4">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_30px_rgba(255,0,60,0.8)] border border-red-400/40 animate-pulse">
+                <i class="fas fa-play text-white text-xl"></i>
             </div>
-            <div class="absolute inset-0 rounded-2xl border-2 border-red-500/50 animate-ping"></div>
         </div>
-        <h2 class="text-xl font-extrabold tracking-wider text-white">MINITUBE <span class="text-[#ff003c]">X</span></h2>
-        <p class="text-xs tracking-[0.2em] text-red-400 font-mono mt-1 font-semibold uppercase">MODE ULTRA FAST v4.1</p>
+        <h2 class="text-lg font-extrabold tracking-wider text-white">MINITUBE <span class="text-[#ff003c]">X</span></h2>
+        <p class="text-[10px] tracking-[0.2em] text-red-400 font-mono mt-1 font-semibold uppercase">INSTANT MODE v4.1</p>
     </div>
 
-    <!-- Background Ambient Glow -->
+    <!-- Ambient Glow Background -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-red-600/15 rounded-full blur-[120px]"></div>
         <div class="absolute top-1/2 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px]"></div>
     </div>
 
-    <!-- ==================== TOP HEADER ==================== -->
+    <!-- ==================== HEADER BAR ==================== -->
     <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#0d0607]/95 border-b border-red-500/20 px-4 lg:px-8 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
@@ -102,13 +98,14 @@
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 relative z-10">
 
-        <!-- ==================== SEARCH BAR ULTRA FAST ==================== -->
+        <!-- ==================== SEARCH BAR INSTANT (0 DETIK) ==================== -->
         <div class="max-w-2xl mx-auto mb-8 relative">
-            <form id="searchForm" onsubmit="event.preventDefault(); fastSearch();" class="relative z-20">
+            <form id="searchForm" onsubmit="event.preventDefault(); executeInstantSearch();" class="relative z-20">
                 <div class="relative flex items-center">
                     <input type="text" id="searchInput" 
-                        placeholder="Ketik lagu / video lalu tekan Enter..." 
+                        placeholder="Cari lagu / video (Ketik & Tekan Enter)..." 
                         autocomplete="off"
+                        oninput="executeInstantSearch()"
                         class="w-full bg-[#140b0d] border-2 border-red-500/40 focus:border-red-500 rounded-2xl py-3.5 pl-12 pr-14 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-red-500/20 shadow-[0_0_20px_rgba(255,0,60,0.15)] transition-all">
                     
                     <i class="fas fa-search absolute left-4 text-red-500 text-base pointer-events-none"></i>
@@ -128,15 +125,15 @@
             
             <div class="mt-4 p-4 lg:p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 id="playerVideoTitle" class="text-base lg:text-lg font-bold text-white line-clamp-2">Memuat Judul Video...</h2>
+                    <h2 id="playerVideoTitle" class="text-base lg:text-lg font-bold text-white line-clamp-2">Judul Video</h2>
                     <p id="playerChannelTitle" class="text-xs text-red-400 mt-1 font-semibold flex items-center gap-1">
                         <i class="fas fa-check-circle text-[10px]"></i> <span id="channelNameText">MiniTube Player</span>
                     </p>
                 </div>
                 
                 <div class="flex items-center gap-3 shrink-0">
-                    <button onclick="closeFastPlayer()" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-semibold text-white flex items-center gap-2 shadow-[0_0_12px_rgba(255,0,60,0.4)] transition-all">
-                        <i class="fas fa-times"></i> Tutup Pemutar
+                    <button onclick="closePlayer()" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-semibold text-white flex items-center gap-2 shadow-[0_0_12px_rgba(255,0,60,0.4)] transition-all">
+                        <i class="fas fa-times"></i> Tutup
                     </button>
                 </div>
             </div>
@@ -144,7 +141,7 @@
 
         <!-- Video Feed Grid -->
         <div id="video-feed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-            <!-- Dynamic Video Cards -->
+            <!-- Video Cards otomatis di-render dari script.js -->
         </div>
 
     </main>
@@ -178,101 +175,56 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Splash Screen Fast Close
+        // Splash Screen Langsung Hilang
         window.addEventListener('load', () => {
             const loader = document.getElementById('app-loading-screen');
             if (loader) {
-                setTimeout(() => {
-                    loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 300);
-                }, 200);
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 200);
             }
         });
 
-        // ==================== FAST SEARCH ENGINE & AUTO PLAY ====================
-        async function fastSearch() {
+        // ==================== EKSEKUSI PENCARIAN INSTAN LOKAL ====================
+        function executeInstantSearch() {
             const query = document.getElementById('searchInput').value.trim();
-            if (!query) return;
 
-            const grid = document.getElementById('video-feed-grid');
-            grid.innerHTML = `
-                <div class="col-span-full py-12 text-center">
-                    <i class="fas fa-circle-notch fa-spin text-red-500 text-3xl mb-3"></i>
-                    <p class="text-sm font-semibold text-gray-300">Mencari '${query}' dengan cepat...</p>
-                </div>
-            `;
-
-            try {
-                // Menggunakan API Piped/Invidious publik yang cepat tanpa API Key limit
-                const res = await fetch(`https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(query)}&filter=all`);
-                const data = await res.json();
-
-                if (data.items && data.items.length > 0) {
-                    grid.innerHTML = '';
-                    const videos = data.items.filter(item => item.type === 'stream').slice(0, 12);
-                    
-                    videos.forEach(v => {
-                        const videoId = v.url.split('v=')[1];
-                        const card = document.createElement('div');
-                        card.className = "bg-white/5 border border-white/10 hover:border-red-500/50 rounded-2xl p-3 cursor-pointer transition-all hover:scale-[1.02]";
-                        card.onclick = () => playFastVideo(videoId, v.title, v.uploaderName);
-                        
-                        card.innerHTML = `
-                            <div class="relative w-full aspect-video rounded-xl overflow-hidden mb-3 bg-black">
-                                <img src="${v.thumbnail}" class="w-full h-full object-cover" alt="thumb" loading="lazy">
-                                <div class="absolute bottom-2 right-2 bg-black/80 px-2 py-0.5 rounded text-[10px] font-mono text-white">
-                                    ${v.duration ? Math.floor(v.duration/60) + ':' + ('0' + v.duration%60).slice(-2) : 'LIVE'}
-                                </div>
-                            </div>
-                            <h3 class="text-xs font-bold text-white line-clamp-2 leading-snug">${v.title}</h3>
-                            <p class="text-[11px] text-red-400 mt-1.5 font-medium">${v.uploaderName}</p>
-                        `;
-                        grid.appendChild(card);
-                    });
-                } else {
-                    fallbackYoutubeSearch(query);
-                }
-            } catch (err) {
-                fallbackYoutubeSearch(query);
-            }
-        }
-
-        // Fallback jika API piped terhalang
-        function fallbackYoutubeSearch(query) {
-            const grid = document.getElementById('video-feed-grid');
-            // Jika ada fungsi handleSearch bawaan script.js
+            // Panggil fungsi pencarian bawaan script.js tanpa delay
             if (typeof handleSearch === 'function') {
                 handleSearch();
+            } else if (typeof renderVideos === 'function') {
+                renderVideos(query);
+            } else if (typeof filterVideos === 'function') {
+                filterVideos(query);
             } else {
-                grid.innerHTML = `
-                    <div class="col-span-full py-8 text-center text-red-400 text-xs">
-                        Pencarian selesai. Jika hasil tidak tampil, pastikan file script.js terhubung dengan benar.
-                    </div>
-                `;
+                const event = new CustomEvent('searchQuery', { detail: query });
+                window.dispatchEvent(event);
             }
         }
 
-        // Play Video Langsung Tanpa Error
-        function playFastVideo(id, title, channel) {
+        // Fungsi Putar Video Langsung Tanpa Delay
+        function playYoutubeVideo(id, title, channel) {
             const container = document.getElementById('mainPlayerContainer');
             const iframe = document.getElementById('mainYoutubePlayer');
             const titleEl = document.getElementById('playerVideoTitle');
             const channelEl = document.getElementById('channelNameText');
 
-            // Gunakan No-Cookie Embed YouTube standar agar tidak diblokir
-            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-            titleEl.innerText = title || "Video YouTube";
-            channelEl.innerText = channel || "Channel";
+            if (iframe) {
+                iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&enablejsapi=1`;
+            }
+            if (titleEl) titleEl.innerText = title || 'YouTube Video';
+            if (channelEl) channelEl.innerText = channel || 'Channel';
 
-            container.classList.remove('hidden');
-            window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+            if (container) {
+                container.classList.remove('hidden');
+                window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+            }
         }
 
-        function closeFastPlayer() {
+        function closePlayer() {
             const container = document.getElementById('mainPlayerContainer');
             const iframe = document.getElementById('mainYoutubePlayer');
-            iframe.src = '';
-            container.classList.add('hidden');
+            if (iframe) iframe.src = '';
+            if (container) container.classList.add('hidden');
         }
 
         function showSejarahIndonesiaModal() {
@@ -296,6 +248,7 @@
         }
     </script>
 
+    <!-- Engine Script Utama -->
     <script src="script.js"></script>
 </body>
 </html>
