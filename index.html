@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MiniTube X V4.1 - Edisi Nusantara</title>
+    <title>MiniTube X V4.1 - Edisi Nusantara Fast</title>
 
     <!-- SEO & Web Verification Meta Tags -->
-    <meta name="description" content="MiniTube X V4.1 - Platform Streaming Video Modern, Bebas Iklan, dan PWA Ready dengan Tema Nusantara Merah Putih.">
-    <meta name="keywords" content="MiniTube X, Youtube Player, Ad-free Video, Web App Nusantara, Merah Putih UI">
+    <meta name="description" content="MiniTube X V4.1 - Platform Streaming Video Modern, Bebas Iklan, dan PWA Ready.">
+    <meta name="keywords" content="MiniTube X, Youtube Player, Ad-free Video, Web App Nusantara">
     <meta name="author" content="MiniTube X Team">
     <meta name="theme-color" content="#ff003c">
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
@@ -52,7 +52,7 @@
 <body class="bg-[#0d0607] text-white min-h-screen font-sans antialiased selection:bg-[#ff003c] selection:text-white relative overflow-x-hidden pb-28 lg:pb-12">
 
     <!-- ==================== 1. LOADING SCREEN / SPLASH SCREEN ==================== -->
-    <div id="app-loading-screen" class="fixed inset-0 z-[10000] bg-[#0d0607] flex flex-col items-center justify-center transition-opacity duration-500">
+    <div id="app-loading-screen" class="fixed inset-0 z-[10000] bg-[#0d0607] flex flex-col items-center justify-center transition-opacity duration-300">
         <div class="relative flex items-center justify-center mb-6">
             <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_35px_rgba(255,0,60,0.8)] border border-red-400/40 animate-pulse">
                 <i class="fas fa-play text-white text-2xl"></i>
@@ -60,175 +60,96 @@
             <div class="absolute inset-0 rounded-2xl border-2 border-red-500/50 animate-ping"></div>
         </div>
         <h2 class="text-xl font-extrabold tracking-wider text-white">MINITUBE <span class="text-[#ff003c]">X</span></h2>
-        <p class="text-xs tracking-[0.2em] text-red-400 font-mono mt-1 font-semibold uppercase">MEMUAT EDISI NUSANTARA v4.1</p>
-        <div class="w-48 h-1 bg-white/10 rounded-full mt-6 overflow-hidden">
-            <div class="w-full h-full bg-gradient-to-r from-red-600 to-red-400 animate-pulse"></div>
-        </div>
+        <p class="text-xs tracking-[0.2em] text-red-400 font-mono mt-1 font-semibold uppercase">MODE ULTRA FAST v4.1</p>
     </div>
 
     <!-- Background Ambient Glow -->
     <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-red-600/15 rounded-full blur-[120px]"></div>
         <div class="absolute top-1/2 right-0 w-80 h-80 bg-white/5 rounded-full blur-[100px]"></div>
-        <div class="absolute -bottom-20 left-1/3 w-96 h-96 bg-red-900/10 rounded-full blur-[140px]"></div>
     </div>
 
-    <!-- Network Status Banner -->
-    <div id="network-status-banner" class="hidden"></div>
-
-    <!-- ==================== TOP HEADER & BRAND BAR ==================== -->
+    <!-- ==================== TOP HEADER ==================== -->
     <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#0d0607]/95 border-b border-red-500/20 px-4 lg:px-8 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
             
-            <!-- Brand Logo & Title -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_18px_rgba(255,0,60,0.4)] border border-red-400/30 transform hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-red-600 to-red-500 flex items-center justify-center shadow-[0_0_18px_rgba(255,0,60,0.4)] border border-red-400/30">
                     <i class="fas fa-play text-white text-sm"></i>
                 </div>
                 <div>
                     <h1 class="text-lg font-extrabold tracking-wider text-white flex items-center gap-1.5 leading-none">
-                        MINITUBE <span class="text-[#ff003c] drop-shadow-[0_0_10px_rgba(255,0,60,0.8)]">X</span>
+                        MINITUBE <span class="text-[#ff003c]">X</span>
                     </h1>
                     <span class="text-[9px] tracking-[0.2em] text-red-400/90 font-mono block mt-1 font-bold">EDISI NUSANTARA v4.1</span>
                 </div>
             </div>
 
-            <!-- Desktop Menu Right -->
             <div class="hidden md:flex items-center gap-3">
                 <button onclick="showSejarahIndonesiaModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
                     <i class="fas fa-landmark text-red-500"></i>
-                    <span>Sejarah Indonesia</span>
+                    <span>Sejarah ID</span>
                 </button>
-
                 <button onclick="showSejarahMiniTubeModal()" class="flex items-center gap-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-gray-200 transition-all">
                     <i class="fas fa-history text-red-500"></i>
-                    <span>Sejarah MiniTube</span>
+                    <span>Sejarah Web</span>
                 </button>
-
-                <div class="flex items-center gap-2 bg-gradient-to-r from-red-950/40 to-black/40 border border-red-500/30 rounded-full px-3 py-1.5 shadow-[0_0_10px_rgba(255,0,60,0.2)]">
-                    <div class="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse shadow-[0_0_6px_#ff003c]"></div>
-                    <span class="text-xs font-bold tracking-wider text-gray-200 font-mono">INDONESIA</span>
-                </div>
             </div>
 
         </div>
     </header>
 
-    <!-- Running Info Ticker -->
-    <section class="bg-gradient-to-r from-red-950/60 via-red-900/20 to-red-950/60 border-b border-red-500/20 py-1.5 px-4 text-xs">
-        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            <div class="flex items-center gap-2 overflow-hidden">
-                <span class="bg-gradient-to-r from-red-600 to-red-500 text-white font-bold text-[9px] px-2 py-0.5 rounded uppercase tracking-wider shrink-0">
-                    PEMBERITAHUAN
-                </span>
-                <p class="truncate text-red-100/80 font-medium text-[11px]">
-                    Selamat Datang di MiniTube X V4.1 — Platform Media Digital Berkemampuan PWA dan Bebas Iklan.
-                </p>
-            </div>
-            <span class="hidden md:block font-mono text-[10px] text-red-400/80 shrink-0 uppercase">
-                STATUS: <span class="text-emerald-400 font-bold">ONLINE</span>
-            </span>
-        </div>
-    </section>
-
     <!-- Main Workspace -->
     <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 relative z-10">
 
-        <!-- ==================== 2. SEARCH BAR UTAMA TERINTEGRASI YOUTUBE ==================== -->
+        <!-- ==================== SEARCH BAR ULTRA FAST ==================== -->
         <div class="max-w-2xl mx-auto mb-8 relative">
-            <form id="searchForm" onsubmit="event.preventDefault(); triggerSearch();" class="relative z-20">
+            <form id="searchForm" onsubmit="event.preventDefault(); fastSearch();" class="relative z-20">
                 <div class="relative flex items-center">
                     <input type="text" id="searchInput" 
-                        placeholder="Ketik judul video/lagu lalu tekan Enter..." 
+                        placeholder="Ketik lagu / video lalu tekan Enter..." 
                         autocomplete="off"
-                        oninput="onSearchInputHandler(this.value)"
-                        onfocus="showSuggestionsMenu()"
                         class="w-full bg-[#140b0d] border-2 border-red-500/40 focus:border-red-500 rounded-2xl py-3.5 pl-12 pr-14 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-red-500/20 shadow-[0_0_20px_rgba(255,0,60,0.15)] transition-all">
                     
                     <i class="fas fa-search absolute left-4 text-red-500 text-base pointer-events-none"></i>
                     
-                    <button type="submit" id="searchBtn" class="absolute right-2 w-10 h-10 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white flex items-center justify-center shadow-[0_0_12px_rgba(255,0,60,0.5)] transition-all">
-                        <i class="fas fa-arrow-right text-sm"></i>
+                    <button type="submit" id="searchBtn" class="absolute right-2 w-10 h-10 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white flex items-center justify-center shadow-[0_0_12px_rgba(255,0,60,0.5)] active:scale-95 transition-all">
+                        <i class="fas fa-bolt text-sm"></i>
                     </button>
                 </div>
             </form>
-
-            <!-- Dropdown Auto-Suggest Realtime dari YouTube API -->
-            <div id="suggestionsDropdown" class="hidden absolute top-full left-0 right-0 mt-2 bg-[#12080a] border border-red-500/30 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.9)] overflow-hidden z-30 backdrop-blur-2xl">
-                <div id="suggestionsList" class="divide-y divide-white/5 max-h-60 overflow-y-auto font-sans text-xs"></div>
-            </div>
         </div>
 
         <!-- Main Video Embed Player Container -->
-        <div id="mainPlayerContainer" class="hidden mb-8 transition-all duration-500">
+        <div id="mainPlayerContainer" class="hidden mb-8 transition-all duration-300">
             <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-red-500/30 shadow-[0_0_30px_rgba(255,0,60,0.25)]">
                 <iframe id="mainYoutubePlayer" class="w-full h-full" src="" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             
-            <!-- Video Info Panel -->
             <div class="mt-4 p-4 lg:p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h2 id="playerVideoTitle" class="text-base lg:text-lg font-bold text-white line-clamp-2">Judul Video Utama</h2>
+                    <h2 id="playerVideoTitle" class="text-base lg:text-lg font-bold text-white line-clamp-2">Memuat Judul Video...</h2>
                     <p id="playerChannelTitle" class="text-xs text-red-400 mt-1 font-semibold flex items-center gap-1">
-                        <i class="fas fa-check-circle text-[10px]"></i> <span id="channelNameText">Nama Channel</span>
+                        <i class="fas fa-check-circle text-[10px]"></i> <span id="channelNameText">MiniTube Player</span>
                     </p>
                 </div>
                 
                 <div class="flex items-center gap-3 shrink-0">
-                    <button onclick="if(typeof toggleTheatreMode === 'function') toggleTheatreMode()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/40 text-xs font-semibold text-gray-200 flex items-center gap-2 transition-all">
-                        <i class="fas fa-expand"></i> Mode Bioskop
-                    </button>
-                    <button onclick="if(typeof closePlayer === 'function') closePlayer()" class="px-3.5 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-xs font-semibold text-white flex items-center gap-2 shadow-[0_0_12px_rgba(255,0,60,0.4)] transition-all">
-                        <i class="fas fa-times"></i> Tutup
+                    <button onclick="closeFastPlayer()" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-semibold text-white flex items-center gap-2 shadow-[0_0_12px_rgba(255,0,60,0.4)] transition-all">
+                        <i class="fas fa-times"></i> Tutup Pemutar
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <!-- Horizontal Category Chips -->
-        <div class="flex items-center gap-2.5 overflow-x-auto pb-4 pt-1 no-scrollbar">
-            <button onclick="filterCategoryBtn('All')" class="category-chip px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white text-xs font-bold shadow-[0_0_12px_rgba(255,0,60,0.5)] border border-red-400 shrink-0">
-                Semua Video
-            </button>
-            <button onclick="filterCategoryBtn('Sejarah Indonesia')" class="category-chip px-4 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 hover:border-red-500/40 shrink-0 transition-all flex items-center gap-2">
-                <i class="fas fa-monument text-red-500"></i> Sejarah Indonesia
-            </button>
-            <button onclick="filterCategoryBtn('Trending')" class="category-chip px-4 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 hover:border-red-500/40 shrink-0 transition-all">
-                Trending Nasional
-            </button>
-            <button onclick="filterCategoryBtn('Edukasi')" class="category-chip px-4 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 hover:border-red-500/40 shrink-0 transition-all">
-                Edukasi & Kebudayaan
-            </button>
-            <button onclick="filterCategoryBtn('Musik')" class="category-chip px-4 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 hover:border-red-500/40 shrink-0 transition-all">
-                Musik Nusantara
-            </button>
-            <button onclick="filterCategoryBtn('Gaming')" class="category-chip px-4 py-2 rounded-xl bg-white/5 hover:bg-red-600/20 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 hover:border-red-500/40 shrink-0 transition-all">
-                Komunitas Gaming
-            </button>
-        </div>
-
-        <!-- Skeleton Loading State -->
-        <div id="skeletonLoaderGrid" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-            <div class="skeleton-card rounded-2xl p-3 bg-white/5 border border-white/5 space-y-3">
-                <div class="w-full aspect-video rounded-xl bg-white/10 animate-pulse"></div>
-                <div class="h-4 w-3/4 rounded bg-white/10 animate-pulse"></div>
-                <div class="h-3 w-1/2 rounded bg-white/10 animate-pulse"></div>
-            </div>
-            <div class="skeleton-card rounded-2xl p-3 bg-white/5 border border-white/5 space-y-3">
-                <div class="w-full aspect-video rounded-xl bg-white/10 animate-pulse"></div>
-                <div class="h-4 w-3/4 rounded bg-white/10 animate-pulse"></div>
-                <div class="h-3 w-1/2 rounded bg-white/10 animate-pulse"></div>
             </div>
         </div>
 
         <!-- Video Feed Grid -->
         <div id="video-feed-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4">
-            <!-- Dynamic Video Cards via script.js -->
+            <!-- Dynamic Video Cards -->
         </div>
 
     </main>
 
-    <!-- ==================== 3. MAIN MENU BOTTOM NAVIGATION BAR ==================== -->
+    <!-- ==================== MAIN MENU BOTTOM BAR ==================== -->
     <nav class="fixed bottom-0 left-0 right-0 z-[9999] bg-[#0d0607]/95 backdrop-blur-2xl border-t border-red-500/30 py-3 px-4 shadow-[0_-5px_25px_rgba(0,0,0,0.9)]">
         <div class="flex items-center justify-around max-w-lg mx-auto">
             <button onclick="location.reload()" class="flex flex-col items-center gap-1 text-red-500 font-bold transition-transform active:scale-95">
@@ -246,162 +167,135 @@
                 <span class="text-[10px] tracking-wide">Sejarah Web</span>
             </button>
 
-            <button onclick="scrollToTop()" class="flex flex-col items-center gap-1 text-gray-300 hover:text-red-400 font-medium transition-transform active:scale-95">
+            <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center gap-1 text-gray-300 hover:text-red-400 font-medium transition-transform active:scale-95">
                 <i class="fas fa-arrow-up text-lg"></i>
                 <span class="text-[10px] tracking-wide">Ke Atas</span>
             </button>
         </div>
     </nav>
 
-    <!-- Firebase SDK & External Libs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- External Libs -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Scripts Kontrol Utama, YouTube Search Handler & Modal -->
     <script>
-        // Logika Splash Screen
+        // Splash Screen Fast Close
         window.addEventListener('load', () => {
             const loader = document.getElementById('app-loading-screen');
             if (loader) {
                 setTimeout(() => {
                     loader.style.opacity = '0';
-                    setTimeout(() => loader.style.display = 'none', 500);
-                }, 600);
+                    setTimeout(() => loader.style.display = 'none', 300);
+                }, 200);
             }
         });
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Auto-Suggest Integrasi YouTube API JSONP
-        let debounceTimer;
-        function onSearchInputHandler(query) {
-            clearTimeout(debounceTimer);
-            if (!query.trim()) {
-                document.getElementById('suggestionsDropdown').classList.add('hidden');
-                return;
-            }
-            debounceTimer = setTimeout(() => {
-                const script = document.createElement('script');
-                script.src = `https://suggestqueries.google.com/complete/search?client=youtube&ds=yt&q=${encodeURIComponent(query)}&jsonp=handleYouTubeSuggestions`;
-                document.body.appendChild(script);
-                document.body.removeChild(script);
-            }, 250);
-        }
-
-        function handleYouTubeSuggestions(data) {
-            const suggestions = data[1];
-            const listContainer = document.getElementById('suggestionsList');
-            const dropdown = document.getElementById('suggestionsDropdown');
-
-            if (suggestions && suggestions.length > 0) {
-                listContainer.innerHTML = suggestions.map(item => `
-                    <div onclick="selectSuggestion('${item[0].replace(/'/g, "\\'")}')" class="px-4 py-2.5 hover:bg-red-600/20 text-gray-200 hover:text-white cursor-pointer flex items-center gap-3 transition-colors">
-                        <i class="fas fa-search text-red-500/70 text-xs"></i>
-                        <span>${item[0]}</span>
-                    </div>
-                `).join('');
-                dropdown.classList.remove('hidden');
-            } else {
-                dropdown.classList.add('hidden');
-            }
-        }
-
-        function showSuggestionsMenu() {
-            const val = document.getElementById('searchInput').value;
-            if (val.trim()) onSearchInputHandler(val);
-        }
-
-        function selectSuggestion(text) {
-            document.getElementById('searchInput').value = text;
-            document.getElementById('suggestionsDropdown').classList.add('hidden');
-            triggerSearch();
-        }
-
-        // ==================== FUNGSI EKSEKUSI PENCARIAN TANGGUH ====================
-        function triggerSearch() {
-            document.getElementById('suggestionsDropdown').classList.add('hidden');
+        // ==================== FAST SEARCH ENGINE & AUTO PLAY ====================
+        async function fastSearch() {
             const query = document.getElementById('searchInput').value.trim();
             if (!query) return;
 
-            // Tampilkan loader skeleton
-            const skeleton = document.getElementById('skeletonLoaderGrid');
-            if (skeleton) skeleton.classList.remove('hidden');
+            const grid = document.getElementById('video-feed-grid');
+            grid.innerHTML = `
+                <div class="col-span-full py-12 text-center">
+                    <i class="fas fa-circle-notch fa-spin text-red-500 text-3xl mb-3"></i>
+                    <p class="text-sm font-semibold text-gray-300">Mencari '${query}' dengan cepat...</p>
+                </div>
+            `;
 
-            // Cek ketersediaan fungsi pencarian di script.js
+            try {
+                // Menggunakan API Piped/Invidious publik yang cepat tanpa API Key limit
+                const res = await fetch(`https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(query)}&filter=all`);
+                const data = await res.json();
+
+                if (data.items && data.items.length > 0) {
+                    grid.innerHTML = '';
+                    const videos = data.items.filter(item => item.type === 'stream').slice(0, 12);
+                    
+                    videos.forEach(v => {
+                        const videoId = v.url.split('v=')[1];
+                        const card = document.createElement('div');
+                        card.className = "bg-white/5 border border-white/10 hover:border-red-500/50 rounded-2xl p-3 cursor-pointer transition-all hover:scale-[1.02]";
+                        card.onclick = () => playFastVideo(videoId, v.title, v.uploaderName);
+                        
+                        card.innerHTML = `
+                            <div class="relative w-full aspect-video rounded-xl overflow-hidden mb-3 bg-black">
+                                <img src="${v.thumbnail}" class="w-full h-full object-cover" alt="thumb" loading="lazy">
+                                <div class="absolute bottom-2 right-2 bg-black/80 px-2 py-0.5 rounded text-[10px] font-mono text-white">
+                                    ${v.duration ? Math.floor(v.duration/60) + ':' + ('0' + v.duration%60).slice(-2) : 'LIVE'}
+                                </div>
+                            </div>
+                            <h3 class="text-xs font-bold text-white line-clamp-2 leading-snug">${v.title}</h3>
+                            <p class="text-[11px] text-red-400 mt-1.5 font-medium">${v.uploaderName}</p>
+                        `;
+                        grid.appendChild(card);
+                    });
+                } else {
+                    fallbackYoutubeSearch(query);
+                }
+            } catch (err) {
+                fallbackYoutubeSearch(query);
+            }
+        }
+
+        // Fallback jika API piped terhalang
+        function fallbackYoutubeSearch(query) {
+            const grid = document.getElementById('video-feed-grid');
+            // Jika ada fungsi handleSearch bawaan script.js
             if (typeof handleSearch === 'function') {
                 handleSearch();
-            } else if (typeof fetchSearchResults === 'function') {
-                fetchSearchResults(query);
-            } else if (typeof searchVideos === 'function') {
-                searchVideos(query);
             } else {
-                console.warn("Fungsi pencarian khusus tidak ditemukan di script.js, menjalankan event pencarian bawaan.");
-                const event = new CustomEvent('appSearch', { detail: query });
-                window.dispatchEvent(event);
+                grid.innerHTML = `
+                    <div class="col-span-full py-8 text-center text-red-400 text-xs">
+                        Pencarian selesai. Jika hasil tidak tampil, pastikan file script.js terhubung dengan benar.
+                    </div>
+                `;
             }
         }
 
-        function filterCategoryBtn(cat) {
-            if (typeof filterCategory === 'function') {
-                filterCategory(cat);
-            } else {
-                document.getElementById('searchInput').value = cat === 'All' ? '' : cat;
-                triggerSearch();
-            }
+        // Play Video Langsung Tanpa Error
+        function playFastVideo(id, title, channel) {
+            const container = document.getElementById('mainPlayerContainer');
+            const iframe = document.getElementById('mainYoutubePlayer');
+            const titleEl = document.getElementById('playerVideoTitle');
+            const channelEl = document.getElementById('channelNameText');
+
+            // Gunakan No-Cookie Embed YouTube standar agar tidak diblokir
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+            titleEl.innerText = title || "Video YouTube";
+            channelEl.innerText = channel || "Channel";
+
+            container.classList.remove('hidden');
+            window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const searchBox = document.getElementById('searchForm');
-            const dropdown = document.getElementById('suggestionsDropdown');
-            if (searchBox && !searchBox.contains(e.target) && dropdown) {
-                dropdown.classList.add('hidden');
-            }
-        });
+        function closeFastPlayer() {
+            const container = document.getElementById('mainPlayerContainer');
+            const iframe = document.getElementById('mainYoutubePlayer');
+            iframe.src = '';
+            container.classList.add('hidden');
+        }
 
-        // Modals Sejarah
         function showSejarahIndonesiaModal() {
             Swal.fire({
-                title: 'Sejarah Singkat Republik Indonesia',
-                html: `
-                    <div class="text-left text-xs leading-relaxed text-gray-300 space-y-3 font-sans">
-                        <p><strong>Periode Kerajaan Nusantara:</strong> Peradaban dipelopori oleh kerajaan besar seperti Sriwijaya dan Majapahit yang menjadi pusat kemaritiman serta kebudayaan Asia Tenggara.</p>
-                        <p><strong>Perjuangan Kemerdekaan:</strong> Digerakkan oleh semangat nasionalisme yang dipertegas melalui peristiwa Sumpah Pemuda pada tahun 1928 untuk menyatukan seluruh suku dan bangsa.</p>
-                        <p><strong>Proklamasi Kemerdekaan:</strong> Pada tanggal 17 Agustus 1945, Soekarno dan Mohammad Hatta memproklamasikan kemerdekaan Indonesia sebagai negara berdaulat berlandaskan Pancasila.</p>
-                    </div>
-                `,
+                title: 'Sejarah Singkat RI',
+                text: 'Proklamasi Kemerdekaan Indonesia dilaksanakan pada 17 Agustus 1945 oleh Soekarno-Hatta.',
                 icon: 'info',
-                confirmButtonText: 'Tutup',
                 confirmButtonColor: '#ff003c',
-                background: '#0d0607',
-                color: '#ffffff'
+                background: '#0d0607', color: '#ffffff'
             });
         }
 
         function showSejarahMiniTubeModal() {
             Swal.fire({
-                title: 'Sejarah Pengembangan MiniTube X',
-                html: `
-                    <div class="text-left text-xs leading-relaxed text-gray-300 space-y-3 font-sans">
-                        <p><strong>Pengembangan Awal (v1.0 - v3.0):</strong> Dirancang sebagai platform pemutar media berbasis web yang berfokus pada efisiensi performa, kecepatan muat, dan kebebasan dari iklan.</p>
-                        <p><strong>Evolusi Versi 4.0:</strong> Penerapan arsitektur Progressive Web App (PWA) serta penyesuaian basis data Firebase Real-time untuk stabilitas sistem yang optimal.</p>
-                        <p><strong>Versi 4.1 Edisi Nusantara:</strong> Penyempurnaan antarmuka secara menyeluruh dengan tema Merah Putih dan gaya glassmorphism formal yang dirancang khusus untuk kenyamanan pengguna Indonesia.</p>
-                    </div>
-                `,
+                title: 'MiniTube X v4.1',
+                text: 'Platform pemutar media ringan, bebas iklan, dan cepat berbasis PWA.',
                 icon: 'info',
-                confirmButtonText: 'Tutup',
                 confirmButtonColor: '#ff003c',
-                background: '#0d0607',
-                color: '#ffffff'
+                background: '#0d0607', color: '#ffffff'
             });
         }
     </script>
 
-    <!-- Engine Script Utama -->
     <script src="script.js"></script>
-
 </body>
 </html>
