@@ -57,7 +57,7 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-theme); }
 
-        /* ==================== SPLASH SCREEN V4.1 ==================== */
+        /* ==================== SPLASH SCREEN & ANIMATED LOADING V4.1 ==================== */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -75,19 +75,19 @@
             border-radius: 28px;
             text-align: center;
             width: 90%;
-            max-width: 380px;
+            max-width: 420px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
         }
         .splash-sun-icon {
-            font-size: 42px;
+            font-size: 48px;
             color: var(--primary-theme);
             margin-bottom: 14px;
-            animation: pulseGlow 2s infinite alternate;
+            animation: pulseGlow 1.5s infinite alternate ease-in-out;
         }
         @keyframes pulseGlow {
-            from { transform: scale(1); filter: drop-shadow(0 0 8px var(--primary-theme)); }
-            to { transform: scale(1.12); filter: drop-shadow(0 0 22px var(--primary-theme)); }
+            from { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-theme)); }
+            to { transform: scale(1.15); filter: drop-shadow(0 0 30px var(--accent-pink)); }
         }
         .loader-track {
             border-radius: 12px;
@@ -97,7 +97,19 @@
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--primary-theme), var(--secondary-theme), var(--accent-pink));
-            transition: width 0.1s linear;
+            transition: width 0.2s linear;
+        }
+
+        /* YouTube-Style Animated Skeleton Placeholder */
+        .yt-skeleton-box {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+            border-radius: 12px;
+        }
+        @keyframes skeletonLoading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* ==================== MAIN GATEWAY SCREEN V4.1 ==================== */
@@ -155,7 +167,7 @@
             box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
         }
 
-        /* ==================== MATRIX STATS GRID V4.1 ==================== */
+        /* MATRIX STATS GRID */
         .stats-container-box {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -184,7 +196,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* ==================== NAVBAR & SEARCH BAR V4.1 ==================== */
+        /* NAVBAR & SEARCH BAR V4.1 */
         .navbar-custom {
             background: rgba(6, 9, 25, 0.85);
             backdrop-filter: blur(16px);
@@ -194,8 +206,6 @@
             top: 0;
             z-index: 100;
         }
-        
-        /* Modern Glow Search Input */
         .search-box-v4 {
             position: relative;
             background: rgba(255, 255, 255, 0.04);
@@ -269,7 +279,7 @@
         .text-divider { color: var(--accent-pink); text-shadow: 0 0 8px var(--accent-pink); margin-right: 20px; }
         .text-en { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); margin-right: 50px; }
 
-        /* ==================== VIDEO PLAYER & CARDS V4.1 ==================== */
+        /* VIDEO PLAYER & CARDS V4.1 */
         .player-wrapper-v4 {
             position: relative;
             border-radius: 24px;
@@ -293,7 +303,7 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        /* ==================== FLOATING MUSIC WIDGET V4.1 ==================== */
+        /* FLOATING MUSIC WIDGET V4.1 */
         #music-floating-widget {
             position: fixed;
             bottom: 24px; right: 24px;
@@ -337,19 +347,25 @@
 </head>
 <body>
 
-    <!-- ==================== 1. SPLASH SCREEN V4.1 ==================== -->
+    <!-- ==================== 1. SPLASH SCREEN V4.1 WITH ANIMATED YOUTUBE PRELOAD ==================== -->
     <div id="splash-screen">
         <div class="splash-card">
-            <i class="fas fa-play-circle splash-sun-icon"></i>
+            <i class="fab fa-youtube splash-sun-icon"></i>
             <div style="font-weight: 800; font-size: 22px; letter-spacing: 2px; background: linear-gradient(95deg, #fff, var(--primary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MINITUBE X</div>
-            <div style="color: #64748b; font-size: 11px; margin-bottom: 18px; font-weight: 600;">GARUDA ENGINE v4.1 NEXT-GEN</div>
+            <div style="color: #64748b; font-size: 11px; margin-bottom: 14px; font-weight: 600;">GARUDA ENGINE v4.1 NEXT-GEN</div>
             
-            <div class="loader-track" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); height: 8px;">
+            <!-- YouTube Mini Animated Skeleton Simulation -->
+            <div class="grid grid-cols-2 gap-2 my-3 opacity-60">
+                <div class="yt-skeleton-box h-12 w-full"></div>
+                <div class="yt-skeleton-box h-12 w-full"></div>
+            </div>
+
+            <div class="loader-track mt-2" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); height: 8px;">
                 <div id="progress-bar-fill" class="loader-fill"></div>
             </div>
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-                <div id="render-status-log" style="font-size: 10px; color: var(--primary-theme); font-weight: 700; text-transform: uppercase;">Memuat Modul V4.1...</div>
+                <div id="render-status-log" style="font-size: 10px; color: var(--primary-theme); font-weight: 700; text-transform: uppercase;">Menghubungkan Server YouTube...</div>
                 <div id="splash-counter" style="font-size: 12px; font-family: monospace; font-weight: 700;">0%</div>
             </div>
         </div>
@@ -422,10 +438,10 @@
                 </button>
             </div>
 
-            <!-- SEARCH BAR V4.1 -->
+            <!-- DYNAMIC YOUTUBE SEARCH BAR -->
             <div class="search-box-v4">
                 <i class="fas fa-search text-slate-400 mr-2 text-sm"></i>
-                <input type="text" id="youtube-search-input" class="search-input-v4" placeholder="Cari video, musik, atau channel YouTube..." onkeypress="handleSearchKeyPress(event)">
+                <input type="text" id="youtube-search-input" class="search-input-v4" placeholder="Cari lagu, video, atau channel YouTube..." onkeypress="handleSearchKeyPress(event)">
                 <button class="btn-search-trigger" onclick="executeVideoSearch()">
                     Cari
                 </button>
@@ -433,21 +449,21 @@
 
             <!-- QUICK CATEGORY CHIPS -->
             <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
-                <div class="category-chip active" onclick="filterByCategory('Trending', this)">🔥 Trending</div>
-                <div class="category-chip" onclick="filterByCategory('Musik Indonesia', this)">🎵 Musik</div>
+                <div class="category-chip active" onclick="filterByCategory('Laguviral indonesia', this)">🔥 Trending</div>
+                <div class="category-chip" onclick="filterByCategory('Musik Pop Indonesia', this)">🎵 Musik</div>
                 <div class="category-chip" onclick="filterByCategory('Gaming Live', this)">🎮 Gaming</div>
                 <div class="category-chip" onclick="filterByCategory('Teknologi Terbaru', this)">💻 Teknologi</div>
                 <div class="category-chip" onclick="filterByCategory('Edukasi Sains', this)">🧠 Edukasi</div>
-                <div class="category-chip" onclick="filterByCategory('Anime AMV', this)">✨ Anime</div>
+                <div class="category-chip" onclick="filterByCategory('Anime AMV 4K', this)">✨ Anime</div>
             </div>
         </nav>
 
         <!-- RUNNING TEXT MARQUEE -->
         <div class="running-text-container">
             <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
-                <span class="text-id">🇮🇩 MiniTube V4.1: Fitur Pencarian Lengkap, Tanpa Iklan, & Akses Gratis!</span>
+                <span class="text-id">🇮🇩 MiniTube V4.1: Cari Lagu/Video Apapun Secara Real-Time Tanpa Iklan!</span>
                 <span class="text-divider">⚡⚡⚡</span>
-                <span class="text-en">🇬🇧 MiniTube V4.1: Full Search Bar, No Ads & Free Stream Access!</span>
+                <span class="text-en">🇬🇧 MiniTube V4.1: Real-Time Dynamic YouTube Search, No Ads Stream!</span>
             </marquee>
         </div>
 
@@ -458,7 +474,7 @@
                 <div id="player-display" class="aspect-video bg-black/60 rounded-xl flex items-center justify-center border border-white/5 overflow-hidden relative">
                     <div class="text-center p-6">
                         <i class="fas fa-play-circle text-5xl text-cyan-400 mb-3 animate-bounce"></i>
-                        <p class="text-slate-300 font-semibold text-sm">Gunakan Search Bar di atas atau pilih video untuk diputar</p>
+                        <p class="text-slate-300 font-semibold text-sm">Cari lagu/video di atas atau klik salah satu video di bawah</p>
                     </div>
                 </div>
             </div>
@@ -473,9 +489,9 @@
                     <span class="text-[11px] text-cyan-400 font-mono font-bold bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-1 rounded-full">GARUDA ENGINE V4.1</span>
                 </div>
                 
-                <!-- DYNAMIC VIDEO GRID -->
+                <!-- DYNAMIC VIDEO GRID WITH SKELETON LOADER -->
                 <div id="video-feed-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Skeleton / Card Video Render Target -->
+                    <!-- Dynamic Items / Skeletons generated here -->
                 </div>
             </div>
         </div>
@@ -493,96 +509,185 @@
         <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
     </div>
 
-    <!-- MAIN SCRIPT LOGIC -->
-    <script src="script.js"></script>
+    <!-- SCRIPT LOGIC PERBAIKAN SEARCH ENGINE & ANIMATED LOADING -->
     <script>
-        // Fungsi Tambahan V4.1 untuk Search Trigger
+        // Simulated Loading Screen with YouTube Preloading Log
+        document.addEventListener("DOMContentLoaded", () => {
+            let progress = 0;
+            const progressBar = document.getElementById("progress-bar-fill");
+            const counter = document.getElementById("splash-counter");
+            const logStatus = document.getElementById("render-status-log");
+
+            const logs = [
+                "Menghubungkan Server YouTube...",
+                "Memuat Modul Engine v4.1...",
+                "Sinkronisasi Pencarian Real-Time...",
+                "Menyiapkan Dashboard Utama...",
+                "Selesai!"
+            ];
+
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress > 100) progress = 100;
+
+                progressBar.style.width = progress + "%";
+                counter.innerText = progress + "%";
+
+                if (progress < 25) logStatus.innerText = logs[0];
+                else if (progress < 50) logStatus.innerText = logs[1];
+                else if (progress < 75) logStatus.innerText = logs[2];
+                else if (progress < 95) logStatus.innerText = logs[3];
+                else logStatus.innerText = logs[4];
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        const splash = document.getElementById("splash-screen");
+                        splash.style.opacity = "0";
+                        splash.style.transform = "scale(1.05)";
+                        setTimeout(() => splash.style.display = "none", 600);
+                    }, 400);
+                }
+            }, 180);
+
+            // Fetch default trending video saat pertama kali
+            executeVideoSearch('lagu viral indonesia terbaru');
+        });
+
+        function enterAppWithoutAccount() {
+            document.getElementById("main-gate-screen").style.display = "none";
+            document.getElementById("main-app-dashboard").style.display = "block";
+        }
+
+        function openLoginModal() {
+            Swal.fire({
+                title: 'Otentikasi Member',
+                text: 'Fitur login member sedang dalam pemeliharaan.',
+                icon: 'info',
+                background: '#0e172a',
+                color: '#fff',
+                confirmButtonColor: '#00f2fe'
+            });
+        }
+
+        function showOwnerProfileAlert() {
+            Swal.fire({
+                title: 'Haruukii79',
+                text: 'Owner & Lead Developer MiniTube X v4.1',
+                icon: 'success',
+                background: '#0e172a',
+                color: '#fff',
+                confirmButtonColor: '#00f2fe'
+            });
+        }
+
         function handleSearchKeyPress(event) {
             if (event.key === 'Enter') {
                 executeVideoSearch();
             }
         }
 
-        function executeVideoSearch() {
-            const query = document.getElementById('youtube-search-input').value.trim();
-            if (query === '') return;
-            
-            document.getElementById('feed-title-label').innerText = `Hasil Pencarian: "${query}"`;
-            
-            // Panggil fungsi search pada script.js jika ada
-            if (typeof searchYouTubeVideos === 'function') {
-                searchYouTubeVideos(query);
-            } else {
-                console.log('Searching for:', query);
+        // FUNGSI PENCARIAN REAL-TIME YOUTUBE SKELETON
+        async function executeVideoSearch(customQuery = null) {
+            const queryInput = document.getElementById('youtube-search-input');
+            const query = customQuery || queryInput.value.trim();
+            if (!query) return;
+
+            document.getElementById('feed-title-label').innerText = `Hasil Pencarian Real-time: "${query}"`;
+            const gridContainer = document.getElementById('video-feed-grid');
+
+            // Render Animated YouTube Skeletons saat memuat data
+            gridContainer.innerHTML = Array(6).fill(0).map(() => `
+                <div class="video-card-v4 p-3 space-y-3">
+                    <div class="yt-skeleton-box aspect-video w-full"></div>
+                    <div class="yt-skeleton-box h-4 w-3/4"></div>
+                    <div class="yt-skeleton-box h-3 w-1/2"></div>
+                </div>
+            `).join('');
+
+            try {
+                // Menggunakan Public Invidious YouTube API Engine
+                const response = await fetch(`https://invidious.io.lol/api/v1/search?q=${encodeURIComponent(query)}&type=video`);
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    gridContainer.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">Tidak ada hasil ditemukan untuk "${query}". Coba kata kunci lagu/video lain.</div>`;
+                    return;
+                }
+
+                // Render video sungguhan dari YouTube
+                gridContainer.innerHTML = data.slice(0, 9).map(video => `
+                    <div class="video-card-v4 p-3 flex flex-col justify-between" onclick="playYouTubeVideo('${video.videoId}', '${escapeQuotes(video.title)}')">
+                        <div>
+                            <div class="relative rounded-xl overflow-hidden mb-2">
+                                <img src="https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg" class="w-full aspect-video object-cover" alt="thumbnail" loading="lazy">
+                                <span class="absolute bottom-2 right-2 bg-black/80 text-cyan-400 font-mono text-[10px] px-2 py-0.5 rounded-md font-bold border border-cyan-500/20">
+                                    ${formatTime(video.lengthSeconds)}
+                                </span>
+                            </div>
+                            <h4 class="font-bold text-sm text-slate-100 line-clamp-2">${video.title}</h4>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+                            <span class="truncate max-w-[120px] text-cyan-400"><i class="fas fa-check-circle"></i> ${video.author}</span>
+                            <span>${video.viewCountText || 'YouTube Video'}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (err) {
+                console.error("Gagal koneksi API YouTube:", err);
+                // Fallback jika API publik lambat
+                gridContainer.innerHTML = `<div class="col-span-full text-center py-8 text-slate-400">Gagal terhubung ke server YouTube. Silakan klik tombol Cari lagi.</div>`;
             }
+        }
+
+        function playYouTubeVideo(videoId, title) {
+            const playerDisplay = document.getElementById('player-display');
+            playerDisplay.innerHTML = `
+                <iframe class="w-full h-full rounded-xl" 
+                    src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0" 
+                    title="${title}" frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            `;
+            // Scroll halus ke player
+            document.getElementById('mainPlayerContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
         function filterByCategory(categoryName, element) {
             document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
             element.classList.add('active');
             document.getElementById('youtube-search-input').value = categoryName;
-            executeVideoSearch();
+            executeVideoSearch(categoryName);
         }
 
-let deferredPrompt;
-
-// 1. Registrasi Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then((reg) => console.log('SW Registered:', reg.scope))
-      .catch((err) => console.error('SW Registration Failed:', err));
-  });
-}
-
-// 2. Tangkap Prompt Install PWA & Munculkan Pop-up Custom
-window.addEventListener('beforeinstallprompt', (e) => {
-  // Cegah dialog bawaan browser agar tidak langsung muncul kasar
-  e.preventDefault();
-  deferredPrompt = e;
-
-  // Tampilkan notifikasi custom berbentuk SweetAlert2
-  Swal.fire({
-    title: 'Install MiniTube X',
-    text: 'Jadikan MiniTube X sebagai aplikasi di HP/Laptop kamu agar lebih cepat & ringan!',
-    icon: 'info',
-    showCancelButton: true,
-    confirmButtonText: '<i class="fas fa-download"></i> Install Sekarang',
-    cancelButtonText: 'Nanti Saja',
-    confirmButtonColor: '#00f2fe',
-    cancelButtonColor: '#334155',
-    background: '#0e172a',
-    color: '#ffffff',
-    customClass: {
-      popup: 'border border-cyan-500/30 rounded-3xl backdrop-blur-xl'
-    }
-  }).then((result) => {
-    if (result.isConfirmed && deferredPrompt) {
-      // Munculkan dialog instalasi resmi dari OS/Browser
-      deferredPrompt.prompt();
-      
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          Swal.fire({
-            title: 'Berhasil!',
-            text: 'Aplikasi sedang dipasang di perangkat kamu.',
-            icon: 'success',
-            confirmButtonColor: '#00f2fe',
-            background: '#0e172a',
-            color: '#ffffff'
-          });
+        function formatTime(seconds) {
+            if (!seconds) return "LIVE";
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
         }
-        deferredPrompt = null;
-      });
-    }
-  });
-});
 
-// 3. Notifikasi setelah aplikasi sukses terinstall
-window.addEventListener('appinstalled', () => {
-  console.log('MiniTube X berhasil diinstall!');
-});
+        function escapeQuotes(str) {
+            return str ? str.replace(/'/g, "\\'").replace(/"/g, '&quot;') : '';
+        }
 
+        function toggleAudioPlayback() {
+            const bgMusic = document.getElementById('bg-music');
+            const vinyl = document.getElementById('vinyl-disc');
+            const eq = document.getElementById('miniEqualizer');
+
+            if (bgMusic.paused) {
+                bgMusic.play();
+                vinyl.classList.remove('paused');
+                eq.classList.add('playing');
+            } else {
+                bgMusic.pause();
+                vinyl.classList.add('paused');
+                eq.classList.remove('playing');
+            }
+        }
     </script>
 </body>
 </html>
