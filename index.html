@@ -523,6 +523,66 @@
             document.getElementById('youtube-search-input').value = categoryName;
             executeVideoSearch();
         }
+
+let deferredPrompt;
+
+// 1. Registrasi Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then((reg) => console.log('SW Registered:', reg.scope))
+      .catch((err) => console.error('SW Registration Failed:', err));
+  });
+}
+
+// 2. Tangkap Prompt Install PWA & Munculkan Pop-up Custom
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Cegah dialog bawaan browser agar tidak langsung muncul kasar
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Tampilkan notifikasi custom berbentuk SweetAlert2
+  Swal.fire({
+    title: 'Install MiniTube X',
+    text: 'Jadikan MiniTube X sebagai aplikasi di HP/Laptop kamu agar lebih cepat & ringan!',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonText: '<i class="fas fa-download"></i> Install Sekarang',
+    cancelButtonText: 'Nanti Saja',
+    confirmButtonColor: '#00f2fe',
+    cancelButtonColor: '#334155',
+    background: '#0e172a',
+    color: '#ffffff',
+    customClass: {
+      popup: 'border border-cyan-500/30 rounded-3xl backdrop-blur-xl'
+    }
+  }).then((result) => {
+    if (result.isConfirmed && deferredPrompt) {
+      // Munculkan dialog instalasi resmi dari OS/Browser
+      deferredPrompt.prompt();
+      
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          Swal.fire({
+            title: 'Berhasil!',
+            text: 'Aplikasi sedang dipasang di perangkat kamu.',
+            icon: 'success',
+            confirmButtonColor: '#00f2fe',
+            background: '#0e172a',
+            color: '#ffffff'
+          });
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
+});
+
+// 3. Notifikasi setelah aplikasi sukses terinstall
+window.addEventListener('appinstalled', () => {
+  console.log('MiniTube X berhasil diinstall!');
+});
+
     </script>
 </body>
 </html>
