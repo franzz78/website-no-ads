@@ -2855,3 +2855,123 @@ hr, .divider-glow {
     margin: 16px 0;
     opacity: 0.6;
    }
+
+/* ==========================================================================
+   MINITUBE X - ADDITIONAL EXTRA CYAN & WHITE STYLING (ADD TO BOTTOM)
+   ========================================================================== */
+
+/* 1. ENHANCED TITLE & BRANDING NEON EFFECTS */
+.v4-badge {
+    background: linear-gradient(90deg, rgba(0, 242, 254, 0.15), rgba(255, 255, 255, 0.05)) !important;
+    border: 1px solid #00f2fe !important;
+    color: #00f2fe !important;
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.35) !important;
+    text-shadow: 0 0 6px rgba(0, 242, 254, 0.8);
+}
+
+/* 2. INPUT SEARCH NEON HIGHLIGHT */
+.search-box-v4 {
+    border: 1px solid rgba(0, 242, 254, 0.25) !important;
+    background: rgba(5, 15, 35, 0.7) !important;
+}
+
+.search-box-v4:focus-within {
+    border-color: #00f2fe !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.4), inset 0 0 10px rgba(0, 242, 254, 0.1) !important;
+}
+
+.search-input-v4 {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.search-input-v4::placeholder {
+    color: #a5f3fc !important;
+    opacity: 0.6;
+}
+
+/* 3. HIGH CONTRAST CYAN-WHITE BUTTONS */
+.btn-search-trigger {
+    background: linear-gradient(135deg, #00f2fe 0%, #00a8ff 100%) !important;
+    color: #050b18 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4) !important;
+    transition: all 0.25s ease-in-out !important;
+}
+
+.btn-search-trigger:hover {
+    background: #ffffff !important;
+    color: #050b18 !important;
+    box-shadow: 0 0 20px #ffffff, 0 0 30px #00f2fe !important;
+    transform: scale(1.04) !important;
+}
+
+/* 4. CATEGORY CHIPS WHITE-CYAN HIGHLIGHT */
+.category-chip {
+    border: 1px solid rgba(0, 242, 254, 0.2) !important;
+    color: #a5f3fc !important;
+    background: rgba(10, 25, 50, 0.5) !important;
+}
+
+.category-chip:hover, 
+.category-chip.active {
+    background: #00f2fe !important;
+    color: #050b18 !important;
+    border-color: #ffffff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.6) !important;
+}
+
+/* 5. CARD HOVER & BORDER CYAN GLOW */
+.video-card-v4 {
+    border: 1px solid rgba(0, 242, 254, 0.15) !important;
+    background: rgba(8, 20, 40, 0.6) !important;
+    backdrop-filter: blur(12px);
+}
+
+.video-card-v4:hover {
+    border-color: #00f2fe !important;
+    background: rgba(0, 242, 254, 0.08) !important;
+    box-shadow: 0 10px 30px rgba(0, 242, 254, 0.25), 0 0 15px rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-4px) !important;
+}
+
+.video-card-v4 h4 {
+    color: #ffffff !important;
+}
+
+/* 6. FLOATING MUSIC WIDGET NEON FINISH */
+#music-floating-widget {
+    background: rgba(6, 18, 38, 0.85) !important;
+    border: 1px solid #00f2fe !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.35) !important;
+}
+
+#music-floating-widget:hover {
+    box-shadow: 0 0 30px rgba(0, 242, 254, 0.6), 0 0 15px #ffffff !important;
+}
+
+#vinyl-disc {
+    border: 2px solid #00f2fe !important;
+    filter: drop-shadow(0 0 8px #00f2fe);
+}
+
+.mini-equalizer .bar {
+    background: linear-gradient(to top, #0077ff, #00f2fe, #ffffff) !important;
+}
+
+/* 7. MARQUEE CYAN TEXT GLOW */
+.text-id {
+    color: #00f2fe !important;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.8) !important;
+}
+
+.text-divider {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #ffffff !important;
+}
+
+.text-en {
+    color: #e0f2fe !important;
+    text-shadow: 0 0 8px rgba(224, 242, 254, 0.5) !important;
+}
