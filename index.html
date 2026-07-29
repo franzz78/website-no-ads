@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniTube X - V4.1 Next-Gen Web App</title>
+    <title>MiniTube X - V4.1 Fast Engine</title>
 
     <meta name="google-site-verification" content="9FgPszYe0eP2kBEzJ0wdNVbPASR5mDb1S51DApXHbkc" />
 
@@ -21,10 +21,6 @@
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Firebase SDK (Compat Version) -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <style>
         :root {
@@ -51,13 +47,12 @@
             min-height: 100vh;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary-theme); }
 
-        /* ==================== SPLASH SCREEN & ANIMATED LOADING V4.1 ==================== */
+        /* SPLASH SCREEN */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -66,7 +61,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .splash-card {
             background: var(--glass-card);
@@ -83,28 +78,24 @@
             font-size: 48px;
             color: var(--primary-theme);
             margin-bottom: 14px;
-            animation: pulseGlow 1.5s infinite alternate ease-in-out;
+            animation: pulseGlow 1.2s infinite alternate ease-in-out;
         }
         @keyframes pulseGlow {
             from { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-theme)); }
             to { transform: scale(1.15); filter: drop-shadow(0 0 30px var(--accent-pink)); }
         }
-        .loader-track {
-            border-radius: 12px;
-            overflow: hidden;
-        }
+        .loader-track { border-radius: 12px; overflow: hidden; }
         .loader-fill {
-            height: 100%;
-            width: 0%;
+            height: 100%; width: 0%;
             background: linear-gradient(90deg, var(--primary-theme), var(--secondary-theme), var(--accent-pink));
-            transition: width 0.2s linear;
+            transition: width 0.15s linear;
         }
 
-        /* YouTube-Style Animated Skeleton Placeholder */
+        /* YOUTUBE SKELETON ANIMATION */
         .yt-skeleton-box {
             background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
             background-size: 200% 100%;
-            animation: skeletonLoading 1.5s infinite;
+            animation: skeletonLoading 1.2s infinite;
             border-radius: 12px;
         }
         @keyframes skeletonLoading {
@@ -112,7 +103,7 @@
             100% { background-position: -200% 0; }
         }
 
-        /* ==================== MAIN GATEWAY SCREEN V4.1 ==================== */
+        /* GATEWAY SCREEN */
         #main-gate-screen {
             min-height: 100vh;
             display: flex;
@@ -157,17 +148,15 @@
             align-items: center;
             gap: 16px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
             text-align: left;
         }
         .btn-gate:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--primary-theme);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
+            transform: translateY(-2px);
         }
 
-        /* MATRIX STATS GRID */
         .stats-container-box {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -180,12 +169,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 18px;
             padding: 14px 16px;
-            transition: all 0.3s ease;
-        }
-        .stat-mini-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--secondary-theme);
-            transform: translateY(-2px);
         }
         .stat-number {
             font-size: 19px;
@@ -196,7 +179,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* NAVBAR & SEARCH BAR V4.1 */
+        /* NAVBAR & SEARCH */
         .navbar-custom {
             background: rgba(6, 9, 25, 0.85);
             backdrop-filter: blur(16px);
@@ -230,25 +213,18 @@
             font-size: 14px;
             padding: 8px 0;
         }
-        .search-input-v4::placeholder {
-            color: #64748b;
-        }
         .btn-search-trigger {
             background: linear-gradient(135deg, var(--primary-theme), #00b4d8);
             color: #000;
             border: none;
             border-radius: 14px;
-            padding: 8px 16px;
+            padding: 8px 18px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        .btn-search-trigger:hover {
-            opacity: 0.9;
-            transform: scale(1.03);
-        }
+        .btn-search-trigger:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* Category Chips Horizontal Scroll */
         .category-chip {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--glass-border);
@@ -259,7 +235,7 @@
             color: #94a3b8;
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .category-chip.active, .category-chip:hover {
             background: linear-gradient(90deg, rgba(0, 242, 254, 0.2), rgba(157, 78, 221, 0.2));
@@ -267,7 +243,6 @@
             color: #fff;
         }
 
-        /* Running Text Container */
         .running-text-container {
             width: 100%;
             background: rgba(255, 255, 255, 0.02);
@@ -279,7 +254,6 @@
         .text-divider { color: var(--accent-pink); text-shadow: 0 0 8px var(--accent-pink); margin-right: 20px; }
         .text-en { color: #ffffff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.4); margin-right: 50px; }
 
-        /* VIDEO PLAYER & CARDS V4.1 */
         .player-wrapper-v4 {
             position: relative;
             border-radius: 24px;
@@ -293,7 +267,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             cursor: pointer;
         }
         .video-card-v4:hover {
@@ -303,7 +277,6 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        /* FLOATING MUSIC WIDGET V4.1 */
         #music-floating-widget {
             position: fixed;
             bottom: 24px; right: 24px;
@@ -318,7 +291,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             z-index: 90;
             cursor: pointer;
-            transition: all 0.4s ease;
         }
         #vinyl-disc {
             width: 34px; height: 34px;
@@ -347,14 +319,13 @@
 </head>
 <body>
 
-    <!-- ==================== 1. SPLASH SCREEN V4.1 WITH ANIMATED YOUTUBE PRELOAD ==================== -->
+    <!-- 1. SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="splash-card">
             <i class="fab fa-youtube splash-sun-icon"></i>
             <div style="font-weight: 800; font-size: 22px; letter-spacing: 2px; background: linear-gradient(95deg, #fff, var(--primary-theme)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MINITUBE X</div>
-            <div style="color: #64748b; font-size: 11px; margin-bottom: 14px; font-weight: 600;">GARUDA ENGINE v4.1 NEXT-GEN</div>
+            <div style="color: #64748b; font-size: 11px; margin-bottom: 14px; font-weight: 600;">GARUDA ENGINE v4.1 FAST SEARCH</div>
             
-            <!-- YouTube Mini Animated Skeleton Simulation -->
             <div class="grid grid-cols-2 gap-2 my-3 opacity-60">
                 <div class="yt-skeleton-box h-12 w-full"></div>
                 <div class="yt-skeleton-box h-12 w-full"></div>
@@ -365,13 +336,13 @@
             </div>
             
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
-                <div id="render-status-log" style="font-size: 10px; color: var(--primary-theme); font-weight: 700; text-transform: uppercase;">Menghubungkan Server YouTube...</div>
+                <div id="render-status-log" style="font-size: 10px; color: var(--primary-theme); font-weight: 700; text-transform: uppercase;">Memuat Engine...</div>
                 <div id="splash-counter" style="font-size: 12px; font-family: monospace; font-weight: 700;">0%</div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 2. MAIN GATEWAY SCREEN V4.1 ==================== -->
+    <!-- 2. GATEWAY SCREEN -->
     <div id="main-gate-screen">
         <div class="gate-content-box" style="max-width: 440px;">
             <div class="v4-badge">RELEASE EDITION V4.1</div>
@@ -379,7 +350,7 @@
             <div style="margin-bottom: 24px;">
                 <i class="fab fa-youtube" style="font-size: 42px; color: var(--primary-theme); margin-bottom: 8px; filter: drop-shadow(0 0 12px rgba(0,242,254,0.4));"></i>
                 <h2 style="font-weight: 800; font-size: 22px; letter-spacing: 0.5px; color: #fff;">MINITUBE APPLICATION</h2>
-                <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Platform Streaming Bebas Iklan & Ringan</p>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Platform Streaming Bebas Iklan & Cepat</p>
             </div>
 
             <div class="gate-buttons-group">
@@ -400,10 +371,9 @@
                 </button>
             </div>
 
-            <!-- MATRIX STATS GRID -->
             <div class="stats-container-box">
                 <div class="stat-mini-card">
-                    <span class="stat-number" id="visitor-count-num">100K+</span>
+                    <span class="stat-number">100K+</span>
                     <span style="font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: 600;">Pengunjung</span>
                 </div>
                 <div class="stat-mini-card">
@@ -424,80 +394,71 @@
         </div>
     </div>
 
-    <!-- ==================== 3. DASHBOARD UTAMA WEBSITE V4.1 ==================== -->
+    <!-- 3. MAIN DASHBOARD -->
     <div id="main-app-dashboard" style="display: none;">
-        <!-- NAVBAR INTEGRATED WITH SEARCH V4.1 -->
         <nav class="navbar-custom space-y-3">
             <div class="flex items-center justify-between">
                 <div style="font-weight: 800; font-size: 20px; color: #fff; display: flex; align-items: center; gap: 10px;">
                     <i class="fab fa-youtube" style="color: var(--primary-theme); font-size: 24px;"></i> 
                     <span>MINITUBE <span style="color: var(--primary-theme); font-size: 12px; vertical-align: super;">V4.1</span></span>
                 </div>
-                <button onclick="showOwnerProfileAlert()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer;" class="hover:bg-white/10 transition">
+                <button onclick="showOwnerProfileAlert()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer;">
                     <i class="fas fa-user-circle text-cyan-400"></i> Owner
                 </button>
             </div>
 
-            <!-- DYNAMIC YOUTUBE SEARCH BAR -->
             <div class="search-box-v4">
                 <i class="fas fa-search text-slate-400 mr-2 text-sm"></i>
-                <input type="text" id="youtube-search-input" class="search-input-v4" placeholder="Cari lagu, video, atau channel YouTube..." onkeypress="handleSearchKeyPress(event)">
+                <input type="text" id="youtube-search-input" class="search-input-v4" placeholder="Ketik nama lagu atau judul video..." onkeypress="handleSearchKeyPress(event)">
                 <button class="btn-search-trigger" onclick="executeVideoSearch()">
                     Cari
                 </button>
             </div>
 
-            <!-- QUICK CATEGORY CHIPS -->
             <div class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
-                <div class="category-chip active" onclick="filterByCategory('Laguviral indonesia', this)">🔥 Trending</div>
+                <div class="category-chip active" onclick="filterByCategory('Lagu viral indonesia', this)">🔥 Trending</div>
                 <div class="category-chip" onclick="filterByCategory('Musik Pop Indonesia', this)">🎵 Musik</div>
                 <div class="category-chip" onclick="filterByCategory('Gaming Live', this)">🎮 Gaming</div>
                 <div class="category-chip" onclick="filterByCategory('Teknologi Terbaru', this)">💻 Teknologi</div>
-                <div class="category-chip" onclick="filterByCategory('Edukasi Sains', this)">🧠 Edukasi</div>
                 <div class="category-chip" onclick="filterByCategory('Anime AMV 4K', this)">✨ Anime</div>
             </div>
         </nav>
 
-        <!-- RUNNING TEXT MARQUEE -->
         <div class="running-text-container">
             <marquee behavior="scroll" direction="left" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
-                <span class="text-id">🇮🇩 MiniTube V4.1: Cari Lagu/Video Apapun Secara Real-Time Tanpa Iklan!</span>
+                <span class="text-id">🇮🇩 MiniTube V4.1: Pencarian Instant Super Cepat Tanpa Delay!</span>
                 <span class="text-divider">⚡⚡⚡</span>
-                <span class="text-en">🇬🇧 MiniTube V4.1: Real-Time Dynamic YouTube Search, No Ads Stream!</span>
+                <span class="text-en">🇬🇧 MiniTube V4.1: Instant Parallel Search Engine Activated!</span>
             </marquee>
         </div>
 
-        <!-- DASHBOARD CONTENT BODY -->
         <div class="p-4 max-w-5xl mx-auto space-y-6">
-            <!-- PLAYER CONTAINER V4.1 -->
             <div id="mainPlayerContainer" class="player-wrapper-v4 p-3 md:p-4">
                 <div id="player-display" class="aspect-video bg-black/60 rounded-xl flex items-center justify-center border border-white/5 overflow-hidden relative">
                     <div class="text-center p-6">
                         <i class="fas fa-play-circle text-5xl text-cyan-400 mb-3 animate-bounce"></i>
-                        <p class="text-slate-300 font-semibold text-sm">Cari lagu/video di atas atau klik salah satu video di bawah</p>
+                        <p class="text-slate-300 font-semibold text-sm">Cari lagu di atas atau klik salah satu video di bawah</p>
                     </div>
                 </div>
             </div>
 
-            <!-- FEED & SEARCH RESULT HEADER -->
             <div class="space-y-4">
                 <div class="flex items-center justify-between border-b border-white/5 pb-2">
                     <h3 class="font-bold text-base text-slate-200 flex items-center gap-2">
-                        <i class="fas fa-compass text-cyan-400"></i>
-                        <span id="feed-title-label">Rekomendasi Video Feed</span>
+                        <i class="fas fa-bolt text-cyan-400"></i>
+                        <span id="feed-title-label">Hasil Pencarian Instant</span>
                     </h3>
-                    <span class="text-[11px] text-cyan-400 font-mono font-bold bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-1 rounded-full">GARUDA ENGINE V4.1</span>
+                    <span class="text-[11px] text-cyan-400 font-mono font-bold bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-1 rounded-full">FAST ENGINE V4.1</span>
                 </div>
                 
-                <!-- DYNAMIC VIDEO GRID WITH SKELETON LOADER -->
                 <div id="video-feed-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Dynamic Items / Skeletons generated here -->
+                    <!-- Dynamic Video Items -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 4. FLOATING MUSIC & EQUALIZER WIDGET V4.1 ==================== -->
+    <!-- 4. FLOATING MUSIC WIDGET -->
     <div id="music-floating-widget" onclick="toggleAudioPlayback()">
         <img id="vinyl-disc" class="paused" src="https://cdn-icons-png.flaticon.com/512/1222/1222209.png" alt="Vinyl">
         <div class="mini-equalizer" id="miniEqualizer">
@@ -509,9 +470,8 @@
         <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
     </div>
 
-    <!-- SCRIPT LOGIC MAIN ENGINE, ANIMATED LOADING & MULTI-FALLBACK SEARCH -->
     <script>
-        // DAFTAR PUBLIC API INVIDIOUS INSTANCES (MULTI-FALLBACK)
+        // SERVER POOL (DIPANGGIL SERENTAK PARALEL)
         const INVIDIOUS_SERVERS = [
             'https://inv.tux.pizza',
             'https://invidious.nerdvpn.de',
@@ -520,33 +480,18 @@
             'https://youtube.007150.xyz'
         ];
 
-        // 1. Loading Screen Animasi
         document.addEventListener("DOMContentLoaded", () => {
             let progress = 0;
             const progressBar = document.getElementById("progress-bar-fill");
             const counter = document.getElementById("splash-counter");
             const logStatus = document.getElementById("render-status-log");
 
-            const logs = [
-                "Menghubungkan Server YouTube...",
-                "Memuat Modul Engine v4.1...",
-                "Sinkronisasi Pencarian Real-Time...",
-                "Menyiapkan Dashboard Utama...",
-                "Selesai!"
-            ];
-
             const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 15) + 5;
+                progress += Math.floor(Math.random() * 25) + 15;
                 if (progress > 100) progress = 100;
 
                 progressBar.style.width = progress + "%";
                 counter.innerText = progress + "%";
-
-                if (progress < 25) logStatus.innerText = logs[0];
-                else if (progress < 50) logStatus.innerText = logs[1];
-                else if (progress < 75) logStatus.innerText = logs[2];
-                else if (progress < 95) logStatus.innerText = logs[3];
-                else logStatus.innerText = logs[4];
 
                 if (progress === 100) {
                     clearInterval(interval);
@@ -554,12 +499,12 @@
                         const splash = document.getElementById("splash-screen");
                         splash.style.opacity = "0";
                         splash.style.transform = "scale(1.05)";
-                        setTimeout(() => splash.style.display = "none", 600);
-                    }, 400);
+                        setTimeout(() => splash.style.display = "none", 500);
+                    }, 200);
                 }
-            }, 180);
+            }, 100);
 
-            // Load default trending video saat awal dibuka
+            // Auto Search Lagu Viral Saat Pertama Buka
             executeVideoSearch('lagu viral indonesia terbaru');
         });
 
@@ -596,16 +541,16 @@
             }
         }
 
-        // 2. FUNGSI PENCARIAN REAL-TIME YOUTUBE SKELETON + MULTI-SERVER FALLBACK
+        // FUNGSI PENCARIAN INSTANT DENGAN PARALLEL FETCH (PROMISE.ANY)
         async function executeVideoSearch(customQuery = null) {
             const queryInput = document.getElementById('youtube-search-input');
             const query = customQuery || queryInput.value.trim();
             if (!query) return;
 
-            document.getElementById('feed-title-label').innerText = `Hasil Pencarian Real-time: "${query}"`;
+            document.getElementById('feed-title-label').innerText = `Hasil Pencarian: "${query}"`;
             const gridContainer = document.getElementById('video-feed-grid');
 
-            // Render Animated Skeleton Placeholders
+            // Render Skeleton Loader Instan
             gridContainer.innerHTML = Array(6).fill(0).map(() => `
                 <div class="video-card-v4 p-3 space-y-3">
                     <div class="yt-skeleton-box aspect-video w-full"></div>
@@ -614,74 +559,61 @@
                 </div>
             `).join('');
 
-            let data = null;
-            let successServer = null;
-
-            // Pindai Server API Satu per Satu jika server sebelumnya bermasalah
-            for (const server of INVIDIOUS_SERVERS) {
-                try {
-                    console.log(`[MiniTube Engine] Mencoba terhubung ke server: ${server}`);
-                    const response = await fetch(`${server}/api/v1/search?q=${encodeURIComponent(query)}&type=video`, {
+            try {
+                // Tembak Semua Server Sekaligus Secara Paralel!
+                const fetchPromises = INVIDIOUS_SERVERS.map(server => 
+                    fetch(`${server}/api/v1/search?q=${encodeURIComponent(query)}&type=video`, {
                         headers: { 'Accept': 'application/json' }
-                    });
+                    }).then(async res => {
+                        if (!res.ok) throw new Error("Server response error");
+                        const json = await res.json();
+                        if (Array.isArray(json) && json.length > 0) return json;
+                        throw new Error("Empty result");
+                    })
+                );
 
-                    if (response.ok) {
-                        const result = await response.json();
-                        if (Array.isArray(result) && result.length > 0) {
-                            data = result;
-                            successServer = server;
-                            break;
-                        }
-                    }
-                } catch (err) {
-                    console.warn(`[MiniTube Engine] Server ${server} offline/error, mencoba server cadangan...`);
-                }
-            }
+                // Promise.any mengambil hasil dari SERVER YANG PALING CEPAT MERESPONS!
+                const data = await Promise.any(fetchPromises);
 
-            // Jika Seluruh Server API Publik Bermasalah
-            if (!data) {
+                // Render Hasil Video Langsung Ke Layar
+                gridContainer.innerHTML = data.slice(0, 9).map(video => {
+                    const videoId = video.videoId || video.id;
+                    const videoTitle = escapeQuotes(video.title || 'YouTube Video');
+                    const authorName = video.author || video.authorName || 'Channel YouTube';
+                    const duration = formatTime(video.lengthSeconds);
+
+                    return `
+                        <div class="video-card-v4 p-3 flex flex-col justify-between" onclick="playYouTubeVideo('${videoId}', '${videoTitle}')">
+                            <div>
+                                <div class="relative rounded-xl overflow-hidden mb-2">
+                                    <img src="https://i.ytimg.com/vi/${videoId}/mqdefault.jpg" class="w-full aspect-video object-cover" alt="thumbnail" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500'">
+                                    <span class="absolute bottom-2 right-2 bg-black/80 text-cyan-400 font-mono text-[10px] px-2 py-0.5 rounded-md font-bold border border-cyan-500/20">
+                                        ${duration}
+                                    </span>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-100 line-clamp-2">${video.title}</h4>
+                            </div>
+                            <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
+                                <span class="truncate max-w-[120px] text-cyan-400"><i class="fas fa-check-circle"></i> ${authorName}</span>
+                                <span>${video.viewCountText || 'Lihat Video'}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error("Semua server sibuk/terhalang jaringan:", err);
                 gridContainer.innerHTML = `
-                    <div class="col-span-full text-center py-10 px-4 bg-slate-900/50 border border-red-500/30 rounded-2xl">
-                        <i class="fas fa-exclamation-triangle text-3xl text-amber-400 mb-3"></i>
-                        <h4 class="font-bold text-slate-200 text-base mb-1">Server Pencarian Sedang Sibuk / Blocked</h4>
-                        <p class="text-xs text-slate-400 mb-4 max-w-md mx-auto">
-                            Koneksi ke server API YouTube publik terhalang jaringan/CORS. Silakan coba tekan tombol "Coba Lagi".
-                        </p>
-                        <button onclick="executeVideoSearch('${query}')" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition">
+                    <div class="col-span-full text-center py-10 px-4 bg-slate-900/50 border border-amber-500/30 rounded-2xl">
+                        <i class="fas fa-exclamation-circle text-3xl text-amber-400 mb-2"></i>
+                        <h4 class="font-bold text-slate-200 text-sm mb-1">Gagal Memuat Hasil Pencarian</h4>
+                        <p class="text-xs text-slate-400 mb-4">Koneksi jaringan sibuk. Coba tekan tombol Cari sekali lagi.</p>
+                        <button onclick="executeVideoSearch('${query}')" class="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs">
                             <i class="fas fa-sync-alt mr-1"></i> Coba Lagi
                         </button>
                     </div>
                 `;
-                return;
             }
-
-            console.log(`[MiniTube Engine] Berhasil mendapatkan data dari server: ${successServer}`);
-
-            // Render Video Card
-            gridContainer.innerHTML = data.slice(0, 9).map(video => {
-                const videoId = video.videoId || video.id;
-                const videoTitle = escapeQuotes(video.title || 'YouTube Video');
-                const authorName = video.author || video.authorName || 'Channel YouTube';
-                const duration = formatTime(video.lengthSeconds);
-
-                return `
-                    <div class="video-card-v4 p-3 flex flex-col justify-between" onclick="playYouTubeVideo('${videoId}', '${videoTitle}')">
-                        <div>
-                            <div class="relative rounded-xl overflow-hidden mb-2">
-                                <img src="https://i.ytimg.com/vi/${videoId}/mqdefault.jpg" class="w-full aspect-video object-cover" alt="thumbnail" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500'">
-                                <span class="absolute bottom-2 right-2 bg-black/80 text-cyan-400 font-mono text-[10px] px-2 py-0.5 rounded-md font-bold border border-cyan-500/20">
-                                    ${duration}
-                                </span>
-                            </div>
-                            <h4 class="font-bold text-sm text-slate-100 line-clamp-2">${video.title}</h4>
-                        </div>
-                        <div class="mt-3 flex items-center justify-between text-xs text-slate-400">
-                            <span class="truncate max-w-[120px] text-cyan-400"><i class="fas fa-check-circle"></i> ${authorName}</span>
-                            <span>${video.viewCountText || 'Lihat Video'}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
         }
 
         function playYouTubeVideo(videoId, title) {
